@@ -25,8 +25,6 @@ namespace ArduinoPlugAndPlay.ClientConsole
 
         public static void Run (Arguments arguments)
         {
-            Console.WriteLine ("Starting Arduino Plug and Play");
-           
             var config = new ConfigHelper (arguments, IsVerbose);
 
             var deviceManager = new DeviceManager ();

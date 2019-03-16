@@ -44,13 +44,14 @@ namespace ArduinoPlugAndPlay
         {
             Console.WriteLine ("");
             Console.WriteLine ("Running Arduino Plug and Play");
-
             Console.WriteLine ("");
-            Console.WriteLine ("Device added command:");
-            Console.WriteLine ("  " + DeviceAddedCommand);
-            Console.WriteLine ("Device removed command:");
-            Console.WriteLine ("  " + DeviceRemovedCommand);
-            Console.WriteLine ("Sleep time: " + SleepTimeInSeconds + " seconds between loops");
+
+            Console.WriteLine ("Settings");
+            Console.WriteLine ("  Device added command:");
+            Console.WriteLine ("    " + DeviceAddedCommand);
+            Console.WriteLine ("  Device removed command:");
+            Console.WriteLine ("    " + DeviceRemovedCommand);
+            Console.WriteLine ("  Sleep time: " + SleepTimeInSeconds + " seconds between loops");
             Console.WriteLine ("");
 
             while (IsActive) {
@@ -246,10 +247,13 @@ namespace ArduinoPlugAndPlay
         public bool StartBashCommand (string command)
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Starting BASH command...");
-            if (IsVerbose)
-                Console.WriteLine (command);
+            Console.WriteLine ("Starting BASH command:");
+            Console.WriteLine ("  " + command);
             Starter.Start ("bash -c \"" + command + "\"");
+            if (!String.IsNullOrWhiteSpace (Starter.Output)) {
+                Console.WriteLine ("Output:");
+                Console.WriteLine (Starter.Output);
+            }
             Console.WriteLine ("Finished BASH command!");
             Console.WriteLine ("");
 
