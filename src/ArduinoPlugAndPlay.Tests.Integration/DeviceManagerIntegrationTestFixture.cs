@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace ArduinoPlugAndPlay.Tests.Integration
 {
-    [TestFixture]
+    [TestFixture (Category = "Integration")]
     public class DeviceManagerIntegrationTestFixture : BaseTestFixture
     {
         [Test]

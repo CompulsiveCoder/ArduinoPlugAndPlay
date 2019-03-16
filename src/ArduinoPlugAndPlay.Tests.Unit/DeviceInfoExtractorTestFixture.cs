@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace ArduinoPlugAndPlay.Tests.Unit
 {
-    [TestFixture]
+    [TestFixture (Category = "Unit")]
     public class DeviceInfoExtractorTestFixture : BaseTestFixture
     {
         [Test]

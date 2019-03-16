@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ArduinoPlugAndPlay.Tests.Unit
 {
-    [TestFixture]
+    [TestFixture (Category = "Unit")]
     public class DeviceInfoFileWriterTestFixture : BaseTestFixture
     {
         public DeviceInfoFileWriterTestFixture ()

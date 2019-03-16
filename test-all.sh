@@ -1,3 +1,2 @@
-# No unit tests are implemented yet
-#sh test-category.sh Unit &&
-bash test-category.sh Integration
+sh test-category.sh Unit &&
+sh test-category.sh Integration

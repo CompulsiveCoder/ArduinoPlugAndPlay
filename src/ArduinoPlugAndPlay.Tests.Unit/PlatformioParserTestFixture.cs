@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ArduinoPlugAndPlay.Tests.Unit
 {
-    [TestFixture]
+    [TestFixture (Category = "Unit")]
     public class PlatformioParserTestFixture : BaseTestFixture
     {
         public MockDeviceOutputs MockOutputs = new MockDeviceOutputs ();
