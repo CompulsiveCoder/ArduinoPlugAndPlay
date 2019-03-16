@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ArduinoPlugAndPlay</id>
+    <version>1.0.0</version>
+    <authors>compulsivecoder</authors>
+    <owners>compulsivecoder</owners>
+    <projectUrl>https://github.com/CompulsiveCoder/ArduinoPlugAndPlay</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Enables plug and play for arduino devices and other microcontrollers.</description>
+    <copyright>Copyright 2017</copyright>
+    <tags>arduino</tags>
+  </metadata>
+  <files>
+      <file src="bin/Release/ArduinoPlugAndPlay.exe" target="lib/net40" />
+      <file src="bin/Release/ArduinoPlugAndPlay.exe.config" target="lib/net40" />
+      <file src="bin/Release/duinocom.core.dll" target="lib/net40" />
+  </files>
+</package>
