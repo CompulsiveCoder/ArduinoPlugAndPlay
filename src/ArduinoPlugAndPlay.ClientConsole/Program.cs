@@ -8,8 +8,6 @@ using System.IO.Ports;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Runtime;
-using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Diagnostics;
 
 namespace ArduinoPlugAndPlay.ClientConsole
