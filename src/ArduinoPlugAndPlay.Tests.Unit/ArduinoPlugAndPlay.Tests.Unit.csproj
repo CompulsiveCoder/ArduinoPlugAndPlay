@@ -50,9 +50,5 @@
       <Project>{03359015-47BB-4B1E-A04E-706931E75B30}</Project>
       <Name>ArduinoPlugAndPlay.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ArduinoPlugAndPlay.ClientConsole\ArduinoPlugAndPlay.ClientConsole.csproj">
-      <Project>{E2CDE896-D69C-4B36-AB96-A245A9F70974}</Project>
-      <Name>ArduinoPlugAndPlay.ClientConsole</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

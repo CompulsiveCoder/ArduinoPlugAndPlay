@@ -63,7 +63,7 @@ namespace ArduinoPlugAndPlay.Tests
         {
             var lastCommandRun = starter.LastCommandRun;
 
-            var fullExpectedCommand = "bash -c \"" + expectedCommand + "\"";
+            var fullExpectedCommand = expectedCommand;
 
             Assert.AreEqual (fullExpectedCommand, lastCommandRun, "Commands don't match.");
 
