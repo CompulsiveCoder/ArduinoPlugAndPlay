@@ -13,6 +13,9 @@
   </metadata>
   <files>
       <file src="bin/Release/ArduinoPlugAndPlay.dll" target="lib/net40" />
+      <file src="bin/Release/ArduinoPlugAndPlay.Tests.dll" target="lib/net40" />
+      <file src="bin/Release/ArduinoPlugAndPlay.Tests.Unit.dll" target="lib/net40" />
+      <file src="bin/Release/ArduinoPlugAndPlay.Tests.Integration.dll" target="lib/net40" />
       <file src="bin/Release/ArduinoPlugAndPlay.exe" target="lib/net40" />
       <file src="bin/Release/ArduinoPlugAndPlay.exe.config" target="lib/net40" />
       <file src="bin/Release/duinocom.core.dll" target="lib/net40" />

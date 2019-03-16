@@ -248,8 +248,13 @@ namespace ArduinoPlugAndPlay
         {
             Console.WriteLine ("");
             Console.WriteLine ("Starting BASH command:");
-            Console.WriteLine ("  " + command);
-            Starter.Start ("bash -c \"" + command + "\"");
+
+            //var fullCommand = "bash -c " + EscapeCharacters (command);
+            var fullCommand = command;
+
+            Console.WriteLine ("  " + fullCommand);
+
+            Starter.Start (fullCommand);
             if (!String.IsNullOrWhiteSpace (Starter.Output)) {
                 Console.WriteLine ("Output:");
                 Console.WriteLine (Starter.Output);
@@ -259,6 +264,15 @@ namespace ArduinoPlugAndPlay
 
             return !Starter.IsError;
         }
+
+        public string EscapeCharacters (string startValue)
+        {
+            var newValue = startValue;
+            //newValue = newValue.Replace ("\"", "\\\"");
+
+            return newValue.ToString ();
+        }
+
 
         public bool AreDevicesConnected ()
         {

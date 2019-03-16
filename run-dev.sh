@@ -1,1 +1,1 @@
-mono bin/Release/ArduinoPlugAndPlay.exe
+mono bin/Release/ArduinoPlugAndPlay.exe $1 $2 $3

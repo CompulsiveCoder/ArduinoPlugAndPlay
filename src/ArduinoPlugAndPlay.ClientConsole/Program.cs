@@ -18,6 +18,10 @@ namespace ArduinoPlugAndPlay.ClientConsole
 
         public static void Main (string[] args)
         {
+            Console.WriteLine ("Arguments:");
+            foreach (var arg in args)
+                Console.WriteLine (arg);
+
             var arguments = new Arguments (args);
 
             Run (arguments);
