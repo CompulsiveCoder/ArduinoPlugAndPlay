@@ -96,7 +96,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             var info = GetExampleDeviceInfo ();
 
-            var expectedResult = info.FamilyName + "/" + info.GroupName + "/" + info.ProjectName + "/" + info.BoardType + "/" + info.Port;
+            var expectedResult = info.FamilyName + "/" + info.GroupName + "/" + info.ProjectName + "/" + info.BoardType + "/" + info.Port.Replace ("/dev/", "");
 
             var actualResult = deviceManager.InsertValues (startPattern, info);
 
