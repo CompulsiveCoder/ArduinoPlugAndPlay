@@ -14,3 +14,4 @@ script:
   - sh inject-version.sh
   - sh build-all.sh
   - sh test.sh
+ 
