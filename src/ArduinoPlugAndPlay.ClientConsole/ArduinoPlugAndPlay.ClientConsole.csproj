@@ -20,7 +20,7 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>--DeviceName=DevIrrigator1 --SerialPort=/dev/ttyUSB0 --SubscribeTopics=D,W,T,P,V,B,O</Commandlineparameters>
+    <Commandlineparameters>--DeviceAddedCommand="echo hello"</Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>

@@ -26,12 +26,12 @@ namespace ArduinoPlugAndPlay.ClientConsole
         public static void Run (Arguments arguments)
         {
             Console.WriteLine ("Starting Arduino Plug and Play");
-            Console.WriteLine ("Checking device list...");
            
             var config = new ConfigHelper (arguments, IsVerbose);
 
             var deviceManager = new DeviceManager ();
 
+            deviceManager.SleepTimeInSeconds = Convert.ToInt32 (config.GetValue ("SleepTime"));
             deviceManager.DeviceAddedCommand = config.GetValue ("DeviceAddedCommand");
             deviceManager.DeviceRemovedCommand = config.GetValue ("DeviceRemovedCommand");
 

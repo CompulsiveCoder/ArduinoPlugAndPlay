@@ -43,7 +43,15 @@ namespace ArduinoPlugAndPlay
         public void Run ()
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Running ArduinoPlugAndPlay Cycle");
+            Console.WriteLine ("Running Arduino Plug and Play");
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Device added command:");
+            Console.WriteLine ("  " + DeviceAddedCommand);
+            Console.WriteLine ("Device removed command:");
+            Console.WriteLine ("  " + DeviceRemovedCommand);
+            Console.WriteLine ("Sleep time: " + SleepTimeInSeconds + " seconds between loops");
+            Console.WriteLine ("");
 
             while (IsActive) {
                 try {
