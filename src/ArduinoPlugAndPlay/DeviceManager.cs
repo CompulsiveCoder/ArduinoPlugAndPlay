@@ -259,7 +259,10 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("Output:");
                 Console.WriteLine (Starter.Output);
             }
-            Console.WriteLine ("Finished BASH command!");
+            if (Starter.IsError)
+                Console.WriteLine ("Error in BASH command!");
+            else
+                Console.WriteLine ("Finished BASH command!");
             Console.WriteLine ("");
 
             return !Starter.IsError;
@@ -288,12 +291,22 @@ namespace ArduinoPlugAndPlay
 
         public string InsertValues (string startValue, DeviceInfo info)
         {
+            if (IsVerbose) {
+                Console.WriteLine ("Inserting values...");
+                Console.WriteLine ("  Before:");
+                Console.WriteLine ("    " + startValue);
+            }
             var newValue = startValue;
             newValue = newValue.Replace ("{FAMILY}", info.FamilyName);
             newValue = newValue.Replace ("{GROUP}", info.GroupName);
             newValue = newValue.Replace ("{PROJECT}", info.ProjectName);
             newValue = newValue.Replace ("{BOARD}", info.BoardType);
             newValue = newValue.Replace ("{PORT}", info.Port.Replace ("/dev/", ""));
+
+            if (IsVerbose) {
+                Console.WriteLine ("  After:");
+                Console.WriteLine ("    " + newValue);
+            }
             return newValue;
         }
 

@@ -10,7 +10,7 @@ namespace ArduinoPlugAndPlay
 
         public DeviceInfoFileManager ()
         {            
-            InfoDirectory = Path.Combine (Environment.CurrentDirectory, "devices");
+            InfoDirectory = Path.Combine (Environment.CurrentDirectory, "pnp");
         }
 
         public DeviceInfoFileManager (string workingDirectory)
@@ -58,8 +58,11 @@ namespace ArduinoPlugAndPlay
                 info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
                 info.Port = File.ReadAllText (Path.Combine (deviceFolder, "port.txt"));
                 info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
-                info.AddCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")));
-                info.RemoveCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "remove-command-completed.txt")));
+
+                if (File.Exists (Path.Combine (deviceFolder, "add-command-completed.txt")))
+                    info.AddCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")));
+                if (File.Exists (Path.Combine (deviceFolder, "remove-command-completed.txt")))
+                    info.RemoveCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "remove-command-completed.txt")));
             }
 
             return info;

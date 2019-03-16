@@ -32,6 +32,13 @@ namespace ArduinoPlugAndPlay
                     info.BoardType = ExtractBoardType (line);
             }
 
+            /*Console.WriteLine ("Extracting device info...");
+            Console.WriteLine ("  Family: " + info.FamilyName);
+            Console.WriteLine ("  Group: " + info.GroupName);
+            Console.WriteLine ("  Project: " + info.ProjectName);
+            Console.WriteLine ("  Board: " + info.BoardType);
+            Console.WriteLine ("  Port: " + info.Port);*/
+
             return info;
         }
 
