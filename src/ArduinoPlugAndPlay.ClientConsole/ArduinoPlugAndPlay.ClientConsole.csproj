@@ -38,9 +38,6 @@
     <Reference Include="duinocom.core">
       <HintPath>..\..\lib\duinocom.core.1.0.6\lib\net40\duinocom.core.dll</HintPath>
     </Reference>
-    <Reference Include="M2Mqtt.Net">
-      <HintPath>..\..\lib\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
