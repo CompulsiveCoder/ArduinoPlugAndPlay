@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests", "ArduinoPlugAndPlay.Tests\ArduinoPlugAndPlay.Tests.csproj", "{03359015-47BB-4B1E-A04E-706931E75B30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Integration", "ArduinoPlugAndPlay.Tests.Integration\ArduinoPlugAndPlay.Tests.Integration.csproj", "{41883F52-F0A1-467F-8E8A-E61535C2F8C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.ClientConsole", "ArduinoPlugAndPlay.ClientConsole\ArduinoPlugAndPlay.ClientConsole.csproj", "{E2CDE896-D69C-4B36-AB96-A245A9F70974}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay", "ArduinoPlugAndPlay\ArduinoPlugAndPlay.csproj", "{E558072A-89B6-487F-A024-1DDC4C870D1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Unit", "ArduinoPlugAndPlay.Tests.Unit\ArduinoPlugAndPlay.Tests.Unit.csproj", "{51C44D71-2B1B-4C81-8CEC-DDB735A6B25B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03359015-47BB-4B1E-A04E-706931E75B30}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03359015-47BB-4B1E-A04E-706931E75B30}.Debug|x86.Build.0 = Debug|Any CPU
+		{03359015-47BB-4B1E-A04E-706931E75B30}.Release|x86.ActiveCfg = Release|Any CPU
+		{03359015-47BB-4B1E-A04E-706931E75B30}.Release|x86.Build.0 = Release|Any CPU
+		{41883F52-F0A1-467F-8E8A-E61535C2F8C3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{41883F52-F0A1-467F-8E8A-E61535C2F8C3}.Debug|x86.Build.0 = Debug|Any CPU
+		{41883F52-F0A1-467F-8E8A-E61535C2F8C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{41883F52-F0A1-467F-8E8A-E61535C2F8C3}.Release|x86.Build.0 = Release|Any CPU
+		{51C44D71-2B1B-4C81-8CEC-DDB735A6B25B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{51C44D71-2B1B-4C81-8CEC-DDB735A6B25B}.Debug|x86.Build.0 = Debug|Any CPU
+		{51C44D71-2B1B-4C81-8CEC-DDB735A6B25B}.Release|x86.ActiveCfg = Release|Any CPU
+		{51C44D71-2B1B-4C81-8CEC-DDB735A6B25B}.Release|x86.Build.0 = Release|Any CPU
+		{E2CDE896-D69C-4B36-AB96-A245A9F70974}.Debug|x86.ActiveCfg = Debug|x86
+		{E2CDE896-D69C-4B36-AB96-A245A9F70974}.Debug|x86.Build.0 = Debug|x86
+		{E2CDE896-D69C-4B36-AB96-A245A9F70974}.Release|x86.ActiveCfg = Release|x86
+		{E2CDE896-D69C-4B36-AB96-A245A9F70974}.Release|x86.Build.0 = Release|x86
+		{E558072A-89B6-487F-A024-1DDC4C870D1C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E558072A-89B6-487F-A024-1DDC4C870D1C}.Debug|x86.Build.0 = Debug|Any CPU
+		{E558072A-89B6-487F-A024-1DDC4C870D1C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E558072A-89B6-487F-A024-1DDC4C870D1C}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
