@@ -8,6 +8,8 @@ namespace ArduinoPlugAndPlay.Tests
     {
         public List<string> MockDevices = new List<string> ();
 
+        public MockDeviceOutputs MockOutputs = new MockDeviceOutputs ();
+
         public MockPlatformioWrapper ()
         {
         }
