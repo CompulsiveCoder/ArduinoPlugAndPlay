@@ -148,38 +148,16 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("Adding device: " + devicePort);
             
             if (!DevicePorts.Contains (devicePort)) {
-                DevicePorts.Add (devicePort);
 
                 var info = ExtractDeviceInfo (devicePort);
 
                 Console.WriteLine ("  " + devicePort);
 
-                LaunchAddDeviceCommand (info);
-
-                Data.WriteInfoToFile (info);
+                if (LaunchAddDeviceCommand (info)) {
+                    DevicePorts.Add (devicePort);
+                    Data.WriteInfoToFile (info);
+                }
             }
-        }
-
-        #endregion
-
-        #region Launch Commands
-
-        public void LaunchAddDeviceCommand (DeviceInfo info)
-        {
-            var fixedCommand = InsertValues (DeviceAddedCommand, info);
-
-            info.AddCommandCompleted = StartBashCommand (fixedCommand);
-
-            Data.WriteInfoToFile (info);
-        }
-
-        public void LaunchRemoveDeviceCommand (DeviceInfo info)
-        {
-            var fixedCommand = InsertValues (DeviceRemovedCommand, info);
-
-            info.RemoveCommandCompleted = StartBashCommand (fixedCommand);
-
-            Data.WriteInfoToFile (info);
         }
 
         #endregion
@@ -228,18 +206,40 @@ namespace ArduinoPlugAndPlay
         public void RemoveDevice (string devicePort)
         {
             if (!String.IsNullOrEmpty (devicePort)) {
-                DevicePorts.Remove (devicePort);
-
                 Console.WriteLine ("  " + devicePort);
 
                 var info = Data.ReadInfoFromFile (devicePort);
 
-                LaunchRemoveDeviceCommand (info);
+                if (LaunchRemoveDeviceCommand (info)) {
+                    Data.DeleteInfoFromFile (info.Port);
 
-                Data.DeleteInfoFromFile (info.Port);
+                    DevicePorts.Remove (devicePort);
 
-                RemovedDevicePorts.Remove (devicePort);
+                    RemovedDevicePorts.Remove (devicePort);
+                }
             }
+        }
+
+        #endregion
+
+        #region Launch Commands
+
+        public bool LaunchAddDeviceCommand (DeviceInfo info)
+        {
+            var fixedCommand = InsertValues (DeviceAddedCommand, info);
+
+            info.AddCommandCompleted = StartBashCommand (fixedCommand);
+
+            return info.AddCommandCompleted;
+        }
+
+        public bool LaunchRemoveDeviceCommand (DeviceInfo info)
+        {
+            var fixedCommand = InsertValues (DeviceRemovedCommand, info);
+
+            info.RemoveCommandCompleted = StartBashCommand (fixedCommand);
+
+            return info.RemoveCommandCompleted;
         }
 
         #endregion
