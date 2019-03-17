@@ -20,6 +20,19 @@ namespace ArduinoPlugAndPlay.ClientConsole
             Arguments = arguments;
         }
 
+        public int GetInt32 (string argumentKey, int defaultValue)
+        {
+            if (String.IsNullOrWhiteSpace (argumentKey))
+                return defaultValue;
+            else {
+                var value = 0;
+                Int32.TryParse (GetValue (argumentKey), out value);
+                if (value == 0)
+                    value = defaultValue;
+                return value;
+            }
+        }
+
         public string GetValue (string argumentKey)
         {
             var value = String.Empty;
