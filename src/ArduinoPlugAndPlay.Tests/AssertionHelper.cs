@@ -58,12 +58,11 @@ namespace ArduinoPlugAndPlay.Tests
             AssertCommandStarted (starter, expectedCommand);
         }
 
-
         public void AssertCommandStarted (MockProcessStarter starter, string expectedCommand)
         {
             var lastCommandRun = starter.LastCommandRun;
 
-            var fullExpectedCommand = expectedCommand;
+            var fullExpectedCommand = "bash -c '" + expectedCommand.Replace ("'", "\'") + "'";
 
             Assert.AreEqual (fullExpectedCommand, lastCommandRun, "Commands don't match.");
 
