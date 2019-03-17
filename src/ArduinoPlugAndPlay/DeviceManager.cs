@@ -254,7 +254,7 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("  " + fullCommand);
 
             Starter.Start (fullCommand);
-            if (!String.IsNullOrWhiteSpace (Starter.Output)) {
+            if (Starter.HasOutput) {
                 Console.WriteLine ("Output:");
                 Console.WriteLine (Starter.Output);
             }

@@ -14,8 +14,17 @@ namespace ArduinoPlugAndPlay
 
         public bool WriteOutputToConsole = false;
 
+        public bool HasOutput {
+            get { return OutputBuilder.Length > 0; }
+        }
+
         public string Output {
-            get { return OutputBuilder.ToString (); }
+            get {
+                if (HasOutput)
+                    return OutputBuilder.ToString ();
+                else
+                    return String.Empty;
+            }
         }
 
         public bool IsDebug = false;
