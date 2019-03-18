@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{41883F52-F0A1-467F-8E8A-E61535C2F8C3}</ProjectGuid>
+    <ProjectGuid>{9E95F228-3FA2-4495-8F5F-846489829465}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>ArduinoPlugAndPlay.Tests.Integration</RootNamespace>
     <AssemblyName>ArduinoPlugAndPlay.Tests.Integration</AssemblyName>
@@ -29,24 +29,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="duinocom.core">
+      <HintPath>..\..\..\lib\duinocom.core.1.0.6\lib\net40\duinocom.core.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\lib\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\lib\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Package>nunit</Package>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TimeoutHelper.cs" />
     <Compile Include="DeviceManagerIntegrationTestFixture.cs" />
+    <Compile Include="TimeoutHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests\ArduinoPlugAndPlay.Tests.csproj">
-      <Project>{03359015-47BB-4B1E-A04E-706931E75B30}</Project>
-      <Name>ArduinoPlugAndPlay.Tests</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ArduinoPlugAndPlay\ArduinoPlugAndPlay.csproj">
-      <Project>{E558072A-89B6-487F-A024-1DDC4C870D1C}</Project>
+      <Project>{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}</Project>
       <Name>ArduinoPlugAndPlay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests\ArduinoPlugAndPlay.Tests.csproj">
+      <Project>{7BDFE167-8319-43CA-81CF-57537324B3DC}</Project>
+      <Name>ArduinoPlugAndPlay.Tests</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

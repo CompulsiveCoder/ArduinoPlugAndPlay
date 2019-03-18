@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace ArduinoPlugAndPlay.Tests
 {
@@ -12,7 +13,7 @@ namespace ArduinoPlugAndPlay.Tests
         {
         }
 
-        public override System.Diagnostics.Process Start (string command)
+        public override Process Start (string command)
         {
             LastCommandRun = command;
 
