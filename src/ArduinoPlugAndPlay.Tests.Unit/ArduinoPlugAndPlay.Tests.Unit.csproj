@@ -8,6 +8,8 @@
     <RootNamespace>ArduinoPlugAndPlay.Tests.Unit</RootNamespace>
     <AssemblyName>ArduinoPlugAndPlay.Tests.Unit</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.Tests.Unit.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

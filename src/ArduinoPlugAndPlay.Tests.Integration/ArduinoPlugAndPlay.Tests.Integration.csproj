@@ -8,6 +8,8 @@
     <RootNamespace>ArduinoPlugAndPlay.Tests.Integration</RootNamespace>
     <AssemblyName>ArduinoPlugAndPlay.Tests.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.Tests.Integration.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,9 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="duinocom.core">
-      <HintPath>..\..\..\lib\duinocom.core.1.0.6\lib\net40\duinocom.core.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\lib\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
       <Package>nunit</Package>

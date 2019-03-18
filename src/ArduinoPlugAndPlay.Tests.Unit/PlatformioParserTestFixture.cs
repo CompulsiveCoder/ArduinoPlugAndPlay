@@ -8,8 +8,6 @@ namespace ArduinoPlugAndPlay.Tests.Unit
     [TestFixture (Category = "Unit")]
     public class PlatformioParserTestFixture : BaseTestFixture
     {
-        public MockDeviceOutputs MockOutputs = new MockDeviceOutputs ();
-
         public PlatformioParserTestFixture ()
         {
         }
