@@ -6,7 +6,7 @@
     <ProjectGuid>{124F4832-7881-49C0-97A6-6586AC0CD53C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ArduinoPlugAndPlay.ClientConsole</RootNamespace>
-    <AssemblyName>ArduinoPlugAndPlay.ClientConsole</AssemblyName>
+    <AssemblyName>ArduinoPlugAndPlay</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.ClientConsole.snk</AssemblyOriginatorKeyFile>
