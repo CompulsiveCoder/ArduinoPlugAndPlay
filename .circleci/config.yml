@@ -8,6 +8,10 @@ jobs:
       - checkout
 
       - run:
+          name: Prepare
+          command: apt-get install -y sudo
+
+      - run:
           name: Setup
           command: sh prepare.sh
 
