@@ -46,49 +46,6 @@ wget $INSTALL_SERVICE_SCRIPT_URL -O $INSTALL_SERVICE_SCRIPT_NAME || (echo "Faile
 
 echo "Installing service"
 
-sh install-service.sh $SERVICE_FILE_NAME
-#echo "Path: $SERVICE_FILE_PATH"
-#echo "Name: $SERVICE_FILE"
-
-#SYSTEMCTL_SCRIPT="systemctl.sh"
-
-#MOCK_SYSTEMCTL_FLAG_FILE="is-mock-systemctl.txt"
-
-#IS_MOCK_SYSTEMCTL=0
-
-#if [ -f "$MOCK_SYSTEMCTL_FLAG_FILE" ]; then
-#  IS_MOCK_SYSTEMCTL=1
-#  echo "Is mock systemctl"
-#fi
-
-#SERVICES_DIR="/lib/systemd/system"
-
-#if [ $IS_MOCK_SYSTEMCTL = 1 ]; then
-#  SERVICES_DIR="mock/services"
-#fi
-
-#SUDO=""
-#if [ ! "$(id -u)" -eq 0 ]; then
-#    SUDO='sudo'
-#fi
-
-#mkdir -p $SERVICES_DIR
-
-#echo "Services directory:"
-#echo "  $SERVICES_DIR"
-#echo "Destination file:"
-#echo "  $SERVICES_DIR/$SERVICE_FILE"
-
-#if [ $IS_MOCK_SYSTEMCTL = 1 ]; then
-#  echo "Is mock systemctl. Installing to mock directory."
-#  cp $SERVICE_FILE_PATH $SERVICES_DIR/$SERVICE_FILE
-#else
-#  $SUDO cp -fv $SERVICE_FILE_PATH $SERVICES_DIR/$SERVICE_FILE && \
-#  $SUDO chmod 644 $SERVICES_DIR/$SERVICE_FILE && \
-#  sh $SYSTEMCTL_SCRIPT daemon-reload && \
-#  sh $SYSTEMCTL_SCRIPT enable $SERVICE_FILE && \
-#  sh $SYSTEMCTL_SCRIPT start $SERVICE_FILE && \
-#  sh $SYSTEMCTL_SCRIPT restart $SERVICE_FILE
-#fi
+sh install-service.sh $SERVICE_FILE_NAME || (echo "Failed to install service: $SERVICE_FILE_NAME." && exit 1)
 
 echo "Finished installing service"

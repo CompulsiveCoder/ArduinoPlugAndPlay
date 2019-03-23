@@ -21,11 +21,11 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
 
             var branch = new BranchDetector ().GetBranch ();
 
-
-            var destination = "mock/install/ArduinoPlugAndPlay";
+            var destination = "installation/ArduinoPlugAndPlay";
 
             // Configure systemctl mocking
             var isMockSystemCtlFile = Path.Combine (TemporaryDirectory, destination + "/is-mock-systemctl.txt");
+            Directory.CreateDirectory (Path.GetDirectoryName (isMockSystemCtlFile));
             File.WriteAllText (isMockSystemCtlFile, 1.ToString ());
 
             var cmd = "bash " + scriptPath + " " + branch + " " + destination;
