@@ -25,14 +25,14 @@ fi
 
 if [ ! -f "install-package.sh" ]; then
   echo "Downloading install-package.sh script...."
-  INSTALL_SCRIPT_FILE_URL="https://raw.githubusercontent.com/GreenSense/ArduinoPlugAndPlay/$BRANCH/install-package.sh"
-  wget --no-cache -O install-package.sh $INSTALL_SCRIPT_FILE_URL || ("Failed to download install-package.sh script" && exit 1)
+  INSTALL_SCRIPT_FILE_URL="https://raw.githubusercontent.com/GreenSense/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-package-from-web.sh"
+  wget --no-cache -O install-package-from-web.sh $INSTALL_SCRIPT_FILE_URL || ("Failed to download install-package.sh script" && exit 1)
 else
   echo "The install-package.sh script already exists. Skipping download."
 fi
 
 echo "Installing the ArduinoPlugAndPlay library..."
-sh install-package.sh ArduinoPlugAndPlay 1.0.0.28 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
+sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.28 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
 
 if [ -f $CONFIG_FILE_TMP ]; then
   echo "Preserved config file found. Restoring."
