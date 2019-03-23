@@ -1,5 +1,8 @@
 echo "Retrieving required libraries..."
 
+echo "Current directory:"
+echo "  $PWD"
+
 BRANCH=$1
 
 EXAMPLE_COMMAND="Example:\n..sh [branch]"
@@ -18,7 +21,7 @@ CONFIG_FILE_SAVED="ArduinoPlugAndPlay.exe.config";
 echo "Library config file:"
 echo "  $PWD/$CONFIG_FILE"
 echo "Saved config file:"
-echo "  $PWD/$CONFIG_FILE"
+echo "  $PWD/CONFIG_FILE_SAVED"
 
 if [ -f $CONFIG_FILE ]; then
   echo "Config file found. Preserving."
