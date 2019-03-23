@@ -9,6 +9,8 @@ if [ ! $BRANCH ]; then
   BRANCH="master"
 fi
 
+echo "$BRANCH"
+
 echo "Installing libraries..."
 
 CONFIG_FILE="ArduinoPlugAndPlay/lib/net40/ArduinoPlugAndPlay.exe.config";
