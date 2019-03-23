@@ -1,0 +1,10 @@
+ [Unit]
+ Description=Arduino Plug and Play Service
+ After=multi-user.target
+
+ [Service]
+ Type=idle
+ ExecStart=/bin/sh -c "mkdir -p {INSTALL_PATH}; cd /usr/local/{INSTALL_PATH}/; wget -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/{BRANCH}/scripts-web/start-from-web.sh | sh"
+
+ [Install]
+ WantedBy=multi-user.target

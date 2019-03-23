@@ -1,5 +1,5 @@
  [Unit]
- Description=GreenSense Plug and Play Service
+ Description=Arduino Plug and Play Service
  After=multi-user.target
 
  [Service]
