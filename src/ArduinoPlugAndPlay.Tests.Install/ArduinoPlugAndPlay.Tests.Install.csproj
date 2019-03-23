@@ -3,13 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7BDFE167-8319-43CA-81CF-57537324B3DC}</ProjectGuid>
+    <ProjectGuid>{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ArduinoPlugAndPlay.Tests</RootNamespace>
-    <AssemblyName>ArduinoPlugAndPlay.Tests</AssemblyName>
+    <RootNamespace>ArduinoPlugAndPlay.Tests.Install</RootNamespace>
+    <AssemblyName>ArduinoPlugAndPlay.Tests.Install</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.Tests.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,19 +35,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AssertionHelper.cs" />
-    <Compile Include="BaseTestFixture.cs" />
-    <Compile Include="MockDeviceOutputs.cs" />
-    <Compile Include="MockDeviceReaderWriter.cs" />
-    <Compile Include="MockPlatformioWrapper.cs" />
-    <Compile Include="MockProcessStarter.cs" />
-    <Compile Include="TestProcessStarter.cs" />
+    <Compile Include="InstallTestFixture.cs" />
+    <Compile Include="BaseInstallTestFixture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\ArduinoPlugAndPlay\ArduinoPlugAndPlay.csproj">
       <Project>{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}</Project>
       <Name>ArduinoPlugAndPlay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests\ArduinoPlugAndPlay.Tests.csproj">
+      <Project>{7BDFE167-8319-43CA-81CF-57537324B3DC}</Project>
+      <Name>ArduinoPlugAndPlay.Tests</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

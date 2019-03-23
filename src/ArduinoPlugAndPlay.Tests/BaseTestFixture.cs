@@ -19,8 +19,10 @@ namespace ArduinoPlugAndPlay.Tests
         }
 
         [SetUp]
-        public void Initialize ()
+        public virtual void Initialize ()
         {
+            // TODO: Reorganize this. Some tests move back to the project directory so it's wasteful
+            // to generate the temporary directory if it isn;t being used.
             InitializeProjectDirectory ();
 
             MoveToTemporaryDirectory ();
@@ -28,6 +30,7 @@ namespace ArduinoPlugAndPlay.Tests
             Console.WriteLine ("");
             Console.WriteLine ("====================");
             Console.WriteLine ("Preparing test");
+
 
         }
 
@@ -50,6 +53,27 @@ namespace ArduinoPlugAndPlay.Tests
 
             CleanTemporaryDirectory ();
         }
+
+        #region Process Starter
+
+        public TestProcessStarter GetTestProcessStarter ()
+        {
+            return GetTestProcessStarter (true);
+        }
+
+        public TestProcessStarter GetTestProcessStarter (bool initializeStarter)
+        {
+            var starter = new TestProcessStarter ();
+
+            starter.WorkingDirectory = ProjectDirectory;
+
+            if (initializeStarter)
+                starter.Initialize ();
+
+            return starter;
+        }
+
+        #endregion
 
         public void HandleFailureFile ()
         {
@@ -104,8 +128,6 @@ namespace ArduinoPlugAndPlay.Tests
         {
             var tmpDir = Path.Combine (ProjectDirectory, "_tmp");
 
-            TemporaryDirectory = tmpDir;
-
             if (!Directory.Exists (tmpDir))
                 Directory.CreateDirectory (tmpDir);
 
@@ -113,6 +135,8 @@ namespace ArduinoPlugAndPlay.Tests
 
             if (!Directory.Exists (tmpTestDir))
                 Directory.CreateDirectory (tmpTestDir);
+
+            TemporaryDirectory = tmpTestDir;
 
             Directory.SetCurrentDirectory (tmpTestDir);
         }
@@ -150,6 +174,13 @@ namespace ArduinoPlugAndPlay.Tests
             info.Port = portName;
 
             return info;
+        }
+
+        public void PullFileFromProject (string fileName)
+        {
+            var sourceFile = Path.Combine (ProjectDirectory, fileName);
+            var destinationFile = Path.Combine (TemporaryDirectory, fileName);
+            File.Copy (sourceFile, destinationFile);
         }
     }
 }
