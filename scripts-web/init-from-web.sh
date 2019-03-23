@@ -23,10 +23,13 @@ echo "  $PWD/$CONFIG_FILE"
 echo "Saved config file:"
 echo "  $PWD/CONFIG_FILE_SAVED"
 
+# If the config file is found in the downloaded package
 if [ -f $CONFIG_FILE ]; then
   echo "Config file found. Preserving."
 
+  # If no custom config file is found
   if [ ! -f $CONFIG_FILE_SAVED ]; then
+    # Copy the config file from the package into the saved location
     cp -v $CONFIG_FILE $CONFIG_FILE_SAVED || ("Failed to save a copy of the ArduinoPlugAndPlay.exe.config file" && exit 1)
   fi
 fi
@@ -42,13 +45,16 @@ fi
 echo "Installing the ArduinoPlugAndPlay library..."
 sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.28 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
 
-if [ -f $CONFIG_FILE_TMP ]; then
+# If a saved/custom config file is found then install it
+if [ -f $CONFIG_FILE_SAVED ]; then
   echo "Installing saved config file..."
 
+  # Copy the default config file to a .bak file
   echo "Backing up empty config file"
   cp $CONFIG_FILE $CONFIG_FILE.bak || ("Failed to backup default config file" && exit 1)
 
   echo "Restoring saved config file"
+  # Install the saved/custom config file into the library
   cp $CONFIG_FILE_SAVED $CONFIG_FILE || ("Failed to install saved config file" && exit 1)
 
 fi
