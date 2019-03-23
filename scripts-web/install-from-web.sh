@@ -36,6 +36,6 @@ cd $INSTALL_DIR
 
 echo "Initializing plug and play (by downloading init.sh file)..."
 
-wget -v --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | sudo sh || exit 1
+wget -v --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | bash -s $BRANCH || exit 1
 
 echo "Finished setting up plug and play"
