@@ -35,13 +35,13 @@ echo "Installing the ArduinoPlugAndPlay library..."
 sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.28 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
 
 if [ -f $CONFIG_FILE_TMP ]; then
-  echo "Preserved config file found. Restoring."
+  echo "Installing saved config file..."
 
   echo "Backing up empty config file"
-  cp $CONFIG_FILE $CONFIG_FILE.bak
+  cp $CONFIG_FILE $CONFIG_FILE.bak || ("Failed to backup default config file" && exit 1)
 
-  echo "Restoring existing config file"
-  cp $CONFIG_FILE_TMP $CONFIG_FILE || exit 1
+  echo "Restoring saved config file"
+  cp $CONFIG_FILE_SAVED $CONFIG_FILE || ("Failed to install saved config file" && exit 1)
 
 fi
 
