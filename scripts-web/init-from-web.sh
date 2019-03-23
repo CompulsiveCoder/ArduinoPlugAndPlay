@@ -3,6 +3,8 @@ echo "Retrieving required libraries..."
 echo "Current directory:"
 echo "  $PWD"
 
+DIR=$PWD
+
 BRANCH=$1
 
 EXAMPLE_COMMAND="Example:\n..sh [branch]"
@@ -58,6 +60,8 @@ if [ -f $CONFIG_FILE_SAVED ]; then
   cp $CONFIG_FILE_SAVED $CONFIG_FILE || ("Failed to install saved config file" && exit 1)
 
 fi
+
+cd $DIR
 
 echo "Installation complete. Launching plug and play."
 
