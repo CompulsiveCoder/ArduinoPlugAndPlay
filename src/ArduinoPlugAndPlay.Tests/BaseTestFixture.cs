@@ -178,8 +178,19 @@ namespace ArduinoPlugAndPlay.Tests
 
         public void PullFileFromProject (string fileName)
         {
+            PullFileFromProject (fileName, false);
+        }
+
+        public void PullFileFromProject (string fileName, bool removeDestinationDirectory)
+        {
             var sourceFile = Path.Combine (ProjectDirectory, fileName);
             var destinationFile = Path.Combine (TemporaryDirectory, fileName);
+
+            if (removeDestinationDirectory) {
+                var shortenedFileName = Path.GetFileName (fileName);
+                destinationFile = Path.Combine (TemporaryDirectory, shortenedFileName);
+            }
+
             File.Copy (sourceFile, destinationFile);
         }
     }

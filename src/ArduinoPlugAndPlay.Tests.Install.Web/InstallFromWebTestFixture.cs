@@ -11,16 +11,29 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
         [Test]
         public void Test_Install_FromWeb ()
         {
-            PullFileFromProject ("scripts-web/install-from-web.sh");
+            Console.WriteLine ("");
+            Console.WriteLine ("Preparing install from web test...");
+            Console.WriteLine ("");
 
-            var scriptPath = Path.Combine (ProjectDirectory, "install-from-web.sh");
+            PullFileFromProject ("scripts-web/install-from-web.sh", true);
+
+            var scriptPath = Path.GetFullPath ("install-from-web.sh");
 
             var branch = new BranchDetector ().GetBranch ();
 
             var destination = "mock/install/ArduinoPlugAndPlay";
 
             var cmd = "bash " + scriptPath + " " + branch + " " + destination;
+
+            Console.WriteLine ("Command:");
+            Console.WriteLine ("  " + cmd);
+
             var starter = new ProcessStarter ();
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Performing install from web test...");
+            Console.WriteLine ("");
+
             starter.Start (cmd);
 
             Console.Write (starter.Output);
