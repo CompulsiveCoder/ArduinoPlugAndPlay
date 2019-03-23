@@ -39,6 +39,7 @@ namespace ArduinoPlugAndPlay
         public int CommandTimeoutInSeconds = 10 * 60;
 
         public bool UseBashC = true;
+        public bool UseCommandTimeout = true;
 
         public DeviceManager ()
         {
@@ -252,7 +253,6 @@ namespace ArduinoPlugAndPlay
             var fixedCommand = initialCommand;
 
             fixedCommand = InsertValues (fixedCommand, info);
-            fixedCommand = "timeout " + CommandTimeoutInSeconds + "s " + fixedCommand;
             fixedCommand = fixedCommand + " > " + GetLogFile (action, info) + "";
 
             return fixedCommand;
@@ -286,10 +286,13 @@ namespace ArduinoPlugAndPlay
             if (UseBashC)
                 fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "'";
 
+            if (UseCommandTimeout)
+                fullCommand = "timeout " + CommandTimeoutInSeconds + "s " + fullCommand;
+
             Console.WriteLine ("  " + fullCommand);
 
             Starter.Start (fullCommand);
-            if (Starter.Output.Length > 0) {
+            if (Starter.HasOutput) {
                 Console.WriteLine ("Output:");
                 Console.WriteLine (Starter.Output);
             }
@@ -305,7 +308,7 @@ namespace ArduinoPlugAndPlay
         public string EscapeCharacters (string startValue)
         {
             var newValue = startValue;
-            newValue = newValue.Replace ("'", "/'");
+            newValue = newValue.Replace ("'", "\\'");
 
             return newValue.ToString ();
         }

@@ -19,8 +19,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             var parser = new PlatformioParser (starter);
 
-            starter.OutputBuilder = new StringBuilder ();
-            starter.OutputBuilder.Append (MockOutputs.DeviceListZeroDevicesOutput);
+            starter.ClearOutput ();
+            starter.AppendOutput (MockOutputs.DeviceListZeroDevicesOutput);
 
             var expectedResult = false;
 
@@ -36,8 +36,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             var parser = new PlatformioParser (starter);
 
-            starter.OutputBuilder = new StringBuilder ();
-            starter.OutputBuilder.Append (MockOutputs.GetDeviceListOutput (2));
+            starter.ClearOutput ();
+            starter.AppendOutput (MockOutputs.GetDeviceListOutput (2));
 
             var expectedResult = true;
 
@@ -54,8 +54,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             var parser = new PlatformioParser (starter);
 
-            starter.OutputBuilder = new StringBuilder ();
-            starter.OutputBuilder.Append (MockOutputs.DeviceListZeroDevicesOutput);
+            starter.ClearOutput ();
+            starter.AppendOutput (MockOutputs.DeviceListZeroDevicesOutput);
 
             var expectedResult = new string[]{ };
 
@@ -71,8 +71,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             var parser = new PlatformioParser (starter);
 
-            starter.OutputBuilder = new StringBuilder ();
-            starter.OutputBuilder.Append (MockOutputs.GetDeviceListOutput (5));
+            starter.ClearOutput ();
+            starter.AppendOutput (MockOutputs.GetDeviceListOutput (5));
 
             var resultList = new List<string> ();
             for (int i = 0; i < 5; i++) {

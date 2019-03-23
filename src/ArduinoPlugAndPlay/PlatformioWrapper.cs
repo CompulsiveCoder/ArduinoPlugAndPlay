@@ -27,7 +27,7 @@ namespace ArduinoPlugAndPlay
             if (devicesDetected)
                 deviceList = Parser.ParseDeviceList ();
 
-            Starter.OutputBuilder.Clear ();
+            Starter.ClearOutput ();
 
             return deviceList;
         }
@@ -38,12 +38,10 @@ namespace ArduinoPlugAndPlay
 
             var devicesDetected = Parser.AreDevicesDetected ();
 
-            Starter.OutputBuilder.Clear ();
+            Starter.ClearOutput ();
 
             return devicesDetected;
         }
-
-      
     }
 }
 

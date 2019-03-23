@@ -15,21 +15,14 @@ namespace ArduinoPlugAndPlay
         public bool WriteOutputToConsole = false;
 
         public bool HasOutput {
-            get { return OutputBuilder.Length > 0; }
-        }
-
-        public string Output {
             get {
-                if (HasOutput)
-                    return OutputBuilder.ToString ();
-                else
-                    return String.Empty;
+                return !String.IsNullOrWhiteSpace (Output); 
             }
         }
 
-        public bool IsDebug = false;
+        public string Output { get; set; }
 
-        public StringBuilder OutputBuilder = new StringBuilder ();
+        public bool IsDebug = false;
 
         public ProcessStarter ()
         {
@@ -137,7 +130,7 @@ namespace ArduinoPlugAndPlay
                         Console.SetOut (c);
                         c.WriteLine (e.Data);
                     }
-                    OutputBuilder.AppendLine (e.Data);
+                    AppendOutputLine (e.Data);
                 }
             );
 
@@ -148,7 +141,7 @@ namespace ArduinoPlugAndPlay
                         Console.SetOut (c);
                         c.WriteLine (e.Data);
                     }
-                    OutputBuilder.AppendLine (e.Data);
+                    AppendOutputLine (e.Data);
                 }
             );
 
@@ -167,8 +160,8 @@ namespace ArduinoPlugAndPlay
 
                 var title = "\"Error starting process.\"";
 
-                OutputBuilder.Append (title);
-                OutputBuilder.Append (ex.ToString ());
+                AppendOutputLine (title);
+                AppendOutputLine (ex.ToString ());
 
                 if (ThrowExceptionOnError)
                     throw new Exception (title, ex);
@@ -208,6 +201,20 @@ namespace ArduinoPlugAndPlay
                 return argument;
         }
 
+        public void ClearOutput ()
+        {
+            Output = String.Empty;
+        }
+
+        public void AppendOutput (string text)
+        {
+            Output += text;
+        }
+
+        public void AppendOutputLine (string line)
+        {
+            Output += line + Environment.NewLine;
+        }
     }
 }
 

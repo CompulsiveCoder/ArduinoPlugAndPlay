@@ -65,7 +65,7 @@ namespace ArduinoPlugAndPlay.Tests
         {
             var lastCommandRun = starter.LastCommandRun;
 
-            var fullExpectedCommand = "/bin/bash -c 'timeout " + Manager.CommandTimeoutInSeconds + "s " + expectedCommand.Replace ("'", "/'") + " > " + logFile + "'";
+            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " > " + logFile + "'";
 
             Assert.AreEqual (fullExpectedCommand, lastCommandRun, "Commands don't match.");
 
