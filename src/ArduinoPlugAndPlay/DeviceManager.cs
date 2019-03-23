@@ -36,7 +36,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsVerbose = false;
 
-        public int CommandTimeoutInSeconds = 10 * 60;
+        public int CommandTimeoutInSeconds = 5 * 60;
 
         public bool UseBashC = true;
         public bool UseCommandTimeout = true;
@@ -267,11 +267,9 @@ namespace ArduinoPlugAndPlay
             if (!Directory.Exists (logsDir))
                 Directory.CreateDirectory (logsDir);
 
-            var dateString = DateTime.Now.ToString ().Replace ("/", "-").Replace (":", "-").Replace (" ", "-");
+            var logFileName = info.Port.Replace ("/dev/", "") + "-" + info.GroupName + ".txt";
 
-            var logFileName = action + "-" + info.GroupName + "-" + dateString + ".txt";
-
-            var filePath = Path.Combine ("logs", logFileName);
+            var filePath = Path.Combine (logsDir, logFileName);
 
             return filePath;
         }
