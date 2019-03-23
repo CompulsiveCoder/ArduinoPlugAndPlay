@@ -17,9 +17,9 @@ PACKAGE_FILE="$PACKAGE_NAME.$PACKAGE_VERSION"
 PACKAGE_FILE_EXT="$PACKAGE_NAME.$PACKAGE_VERSION.nupkg"
 
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
-	wget -q "https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg" -O $PACKAGE_FILE_EXT
+	wget -q "https://github.com/CompulsiveCoder/libs/raw/master/$PACKAGE_FILE.nupkg" -O $PACKAGE_FILE_EXT || (echo "Failed to download $PACKAGE_NAME library package." && exit 1)
 
-	unzip -qq -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/"
+	unzip -qq -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/" || (echo "Failed to unzip package" && exit 1)
 else
 	echo "  Already exists. Skipping download."
 fi
