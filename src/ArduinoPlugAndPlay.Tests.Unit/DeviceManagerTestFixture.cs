@@ -9,8 +9,6 @@ namespace ArduinoPlugAndPlay.Tests.Unit
         [Test]
         public void Test_AddDevice ()
         {
-            var assertion = new AssertionHelper ();
-
             var info = GetExampleDeviceInfo ();
 
             // Set up the mock objects
@@ -24,6 +22,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.Starter = mockProcessStarter;
 
+            var assertion = new AssertionHelper (deviceManager);
+
             // Set the mock output from the device
             mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (info));
 
@@ -34,9 +34,9 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             deviceManager.AddDevice (info.Port);
 
             // Assert that the expected command was started
-            assertion.AssertAddDeviceCommandStarted (info, deviceManager, mockProcessStarter);
+            assertion.AssertAddDeviceCommandStarted (info, mockProcessStarter);
 
-            assertion.AssertDeviceExists (info, deviceManager);
+            assertion.AssertDeviceExists (info);
 
             assertion.AssertDeviceInfoFilesExist (deviceManager.Data.InfoDirectory, info);
         }
@@ -44,8 +44,6 @@ namespace ArduinoPlugAndPlay.Tests.Unit
         [Test]
         public void Test_RemoveDevice ()
         {
-            var assertion = new AssertionHelper ();
-
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockDeviceReaderWriter ();
@@ -56,6 +54,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.Starter = mockProcessStarter;
+
+            var assertion = new AssertionHelper (deviceManager);
 
             var info = GetExampleDeviceInfo ();
 
@@ -78,10 +78,10 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             deviceManager.RemoveDevice (info.Port);
 
             // Assert that the expected command was started
-            assertion.AssertRemoveDeviceCommandStarted (info, deviceManager, mockProcessStarter);
+            assertion.AssertRemoveDeviceCommandStarted (info, mockProcessStarter);
 
             // Assert that 0 devices are in the list
-            assertion.AssertDeviceCount (0, deviceManager);
+            assertion.AssertDeviceCount (0);
 
             // Assert that the info files have been removed
             assertion.AssertDeviceInfoFilesDontExist (deviceManager.Data.InfoDirectory, info);

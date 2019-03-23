@@ -11,8 +11,6 @@ namespace ArduinoPlugAndPlay.Tests.Integration
         {
             Console.WriteLine ("Testing connecting an arduino device...");
 
-            var assertion = new AssertionHelper ();
-
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockDeviceReaderWriter ();
@@ -24,8 +22,10 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.Starter = mockProcessStarter;
 
+            var assertion = new AssertionHelper (deviceManager);
+
             // Assert that no devices are detected by default
-            assertion.AssertDeviceCount (0, deviceManager);
+            assertion.AssertDeviceCount (0);
 
             for (int i = 0; i < 3; i++) {
                 Console.WriteLine ("");
@@ -44,13 +44,13 @@ namespace ArduinoPlugAndPlay.Tests.Integration
                 deviceManager.RunLoop ();
 
                 // Assert that the expected command was started
-                assertion.AssertAddDeviceCommandStarted (info, deviceManager, mockProcessStarter);
+                assertion.AssertAddDeviceCommandStarted (info, mockProcessStarter);
 
                 // Assert there is 1 device
-                assertion.AssertDeviceCount (i + 1, deviceManager);
+                assertion.AssertDeviceCount (i + 1);
 
                 // Assert that the device related data/info was created
-                assertion.AssertDeviceExists (info, deviceManager);
+                assertion.AssertDeviceExists (info);
             }
 
 
@@ -67,13 +67,13 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.RunLoop ();
 
             // Assert that the expected command was started
-            assertion.AssertRemoveDeviceCommandStarted (info1, deviceManager, mockProcessStarter);
+            assertion.AssertRemoveDeviceCommandStarted (info1, mockProcessStarter);
 
             // Assert there are 2 devices left
-            assertion.AssertDeviceCount (2, deviceManager);
+            assertion.AssertDeviceCount (2);
 
             // Assert that the device related data/info was removed
-            assertion.AssertDeviceDoesntExist (info1, deviceManager);
+            assertion.AssertDeviceDoesntExist (info1);
         }
 
     }

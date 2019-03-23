@@ -6,36 +6,39 @@ namespace ArduinoPlugAndPlay.Tests
 {
     public class AssertionHelper
     {
-        public AssertionHelper ()
+        public DeviceManager Manager;
+
+        public AssertionHelper (DeviceManager deviceManager)
         {
+            Manager = deviceManager;
         }
 
-        public void AssertDeviceExists (DeviceInfo deviceInfo, DeviceManager deviceManager)
+        public void AssertDeviceExists (DeviceInfo deviceInfo)
         {
-            AssertDeviceIsInList (deviceInfo.Port, deviceManager);
+            AssertDeviceIsInList (deviceInfo.Port);
 
-            AssertDeviceInfoFilesExist (deviceManager.Data.InfoDirectory, deviceInfo);
+            AssertDeviceInfoFilesExist (Manager.Data.InfoDirectory, deviceInfo);
         }
 
-        public void AssertDeviceDoesntExist (DeviceInfo deviceInfo, DeviceManager deviceManager)
+        public void AssertDeviceDoesntExist (DeviceInfo deviceInfo)
         {
-            Assert.IsFalse (deviceManager.DevicePorts.Contains (deviceInfo.Port), "Device port is still found in DeviceManager list.");
+            Assert.IsFalse (Manager.DevicePorts.Contains (deviceInfo.Port), "Device port is still found in DeviceManager list.");
 
-            AssertDeviceInfoFilesDontExist (deviceManager.Data.InfoDirectory, deviceInfo);
+            AssertDeviceInfoFilesDontExist (Manager.Data.InfoDirectory, deviceInfo);
         }
 
-        public void AssertDeviceIsInList (string portName, DeviceManager deviceManager)
+        public void AssertDeviceIsInList (string portName)
         {
-            Assert.IsTrue (deviceManager.DevicePorts.Contains (portName));
+            Assert.IsTrue (Manager.DevicePorts.Contains (portName));
         }
 
-        public void AssertDeviceCount (int deviceCount, DeviceManager deviceManager)
+        public void AssertDeviceCount (int deviceCount)
         {
-            var deviceList = deviceManager.GetDeviceList ();
+            var deviceList = Manager.GetDeviceList ();
 
             Assert.AreEqual (deviceCount, deviceList.Length, "Incorrect number of devices found in list.");
 
-            var infoDir = deviceManager.Data.InfoDirectory;
+            var infoDir = Manager.Data.InfoDirectory;
 
             var numberOfDeviceDirectories = 0;
             if (Directory.Exists (infoDir))
@@ -46,23 +49,23 @@ namespace ArduinoPlugAndPlay.Tests
             Console.WriteLine ("Device count is correct.");
         }
 
-        public void AssertAddDeviceCommandStarted (DeviceInfo info, DeviceManager deviceManager, MockProcessStarter starter)
+        public void AssertAddDeviceCommandStarted (DeviceInfo info, MockProcessStarter starter)
         {
-            var expectedCommand = deviceManager.InsertValues (deviceManager.DeviceAddedCommand, info);
-            AssertCommandStarted (starter, expectedCommand);
+            var expectedCommand = Manager.InsertValues (Manager.DeviceAddedCommand, info);
+            AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile ("add", info));
         }
 
-        public void AssertRemoveDeviceCommandStarted (DeviceInfo info, DeviceManager deviceManager, MockProcessStarter starter)
+        public void AssertRemoveDeviceCommandStarted (DeviceInfo info, MockProcessStarter starter)
         {
-            var expectedCommand = deviceManager.InsertValues (deviceManager.DeviceRemovedCommand, info);
-            AssertCommandStarted (starter, expectedCommand);
+            var expectedCommand = Manager.InsertValues (Manager.DeviceRemovedCommand, info);
+            AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile ("remove", info));
         }
 
-        public void AssertCommandStarted (MockProcessStarter starter, string expectedCommand)
+        public void AssertCommandStarted (MockProcessStarter starter, string expectedCommand, string logFile)
         {
             var lastCommandRun = starter.LastCommandRun;
 
-            var fullExpectedCommand = "bash -c '" + expectedCommand.Replace ("'", "\'") + "'";
+            var fullExpectedCommand = "/bin/bash -c 'timeout " + Manager.CommandTimeoutInSeconds + "s " + expectedCommand.Replace ("'", "/'") + " > " + logFile + "'";
 
             Assert.AreEqual (fullExpectedCommand, lastCommandRun, "Commands don't match.");
 

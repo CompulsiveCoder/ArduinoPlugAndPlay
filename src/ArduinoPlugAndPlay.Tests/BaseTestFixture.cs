@@ -10,6 +10,8 @@ namespace ArduinoPlugAndPlay.Tests
     {
         public string ProjectDirectory { get; set; }
 
+        public string TemporaryDirectory { get; set; }
+
         public MockDeviceOutputs MockOutputs = new MockDeviceOutputs ();
 
         public BaseTestFixture ()
@@ -19,12 +21,22 @@ namespace ArduinoPlugAndPlay.Tests
         [SetUp]
         public void Initialize ()
         {
+            InitializeProjectDirectory ();
+
             MoveToTemporaryDirectory ();
 
             Console.WriteLine ("");
             Console.WriteLine ("====================");
             Console.WriteLine ("Preparing test");
 
+        }
+
+        public void InitializeProjectDirectory ()
+        {
+            ProjectDirectory = Environment.CurrentDirectory;
+
+            ProjectDirectory = ProjectDirectory.Replace ("/bin/Debug", "");
+            ProjectDirectory = ProjectDirectory.Replace ("/bin/Release", "");
         }
 
         [TearDown]
@@ -83,11 +95,16 @@ namespace ArduinoPlugAndPlay.Tests
             return 9600;
         }
 
+        public void MoveToProjectDirectory ()
+        {
+            Directory.SetCurrentDirectory (ProjectDirectory);
+        }
+
         public void MoveToTemporaryDirectory ()
         {
-            ProjectDirectory = Environment.CurrentDirectory;
+            var tmpDir = Path.Combine (ProjectDirectory, "_tmp");
 
-            var tmpDir = Path.GetFullPath (".tmp");
+            TemporaryDirectory = tmpDir;
 
             if (!Directory.Exists (tmpDir))
                 Directory.CreateDirectory (tmpDir);
@@ -109,7 +126,7 @@ namespace ArduinoPlugAndPlay.Tests
             Console.WriteLine ("Cleaning temporary directory:");
             Console.WriteLine (tmpDir);
 
-            Directory.Delete (tmpDir, true);
+            //Directory.Delete (tmpDir, true);
         }
 
         public DeviceInfo GetExampleDeviceInfo ()

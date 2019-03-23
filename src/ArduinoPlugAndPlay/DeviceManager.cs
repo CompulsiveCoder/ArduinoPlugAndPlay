@@ -3,6 +3,7 @@ using System.Threading;
 using System.Collections.Generic;
 using duinocom;
 using System.Text;
+using System.IO;
 
 namespace ArduinoPlugAndPlay
 {
@@ -34,6 +35,10 @@ namespace ArduinoPlugAndPlay
         public int DeviceInfoLineCount = 15;
 
         public bool IsVerbose = false;
+
+        public int CommandTimeoutInSeconds = 10 * 60;
+
+        public bool UseBashC = true;
 
         public DeviceManager ()
         {
@@ -226,35 +231,65 @@ namespace ArduinoPlugAndPlay
 
         public bool LaunchAddDeviceCommand (DeviceInfo info)
         {
-            var fixedCommand = InsertValues (DeviceAddedCommand, info);
+            var cmd = FixCommand (DeviceAddedCommand, "add", info);
 
-            info.AddCommandCompleted = StartBashCommand (fixedCommand);
+            info.AddCommandCompleted = StartBashCommand (cmd);
 
             return info.AddCommandCompleted;
         }
 
         public bool LaunchRemoveDeviceCommand (DeviceInfo info)
         {
-            var fixedCommand = InsertValues (DeviceRemovedCommand, info);
+            var cmd = FixCommand (DeviceRemovedCommand, "remove", info);
 
-            info.RemoveCommandCompleted = StartBashCommand (fixedCommand);
+            info.RemoveCommandCompleted = StartBashCommand (cmd);
 
             return info.RemoveCommandCompleted;
         }
 
+        public string FixCommand (string initialCommand, string action, DeviceInfo info)
+        {
+            var fixedCommand = initialCommand;
+
+            fixedCommand = InsertValues (fixedCommand, info);
+            fixedCommand = "timeout " + CommandTimeoutInSeconds + "s " + fixedCommand;
+            fixedCommand = fixedCommand + " > " + GetLogFile (action, info) + "";
+
+            return fixedCommand;
+
+        }
+
         #endregion
+
+        public string GetLogFile (string action, DeviceInfo info)
+        {
+            var logsDir = Path.GetFullPath ("logs");
+            if (!Directory.Exists (logsDir))
+                Directory.CreateDirectory (logsDir);
+
+            var dateString = DateTime.Now.ToString ().Replace ("/", "-").Replace (":", "-").Replace (" ", "-");
+
+            var logFileName = action + "-" + info.GroupName + "-" + dateString + ".txt";
+
+            var filePath = Path.Combine ("logs", logFileName);
+
+            return filePath;
+        }
 
         public bool StartBashCommand (string command)
         {
             Console.WriteLine ("");
             Console.WriteLine ("Starting BASH command:");
+            Console.WriteLine (Environment.CurrentDirectory);
+            var fullCommand = EscapeCharacters (command);
 
-            var fullCommand = "bash -c '" + EscapeCharacters (command) + "'";
+            if (UseBashC)
+                fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "'";
 
             Console.WriteLine ("  " + fullCommand);
 
             Starter.Start (fullCommand);
-            if (Starter.HasOutput) {
+            if (Starter.Output.Length > 0) {
                 Console.WriteLine ("Output:");
                 Console.WriteLine (Starter.Output);
             }
@@ -270,7 +305,7 @@ namespace ArduinoPlugAndPlay
         public string EscapeCharacters (string startValue)
         {
             var newValue = startValue;
-            newValue = newValue.Replace ("'", "\'");
+            newValue = newValue.Replace ("'", "/'");
 
             return newValue.ToString ();
         }

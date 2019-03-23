@@ -29,10 +29,16 @@ namespace ArduinoPlugAndPlay.ClientConsole
 
             var deviceManager = new DeviceManager ();
 
+            var isVerboseString = config.GetValue ("IsVerbose");
+            if (!String.IsNullOrEmpty (isVerboseString))
+                Boolean.TryParse (isVerboseString, out IsVerbose);
+            deviceManager.IsVerbose = IsVerbose;
+
             //deviceManager.SleepTimeInSeconds = config.GetInt32 ("SleepTime", 3);
             deviceManager.SleepTimeInSeconds = 3;
             deviceManager.DeviceAddedCommand = config.GetValue ("DeviceAddedCommand");
             deviceManager.DeviceRemovedCommand = config.GetValue ("DeviceRemovedCommand");
+
 
             deviceManager.Run ();
 

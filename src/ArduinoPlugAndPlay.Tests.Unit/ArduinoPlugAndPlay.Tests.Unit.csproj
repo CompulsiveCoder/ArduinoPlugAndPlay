@@ -41,11 +41,9 @@
     <Compile Include="DeviceInfoFileWriterTestFixture.cs" />
     <Compile Include="DeviceManagerTestFixture.cs" />
     <Compile Include="PlatformioParserTestFixture.cs" />
+    <Compile Include="DeviceManagerLaunchCommandTestFixture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <None Include="ArduinoPlugAndPlay.Tests.Unit.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArduinoPlugAndPlay\ArduinoPlugAndPlay.csproj">
       <Project>{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}</Project>
