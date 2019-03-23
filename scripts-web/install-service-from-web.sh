@@ -45,6 +45,8 @@ echo "File name: $INSTALL_SERVICE_SCRIPT_NAME"
 wget $INSTALL_SERVICE_SCRIPT_URL -O $INSTALL_SERVICE_SCRIPT_NAME || (echo "Failed to download $INSTALL_SERVICE_SCRIPT_NAME." && exit 1)
 
 echo "Installing service"
+
+sh install-service.sh $SERVICE_FILE_NAME
 #echo "Path: $SERVICE_FILE_PATH"
 #echo "Name: $SERVICE_FILE"
 
