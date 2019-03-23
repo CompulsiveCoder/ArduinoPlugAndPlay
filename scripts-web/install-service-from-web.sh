@@ -18,8 +18,12 @@ echo "$BRANCH"
 
 SERVICE_FILE_NAME="arduino-plug-and-play.service"
 
+SERVICE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_FILE_NAME"
+
 echo "Downloading service file..."
-wget "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_FILE_NAME" -O $SERVICE_FILE_NAME || (echo "Failed to download $SERVICE_FILE_NAME." && exit 1)
+echo "URL: $SERVICE_FILE_URL"
+echo "File name: $SERVICE_FILE_NAME"
+wget $SERVICE_FILE_URL -O $SERVICE_FILE_NAME || (echo "Failed to download $SERVICE_FILE_NAME." && exit 1)
 
 #echo "Installing service"
 #echo "Path: $SERVICE_FILE_PATH"
