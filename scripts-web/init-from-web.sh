@@ -23,7 +23,7 @@ CONFIG_FILE_SAVED="ArduinoPlugAndPlay.exe.config";
 echo "Library config file:"
 echo "  $PWD/$CONFIG_FILE"
 echo "Saved config file:"
-echo "  $PWD/CONFIG_FILE_SAVED"
+echo "  $PWD/$CONFIG_FILE_SAVED"
 
 # If the config file is found in the downloaded package
 if [ -f $CONFIG_FILE ]; then
