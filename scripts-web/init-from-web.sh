@@ -14,6 +14,10 @@ echo "Installing libraries..."
 CONFIG_FILE="ArduinoPlugAndPlay/lib/net40/ArduinoPlugAndPlay.exe.config";
 CONFIG_FILE_SAVED="ArduinoPlugAndPlay.exe.config";
 
+echo "Library config file:"
+echo "  $PWD/$CONFIG_FILE"
+echo "Saved config file:"
+echo "  $PWD/$CONFIG_FILE"
 
 if [ -f $CONFIG_FILE ]; then
   echo "Config file found. Preserving."
