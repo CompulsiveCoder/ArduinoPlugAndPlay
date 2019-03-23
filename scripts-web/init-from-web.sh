@@ -1,9 +1,8 @@
 echo "Retrieving required libraries..."
 
 BRANCH=$1
-DESTINATION=$2
 
-EXAMPLE_COMMAND="Example:\n..sh [branch] [destination]"
+EXAMPLE_COMMAND="Example:\n..sh [branch]"
 
 if [ ! $BRANCH ]; then
   BRANCH="master"
