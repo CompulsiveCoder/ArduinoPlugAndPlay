@@ -54,8 +54,8 @@ pipeline {
         stage('Nuget') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                shHide( 'sh nuget-set-api-key.sh ${NUGETTOKEN}' )
-                sh 'sh nuget-pack-and-push.sh'
+                shHide( ' #sh nuget-set-api-key.sh ${NUGETTOKEN}' )
+                sh ' #sh nuget-pack-and-push.sh'
             }
         } 
         stage('Graduate') {
