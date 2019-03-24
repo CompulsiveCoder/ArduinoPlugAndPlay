@@ -1,2 +1,2 @@
-sh build.sh &&
-sh build-sketch.sh
+sh build.sh # &&
+#sh build-sketch.sh
