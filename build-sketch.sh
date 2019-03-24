@@ -1,7 +1,7 @@
 DIR=$PWD
 
-cd sketch/ExampleSketch
-sh build.sh
+cd sketches/ExampleSketch && \
+sh build.sh && \
 
 cd $DIR
 
