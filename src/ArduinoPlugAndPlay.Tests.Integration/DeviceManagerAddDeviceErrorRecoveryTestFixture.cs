@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ArduinoPlugAndPlay.Tests.Integration
 {
-    [TestFixture]
+    [TestFixture (Category = "Integration")]
     public class DeviceManagerAddDeviceErrorRecoveryTestFixture : BaseTestFixture
     {
         [Test]
@@ -38,7 +38,6 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             var countInFile = 0;
 
-            // Make sure the process has stopped
             for (int i = 1; i <= deviceManager.CommandRetryMax; i++) {
                 deviceManager.RunLoop ();
 
@@ -46,7 +45,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.StartedProcesses.Count, "Wrong number of processes found.");
 
-                var process = deviceManager.BackgroundStarter.StartedProcesses [0];
+                var process = deviceManager.BackgroundStarter.StartedProcesses [info.Port];
 
                 while (!process.HasExited)
                     Thread.Sleep (10);
@@ -55,7 +54,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (i, countInFile);
             }
-
+            
+            // Make sure the process has stopped
             for (int i = 1; i <= 5; i++) {
                 deviceManager.RunLoop ();
 

@@ -11,18 +11,25 @@ namespace ArduinoPlugAndPlay.Tests
 
         public bool EnableCommandExecution { get; set; }
 
+        public string Key { get; set; }
+
+        public string Arguments { get; set; }
+
         public MockBackgroundProcessStarter ()
         {
         }
 
-        public override Process Start (string command)
+        public override Process Start (string key, string command, string arguments)
         {
-            LastCommandRun = command;
+            LastCommandRun = command + " " + arguments;
 
             DidStart = true;
 
+            Key = key;
+            Arguments = arguments;
+
             if (EnableCommandExecution)
-                return base.Start (command);
+                return base.Start (key, command, arguments);
             else
                 return null;
         }

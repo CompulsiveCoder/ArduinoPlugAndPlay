@@ -24,72 +24,23 @@ namespace ArduinoPlugAndPlay
 
         public bool IsDebug = false;
 
-        public List<Process> StartedProcesses = new List<Process> ();
+        public Dictionary<string, Process> StartedProcesses = new Dictionary<string, Process> ();
 
         public BackgroundProcessStarter ()
         {
         }
 
-        public virtual Process Start (params string[] commandParts)
-        {
-            return Start (String.Join (" ", commandParts));
-        }
-
-        public virtual Process Start (string command, string argument1, params string[] otherArguments)
-        {
-            var arguments = new List<string> ();
-            arguments.Add (argument1);
-            arguments.AddRange (otherArguments);
-
-            return Start (command, arguments.ToArray ());
-        }
-
-        public virtual Process Start (string command, string argument1, string argument2, params string[] otherArguments)
-        {
-            var arguments = new List<string> ();
-            arguments.Add (argument1);
-            arguments.Add (argument2);
-            arguments.AddRange (otherArguments);
-
-            return Start (command, arguments.ToArray ());
-        }
-
-        public virtual Process Start (string command)
-        {
-            if (command.Contains (" ")) {
-                var cmd = String.Empty;
-                var arguments = new string[] { };
-                var list = new List<string> (command.Split (' '));
-                cmd = list [0];
-                list.RemoveAt (0);
-                arguments = list.ToArray ();
-                return Start (cmd, arguments);
-            } else {
-                return Start (command, new string[] { });
-            }
-        }
-
         /// <summary>
         /// Starts/executes a process in the current thread.
         /// </summary>
         /// <param name='command'></param>
         /// <param name='arguments'></param>
-        public virtual Process Start (string command, params string[] arguments)
-        {
-            return Start (command, String.Join (" ", arguments));
-        }
-
-        /// <summary>
-        /// Starts/executes a process in the current thread.
-        /// </summary>
-        /// <param name='command'></param>
-        /// <param name='arguments'></param>
-        public virtual Process Start (string command, string arguments)
+        public virtual Process Start (string key, string command, string arguments)
         {
             if (IsDebug) {
                 Console.WriteLine ("");
                 Console.WriteLine ("Starting process:");
-                Console.WriteLine (command + " " + arguments);
+                Console.WriteLine (command);
                 Console.WriteLine ("");
             }
 
@@ -108,56 +59,16 @@ namespace ArduinoPlugAndPlay
 
             // Configure the process
             info.UseShellExecute = false;
-            info.RedirectStandardInput = true;
-            info.RedirectStandardOutput = true;
-            info.RedirectStandardError = true;
-            // info.CreateNoWindow = true;
-
-            // TODO: Remove if not needed
-            //info.ErrorDialog = true;
 
             // Start the process
             Process process = new Process ();
 
             process.StartInfo = info;
 
-            // process.EnableRaisingEvents = true;
-
-            //var c = Console.Out;
-
-            // Output the errors to the console
-            /*process.ErrorDataReceived += new DataReceivedEventHandler (
-                delegate (object sender, DataReceivedEventArgs e) {
-                    //if (WriteOutputToConsole) {
-                    //    Console.SetOut (c);
-                    //    c.WriteLine (e.Data);
-                    //}
-                    //AppendOutputLine (e.Data);
-                }
-            );*/
-
-            // Output the data to the console
-            /*process.OutputDataReceived += new DataReceivedEventHandler (
-                delegate (object sender, DataReceivedEventArgs e) {
-                    if (WriteOutputToConsole) {
-                        Console.SetOut (c);
-                        c.WriteLine (e.Data);
-                    }
-                    AppendOutputLine (e.Data);
-                }
-            );*/
-
-            StartedProcesses.Add (process);
+            StartedProcesses.Add (key, process);
 
             try {
                 process.Start ();
-                //process.BeginOutputReadLine ();
-                //process.BeginErrorReadLine ();
-
-                //process.WaitForExit ();
-
-                // If the exit code is NOT zero then an error must have occurred
-                //IsError = (process.ExitCode != 0);
             } catch (Exception ex) {
                 IsError = true;
 

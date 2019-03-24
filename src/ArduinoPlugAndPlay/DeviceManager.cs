@@ -44,7 +44,6 @@ namespace ArduinoPlugAndPlay
         public int CommandTimeoutInSeconds = 10 * 60;
         public int TimeoutExtractingDetailsInSeconds = 1 * 60;
 
-        public bool UseBashC = true;
         public bool UseCommandTimeout = true;
 
         public int CommandRetryMax = 5;
@@ -173,10 +172,11 @@ namespace ArduinoPlugAndPlay
 
                 Console.WriteLine ("  " + devicePort);
 
+                DevicePorts.Add (devicePort);
+                Data.WriteInfoToFile (info);
+
                 if (LaunchAddDeviceCommand (info)) {
-                    DevicePorts.Add (devicePort);
                     NewDevicePorts.Remove (devicePort);
-                    Data.WriteInfoToFile (info);
                 }
             }
         }
@@ -249,7 +249,7 @@ namespace ArduinoPlugAndPlay
         {
             var cmd = FixCommand (DeviceAddedCommand, "add", info);
 
-            info.AddCommandCompleted = StartBashCommand (cmd);
+            info.AddCommandCompleted = StartBashCommand (cmd, info);
 
             return info.AddCommandCompleted;
         }
@@ -258,7 +258,7 @@ namespace ArduinoPlugAndPlay
         {
             var cmd = FixCommand (DeviceRemovedCommand, "remove", info);
 
-            info.RemoveCommandCompleted = StartBashCommand (cmd);
+            info.RemoveCommandCompleted = StartBashCommand (cmd, info);
 
             return info.RemoveCommandCompleted;
         }
@@ -293,22 +293,21 @@ namespace ArduinoPlugAndPlay
             return filePath;
         }
 
-        public bool StartBashCommand (string command)
+        public bool StartBashCommand (string command, DeviceInfo info)
         {
             Console.WriteLine ("");
             Console.WriteLine ("Starting BASH command:");
             //Console.WriteLine (Environment.CurrentDirectory);
-            var fullCommand = EscapeCharacters (command);
 
-            if (UseBashC)
-                fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "'";
+            var cmd = "/bin/bash";
+            var arguments = "-c '" + EscapeCharacters (command) + "'";
 
-            if (UseCommandTimeout)
-                fullCommand = "timeout " + CommandTimeoutInSeconds + "s " + fullCommand;
+            if (UseCommandTimeout) {
+                arguments = CommandTimeoutInSeconds + "s " + cmd + " " + arguments;
+                cmd = "timeout";
+            }
 
-            Console.WriteLine ("  " + fullCommand);
-
-            BackgroundStarter.Start (fullCommand);
+            BackgroundStarter.Start (info.Port, cmd, arguments);
 
             if (BackgroundStarter.IsError)
                 Console.WriteLine ("Error in BASH command!");
@@ -399,8 +398,14 @@ namespace ArduinoPlugAndPlay
             var totalFailedProcesses = 0;
             var totalSuccessfulProcesses = 0;
 
-            for (int i = 0; i < BackgroundStarter.StartedProcesses.Count; i++) {
-                var process = BackgroundStarter.StartedProcesses [i];
+            var keys = new List<string> ();
+
+            foreach (var item in BackgroundStarter.StartedProcesses) {
+                keys.Add (item.Key);
+            }
+
+            foreach (var key in keys) {
+                var process = BackgroundStarter.StartedProcesses [key];
 
                 if (process.HasExited) {
                     if (process.ExitCode != 0) {
@@ -408,8 +413,7 @@ namespace ArduinoPlugAndPlay
                         ProcessFailure (process);
                     } else {
                         totalSuccessfulProcesses++;
-                        BackgroundStarter.StartedProcesses.RemoveAt (i);
-                        i--;
+                        BackgroundStarter.StartedProcesses.Remove (key);
                     }
                 } else {
                     totalRunningProcesses++;
