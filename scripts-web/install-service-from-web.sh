@@ -4,11 +4,16 @@ echo "Current directory:"
 echo "  $PWD"
 
 BRANCH=$1
+DESTINATION=$2
 
-EXAMPLE_COMMAND="Example:\n..sh [branch]"
+EXAMPLE_COMMAND="Example:\n..sh [branch] [destination]"
 
 if [ ! $BRANCH ]; then
   BRANCH="master"
+fi
+
+if [ ! $DESTINATION ]; then
+  DESTINATION="/usr/local/ArduinoPlugAndPlay"
 fi
 
 echo "$BRANCH"
@@ -40,6 +45,15 @@ echo "Downloading service file..."
 echo "URL: $INSTALL_SERVICE_SCRIPT_URL"
 echo "File name: $INSTALL_SERVICE_SCRIPT_NAME"
 wget $INSTALL_SERVICE_SCRIPT_URL -O $INSTALL_SERVICE_SCRIPT_NAME || (echo "Failed to download $INSTALL_SERVICE_SCRIPT_NAME." && exit 1)
+
+
+echo "Injecting values into template service file..."
+
+ESCAPED_INSTALL_DIR="${DESTINATION//\//\\/}"
+
+sed -i -e "s/{INSTALL_PATH}/$ESCAPED_INSTALL_DIR/g" "$SERVICE_FILE_PATH" || exit 1
+sed -i -e "s/{BRANCH}/$BRANCH/g" "$SERVICE_FILE_PATH" || exit 1
+
 
 echo "Installing service"
 
