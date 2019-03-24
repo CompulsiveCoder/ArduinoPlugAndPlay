@@ -44,8 +44,9 @@
     <Compile Include="DeviceReaderWriter.cs" />
     <Compile Include="PlatformioParser.cs" />
     <Compile Include="PlatformioWrapper.cs" />
-    <Compile Include="ProcessStarter.cs" />
     <Compile Include="TimeoutHelper.cs" />
+    <Compile Include="BackgroundProcessStarter.cs" />
+    <Compile Include="ProcessStarter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,13 +14,13 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockDeviceReaderWriter ();
-            var mockProcessStarter = new MockProcessStarter ();
+            var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
-            deviceManager.Starter = mockProcessStarter;
+            deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -34,7 +34,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             deviceManager.AddDevice (info.Port);
 
             // Assert that the expected command was started
-            assertion.AssertAddDeviceCommandStarted (info, mockProcessStarter);
+            assertion.AssertAddDeviceCommandStarted (info, mockBackgroundProcessStarter);
 
             assertion.AssertDeviceExists (info);
 
@@ -47,13 +47,13 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockDeviceReaderWriter ();
-            var mockProcessStarter = new MockProcessStarter ();
+            var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
-            deviceManager.Starter = mockProcessStarter;
+            deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -78,7 +78,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             deviceManager.RemoveDevice (info.Port);
 
             // Assert that the expected command was started
-            assertion.AssertRemoveDeviceCommandStarted (info, mockProcessStarter);
+            assertion.AssertRemoveDeviceCommandStarted (info, mockBackgroundProcessStarter);
 
             // Assert that 0 devices are in the list
             assertion.AssertDeviceCount (0);

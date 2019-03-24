@@ -49,23 +49,23 @@ namespace ArduinoPlugAndPlay.Tests
             Console.WriteLine ("Device count is correct.");
         }
 
-        public void AssertAddDeviceCommandStarted (DeviceInfo info, MockProcessStarter starter)
+        public void AssertAddDeviceCommandStarted (DeviceInfo info, MockBackgroundProcessStarter starter)
         {
             var expectedCommand = Manager.InsertValues (Manager.DeviceAddedCommand, info);
             AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile ("add", info));
         }
 
-        public void AssertRemoveDeviceCommandStarted (DeviceInfo info, MockProcessStarter starter)
+        public void AssertRemoveDeviceCommandStarted (DeviceInfo info, MockBackgroundProcessStarter starter)
         {
             var expectedCommand = Manager.InsertValues (Manager.DeviceRemovedCommand, info);
             AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile ("remove", info));
         }
 
-        public void AssertCommandStarted (MockProcessStarter starter, string expectedCommand, string logFile)
+        public void AssertCommandStarted (MockBackgroundProcessStarter starter, string expectedCommand, string logFile)
         {
             var lastCommandRun = starter.LastCommandRun;
 
-            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " > " + logFile + "'";
+            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " >> " + logFile + "' &";
 
             Assert.AreEqual (fullExpectedCommand, lastCommandRun, "Commands don't match.");
 

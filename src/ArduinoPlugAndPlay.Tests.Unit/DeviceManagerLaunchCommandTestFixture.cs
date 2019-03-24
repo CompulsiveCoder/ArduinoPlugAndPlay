@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.IO;
+using System.Threading;
 
 namespace ArduinoPlugAndPlay.Tests.Unit
 {
@@ -27,6 +28,9 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var deviceInfo = GetExampleDeviceInfo ();
 
             deviceManager.LaunchAddDeviceCommand (deviceInfo);
+
+            // Give the command time to run
+            Thread.Sleep (4000);
 
             var logDir = Path.GetFullPath ("logs");
             Console.WriteLine (logDir);
@@ -68,6 +72,9 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var deviceInfo = GetExampleDeviceInfo ();
 
             deviceManager.LaunchRemoveDeviceCommand (deviceInfo);
+
+            // Give the command time to run
+            Thread.Sleep (4000);
 
             var logDir = Path.GetFullPath ("logs");
             Console.WriteLine (logDir);

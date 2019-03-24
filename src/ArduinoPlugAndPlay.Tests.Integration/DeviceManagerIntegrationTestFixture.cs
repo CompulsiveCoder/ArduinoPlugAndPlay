@@ -14,13 +14,13 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockDeviceReaderWriter ();
-            var mockProcessStarter = new MockProcessStarter ();
+            var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
-            deviceManager.Starter = mockProcessStarter;
+            deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -44,7 +44,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
                 deviceManager.RunLoop ();
 
                 // Assert that the expected command was started
-                assertion.AssertAddDeviceCommandStarted (info, mockProcessStarter);
+                assertion.AssertAddDeviceCommandStarted (info, mockBackgroundProcessStarter);
 
                 // Assert there is 1 device
                 assertion.AssertDeviceCount (i + 1);
@@ -67,7 +67,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.RunLoop ();
 
             // Assert that the expected command was started
-            assertion.AssertRemoveDeviceCommandStarted (info1, mockProcessStarter);
+            assertion.AssertRemoveDeviceCommandStarted (info1, mockBackgroundProcessStarter);
 
             // Assert there are 2 devices left
             assertion.AssertDeviceCount (2);

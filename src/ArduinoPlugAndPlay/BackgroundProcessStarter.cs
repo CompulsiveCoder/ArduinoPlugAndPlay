@@ -6,7 +6,7 @@ using System.IO;
 
 namespace ArduinoPlugAndPlay
 {
-    public class ProcessStarter
+    public class BackgroundProcessStarter
     {
         public bool IsError { get; set; }
 
@@ -24,7 +24,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsDebug = false;
 
-        public ProcessStarter ()
+        public BackgroundProcessStarter ()
         {
         }
 
@@ -109,7 +109,7 @@ namespace ArduinoPlugAndPlay
             info.RedirectStandardInput = true;
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
-            info.CreateNoWindow = true;
+            // info.CreateNoWindow = true;
 
             // TODO: Remove if not needed
             //info.ErrorDialog = true;
@@ -119,9 +119,9 @@ namespace ArduinoPlugAndPlay
 
             process.StartInfo = info;
 
-            process.EnableRaisingEvents = true;
+            // process.EnableRaisingEvents = true;
 
-            var c = Console.Out;
+            /*var c = Console.Out;
 
             // Output the errors to the console
             process.ErrorDataReceived += new DataReceivedEventHandler (
@@ -143,18 +143,17 @@ namespace ArduinoPlugAndPlay
                     }
                     AppendOutputLine (e.Data);
                 }
-            );
+            );*/
 
             try {
                 process.Start ();
+                //process.BeginOutputReadLine ();
+                //process.BeginErrorReadLine ();
 
-                process.BeginOutputReadLine ();
-                process.BeginErrorReadLine ();
-
-                process.WaitForExit ();
+                //process.WaitForExit ();
 
                 // If the exit code is NOT zero then an error must have occurred
-                IsError = (process.ExitCode != 0);
+                //IsError = (process.ExitCode != 0);
             } catch (Exception ex) {
                 IsError = true;
 

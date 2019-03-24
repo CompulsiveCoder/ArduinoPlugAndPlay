@@ -11,6 +11,8 @@ namespace ArduinoPlugAndPlay
     {
         public ProcessStarter Starter = new ProcessStarter ();
 
+        public BackgroundProcessStarter BackgroundStarter = new BackgroundProcessStarter ();
+
         public DeviceInfoExtractor Extractor = new DeviceInfoExtractor ();
 
         public PlatformioWrapper Platformio = new PlatformioWrapper ();
@@ -253,7 +255,7 @@ namespace ArduinoPlugAndPlay
             var fixedCommand = initialCommand;
 
             fixedCommand = InsertValues (fixedCommand, info);
-            fixedCommand = fixedCommand + " > " + GetLogFile (action, info) + "";
+            fixedCommand = fixedCommand + " >> " + GetLogFile (action, info) + "";
 
             return fixedCommand;
 
@@ -267,7 +269,11 @@ namespace ArduinoPlugAndPlay
             if (!Directory.Exists (logsDir))
                 Directory.CreateDirectory (logsDir);
 
-            var logFileName = info.Port.Replace ("/dev/", "") + "-" + info.GroupName + ".txt";
+            var date = DateTime.Now;
+
+            var dateString = date.Year + "-" + date.Month + "-" + date.Day;
+
+            var logFileName = dateString + "-" + info.Port.Replace ("/dev/", "") + "-" + info.GroupName + ".txt";
 
             var filePath = Path.Combine (logsDir, logFileName);
 
@@ -278,29 +284,24 @@ namespace ArduinoPlugAndPlay
         {
             Console.WriteLine ("");
             Console.WriteLine ("Starting BASH command:");
-            Console.WriteLine (Environment.CurrentDirectory);
+            //Console.WriteLine (Environment.CurrentDirectory);
             var fullCommand = EscapeCharacters (command);
 
             if (UseBashC)
-                fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "'";
+                fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "' &";
 
             if (UseCommandTimeout)
                 fullCommand = "timeout " + CommandTimeoutInSeconds + "s " + fullCommand;
 
             Console.WriteLine ("  " + fullCommand);
 
-            Starter.Start (fullCommand);
-            if (Starter.HasOutput) {
-                Console.WriteLine ("Output:");
-                Console.WriteLine (Starter.Output);
-            }
-            if (Starter.IsError)
+            BackgroundStarter.Start (fullCommand);
+
+            if (BackgroundStarter.IsError)
                 Console.WriteLine ("Error in BASH command!");
-            else
-                Console.WriteLine ("Finished BASH command!");
             Console.WriteLine ("");
 
-            return !Starter.IsError;
+            return !BackgroundStarter.IsError;
         }
 
         public string EscapeCharacters (string startValue)
