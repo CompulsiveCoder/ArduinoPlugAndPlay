@@ -36,7 +36,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsVerbose = false;
 
-        public int CommandTimeoutInSeconds = 5 * 60;
+        public int CommandTimeoutInSeconds = 10 * 60;
 
         public bool UseBashC = true;
         public bool UseCommandTimeout = true;

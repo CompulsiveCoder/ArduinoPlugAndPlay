@@ -33,7 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="duinocom.core">
-      <HintPath>..\..\lib\duinocom.core.1.2.0.15\lib\net40\duinocom.core.dll</HintPath>
+      <HintPath>..\..\lib\duinocom.core.1.2.0.16\lib\net40\duinocom.core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
