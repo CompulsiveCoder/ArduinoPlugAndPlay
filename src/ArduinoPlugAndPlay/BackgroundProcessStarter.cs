@@ -24,6 +24,8 @@ namespace ArduinoPlugAndPlay
 
         public bool IsDebug = false;
 
+        public List<Process> StartedProcesses = new List<Process> ();
+
         public BackgroundProcessStarter ()
         {
         }
@@ -121,21 +123,21 @@ namespace ArduinoPlugAndPlay
 
             // process.EnableRaisingEvents = true;
 
-            /*var c = Console.Out;
+            //var c = Console.Out;
 
             // Output the errors to the console
-            process.ErrorDataReceived += new DataReceivedEventHandler (
+            /*process.ErrorDataReceived += new DataReceivedEventHandler (
                 delegate (object sender, DataReceivedEventArgs e) {
-                    if (WriteOutputToConsole) {
-                        Console.SetOut (c);
-                        c.WriteLine (e.Data);
-                    }
-                    AppendOutputLine (e.Data);
+                    //if (WriteOutputToConsole) {
+                    //    Console.SetOut (c);
+                    //    c.WriteLine (e.Data);
+                    //}
+                    //AppendOutputLine (e.Data);
                 }
-            );
+            );*/
 
             // Output the data to the console
-            process.OutputDataReceived += new DataReceivedEventHandler (
+            /*process.OutputDataReceived += new DataReceivedEventHandler (
                 delegate (object sender, DataReceivedEventArgs e) {
                     if (WriteOutputToConsole) {
                         Console.SetOut (c);
@@ -144,6 +146,8 @@ namespace ArduinoPlugAndPlay
                     AppendOutputLine (e.Data);
                 }
             );*/
+
+            StartedProcesses.Add (process);
 
             try {
                 process.Start ();

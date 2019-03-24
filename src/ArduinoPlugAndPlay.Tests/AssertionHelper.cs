@@ -29,7 +29,12 @@ namespace ArduinoPlugAndPlay.Tests
 
         public void AssertDeviceIsInList (string portName)
         {
-            Assert.IsTrue (Manager.DevicePorts.Contains (portName));
+            Assert.IsTrue (Manager.DevicePorts.Contains (portName), "Device wasn't found in the list: " + portName);
+        }
+
+        public void AssertDeviceIsNotList (string portName)
+        {
+            Assert.IsFalse (Manager.DevicePorts.Contains (portName), "Device was found in the list when it shouldn't be: " + portName);
         }
 
         public void AssertDeviceCount (int deviceCount)
@@ -65,7 +70,7 @@ namespace ArduinoPlugAndPlay.Tests
         {
             var lastCommandRun = starter.LastCommandRun;
 
-            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " >> " + logFile + "' &";
+            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " >> " + logFile + "'";
 
             Assert.AreEqual (fullExpectedCommand, lastCommandRun, "Commands don't match.");
 

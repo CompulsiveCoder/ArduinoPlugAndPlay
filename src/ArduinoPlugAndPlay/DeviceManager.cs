@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using duinocom;
 using System.Text;
 using System.IO;
+using System.Diagnostics;
 
 namespace ArduinoPlugAndPlay
 {
@@ -20,6 +21,8 @@ namespace ArduinoPlugAndPlay
         public DeviceInfoFileManager Data = new DeviceInfoFileManager ();
 
         public DeviceReaderWriter ReaderWriter = new DeviceReaderWriter ();
+
+        public TimeoutHelper Timeout = new TimeoutHelper ();
 
         public int SleepTimeInSeconds = 1;
 
@@ -39,9 +42,12 @@ namespace ArduinoPlugAndPlay
         public bool IsVerbose = false;
 
         public int CommandTimeoutInSeconds = 10 * 60;
+        public int TimeoutExtractingDetailsInSeconds = 1 * 60;
 
         public bool UseBashC = true;
         public bool UseCommandTimeout = true;
+
+        public int CommandRetryMax = 5;
 
         public DeviceManager ()
         {
@@ -83,13 +89,17 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("Starting DeviceManager loop...");
             Console.WriteLine ("");
 
-            CheckForNewDevices ();
+            // Clean up any problems first
+            CheckProcessStatus ();
 
+            // Handle connected devices
+            CheckForNewDevices ();
             ProcessNewDevices ();
 
+            // Handle disconnected devices
             CheckForRemovedDevices ();
-
             ProcessRemovedDevices ();
+
 
             Console.WriteLine ("");
             Console.WriteLine ("Loop Completed!");
@@ -139,15 +149,17 @@ namespace ArduinoPlugAndPlay
         {
             if (IsVerbose)
                 Console.WriteLine ("Processing new devices...");
-            
-            if (NewDevicePorts.Count > 0) {
-                Console.WriteLine ("");
-                Console.WriteLine ("Adding new devices:");
-                foreach (var newDevice in NewDevicePorts) {
-                    AddDevice (newDevice);
+
+            if (NewDevicePorts != null) {
+                if (NewDevicePorts.Count > 0) {
+                    Console.WriteLine ("");
+                    Console.WriteLine ("Adding new devices:");
+
+                    var nextDevicePort = NewDevicePorts [0];
+
+                    AddDevice (nextDevicePort);
                 }
             }
-            NewDevicePorts.Clear ();
         }
 
         public void AddDevice (string devicePort)
@@ -163,6 +175,7 @@ namespace ArduinoPlugAndPlay
 
                 if (LaunchAddDeviceCommand (info)) {
                     DevicePorts.Add (devicePort);
+                    NewDevicePorts.Remove (devicePort);
                     Data.WriteInfoToFile (info);
                 }
             }
@@ -288,7 +301,7 @@ namespace ArduinoPlugAndPlay
             var fullCommand = EscapeCharacters (command);
 
             if (UseBashC)
-                fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "' &";
+                fullCommand = "/bin/bash -c '" + EscapeCharacters (command) + "'";
 
             if (UseCommandTimeout)
                 fullCommand = "timeout " + CommandTimeoutInSeconds + "s " + fullCommand;
@@ -354,6 +367,8 @@ namespace ArduinoPlugAndPlay
 
             var allDetailsHaveBeenDetected = false;
 
+            Timeout.Start ();
+
             while (!allDetailsHaveBeenDetected) {
                 var line = ReaderWriter.ReadLine ();
                 if (!String.IsNullOrEmpty (line))
@@ -365,6 +380,8 @@ namespace ArduinoPlugAndPlay
                 output.Contains (Extractor.GroupNamePreText) &&
                 output.Contains (Extractor.ProjectNamePreText) &&
                 output.Contains (Extractor.BoardTypePreText);
+
+                Timeout.Check (TimeoutExtractingDetailsInSeconds * 1000, "Timed out attempting to read the details from the device.");
             }
 
             var serialOutput = builder.ToString ();
@@ -374,6 +391,51 @@ namespace ArduinoPlugAndPlay
             ReaderWriter.Close ();
 
             return info;
+        }
+
+        public void CheckProcessStatus ()
+        {
+            var totalRunningProcesses = 0;
+            var totalFailedProcesses = 0;
+            var totalSuccessfulProcesses = 0;
+
+            for (int i = 0; i < BackgroundStarter.StartedProcesses.Count; i++) {
+                var process = BackgroundStarter.StartedProcesses [i];
+
+                if (process.HasExited) {
+                    if (process.ExitCode != 0) {
+                        totalFailedProcesses++;
+                        ProcessFailure (process);
+                    } else {
+                        totalSuccessfulProcesses++;
+                        BackgroundStarter.StartedProcesses.RemoveAt (i);
+                        i--;
+                    }
+                } else {
+                    totalRunningProcesses++;
+                }
+            }
+
+            if (totalRunningProcesses > 0) {
+                Console.WriteLine ("Processes running: " + totalRunningProcesses);
+                Console.WriteLine ("");
+            }
+            if (totalFailedProcesses > 0) {
+                Console.WriteLine ("Processes failed: " + totalFailedProcesses);
+                Console.WriteLine ("");
+            }
+            if (totalSuccessfulProcesses > 0) {
+                Console.WriteLine ("Processes successful: " + totalFailedProcesses);
+                Console.WriteLine ("");
+            }
+        }
+
+        public void ProcessFailure (Process process)
+        {
+            Console.WriteLine ("Processing previous failure...");
+            process.Start ();
+            Console.WriteLine ("  Failed process has been restarted.");
+            Console.WriteLine ("");
         }
     }
 }

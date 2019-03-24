@@ -41,6 +41,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             assertion.AssertDeviceInfoFilesExist (deviceManager.Data.InfoDirectory, info);
         }
 
+
         [Test]
         public void Test_RemoveDevice ()
         {

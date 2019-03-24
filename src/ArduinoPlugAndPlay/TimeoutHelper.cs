@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArduinoPlugAndPlay.Tests.Integration
+namespace ArduinoPlugAndPlay
 {
     public class TimeoutHelper
     {
@@ -17,9 +17,9 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             TimeoutStart = DateTime.Now;
         }
 
-        public void Check (int maxTime, string errorMessage)
+        public void Check (int maxMilliseconds, string errorMessage)
         {
-            var timeoutEnd = TimeoutStart.AddMilliseconds (maxTime);
+            var timeoutEnd = TimeoutStart.AddMilliseconds (maxMilliseconds);
 
             var hasTimedOut = timeoutEnd < DateTime.Now;
 

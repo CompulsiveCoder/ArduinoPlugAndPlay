@@ -7,7 +7,9 @@ namespace ArduinoPlugAndPlay.Tests
     {
         public string LastCommandRun { get; set; }
 
-        public bool DidStart = false;
+        public bool DidStart { get; set; }
+
+        public bool EnableCommandExecution { get; set; }
 
         public MockBackgroundProcessStarter ()
         {
@@ -19,7 +21,10 @@ namespace ArduinoPlugAndPlay.Tests
 
             DidStart = true;
 
-            return null;
+            if (EnableCommandExecution)
+                return base.Start (command);
+            else
+                return null;
         }
     }
 }
