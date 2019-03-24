@@ -4,7 +4,7 @@ using System.IO;
 
 namespace ArduinoPlugAndPlay.Tests.Install
 {
-    [TestFixture]
+    [TestFixture (Category = "Install")]
     public class InstallTestFixture : BaseInstallTestFixture
     {
         [Test]
