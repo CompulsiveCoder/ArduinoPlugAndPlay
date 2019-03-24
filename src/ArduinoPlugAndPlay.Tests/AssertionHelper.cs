@@ -68,7 +68,7 @@ namespace ArduinoPlugAndPlay.Tests
 
         public void AssertCommandStarted (MockBackgroundProcessStarter starter, string expectedCommand, string logFile)
         {
-            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " >> " + logFile + "'";
+            var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " >> " + logFile + "' &";
 
             Assert.IsTrue (starter.CommandsRun.ContainsValue (fullExpectedCommand), "The expected command wasn't run.");
 

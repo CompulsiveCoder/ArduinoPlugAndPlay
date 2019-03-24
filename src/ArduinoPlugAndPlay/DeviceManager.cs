@@ -304,7 +304,7 @@ namespace ArduinoPlugAndPlay
             //Console.WriteLine (Environment.CurrentDirectory);
 
             var cmd = "/bin/bash";
-            var arguments = "-c '" + EscapeCharacters (command) + "'";
+            var arguments = "-c '" + EscapeCharacters (command) + "' &";
 
             if (UseCommandTimeout) {
                 arguments = CommandTimeoutInSeconds + "s " + cmd + " " + arguments;
