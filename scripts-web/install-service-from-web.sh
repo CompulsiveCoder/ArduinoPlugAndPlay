@@ -21,7 +21,7 @@ echo "$BRANCH"
 # Get the service file
 
 SERVICE_FILE_NAME="arduino-plug-and-play.service"
-SERVICE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_FILE_NAME"
+SERVICE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_FILE_NAME.template"
 
 echo "Downloading service file..."
 echo "URL: $SERVICE_FILE_URL"
