@@ -10,7 +10,7 @@ namespace ArduinoPlugAndPlay.Tests
 
         public string WorkingDirectory = Directory.GetCurrentDirectory ();
 
-        public string PreCommand = "sh clean.sh; sh init-mock-setup.sh";
+        public string PreCommand = "sh clean.sh";
 
         public bool IsMockSystemCTL = true;
         public bool IsMockHardware = true;
@@ -36,14 +36,6 @@ namespace ArduinoPlugAndPlay.Tests
                 File.WriteAllText (Path.GetFullPath ("is-mock-systemctl.txt"), 1.ToString ());
             else
                 File.Delete (Path.GetFullPath ("is-mock-systemctl.txt"));
-
-            if (IsMockMqttBridge)
-                File.WriteAllText (Path.GetFullPath ("is-mock-mqtt-bridge.txt"), 1.ToString ());
-            else
-                File.Delete (Path.GetFullPath ("is-mock-mqtt-bridge.txt"));
-
-
-
         }
 
         protected string RunProcess (string command)
@@ -55,7 +47,9 @@ namespace ArduinoPlugAndPlay.Tests
             Console.WriteLine ("Running process...");
             Console.WriteLine (command);
 
-            Starter.Start (command);
+            var finishedCommand = "/bin/bash -c '" + command + "'";
+
+            Starter.Start (finishedCommand);
             var output = Starter.Output;
 
             Directory.SetCurrentDirectory (currentDirectory);

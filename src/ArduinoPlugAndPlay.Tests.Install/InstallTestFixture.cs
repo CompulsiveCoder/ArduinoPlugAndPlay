@@ -12,7 +12,7 @@ namespace ArduinoPlugAndPlay.Tests.Install
         {
             MoveToProjectDirectory ();
 
-            var scriptPath = Path.Combine (ProjectDirectory, "system/install.sh");
+            var scriptPath = Path.Combine (ProjectDirectory, "install.sh");
 
             var cmd = "sh " + scriptPath;
             var starter = GetTestProcessStarter ();
