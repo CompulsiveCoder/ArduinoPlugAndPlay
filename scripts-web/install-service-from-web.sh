@@ -51,8 +51,8 @@ echo "Injecting values into template service file..."
 
 ESCAPED_INSTALL_DIR="${DESTINATION//\//\\/}"
 
-sed -i -e "s/{INSTALL_PATH}/$ESCAPED_INSTALL_DIR/g" "$SERVICE_FILE_PATH" || exit 1
-sed -i -e "s/{BRANCH}/$BRANCH/g" "$SERVICE_FILE_PATH" || exit 1
+sed -i -e "s/{INSTALL_PATH}/$ESCAPED_INSTALL_DIR/g" "$SERVICE_FILE_NAME" || exit 1
+sed -i -e "s/{BRANCH}/$BRANCH/g" "$SERVICE_FILE_NAME" || exit 1
 
 
 echo "Installing service"
