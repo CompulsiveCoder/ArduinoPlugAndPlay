@@ -16,15 +16,7 @@ fi
 echo "Branch: $BRANCH"
 echo "Destination: $DESTINATION"
 
-#[ -f "is-mock-install.txt" ] && IS_MOCK_INSTALL=1
-
-
-
 INSTALL_DIR=$DESTINATION
-
-#if [ $IS_MOCK_INSTALL == 1 ]; then
-#  INSTALL_DIR="mock/ArduinoPlugAndPlay"
-#fi
 
 echo "Branch name: $BRANCH"
 
