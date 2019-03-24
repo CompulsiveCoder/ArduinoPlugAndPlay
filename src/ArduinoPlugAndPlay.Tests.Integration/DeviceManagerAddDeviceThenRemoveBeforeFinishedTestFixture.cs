@@ -39,7 +39,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.RunLoop ();
 
             // Give the command time to start
-            Thread.Sleep (1000);
+            Thread.Sleep (2000);
 
             // Disconnect the device before the command is completed
             mockPlatformio.DisconnectDevice (deviceInfo.Port);
