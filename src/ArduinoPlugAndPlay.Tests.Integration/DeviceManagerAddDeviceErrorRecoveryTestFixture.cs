@@ -45,7 +45,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.StartedProcesses.Count, "Wrong number of processes found.");
 
-                var process = deviceManager.BackgroundStarter.StartedProcesses [info.Port];
+                var process = deviceManager.BackgroundStarter.StartedProcesses ["add-" + info.Port];
 
                 while (!process.HasExited)
                     Thread.Sleep (10);

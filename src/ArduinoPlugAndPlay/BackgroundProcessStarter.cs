@@ -65,6 +65,12 @@ namespace ArduinoPlugAndPlay
 
             process.StartInfo = info;
 
+            // If an existing process is running kill it and remove it
+            if (StartedProcesses.ContainsKey (key)) {
+                StartedProcesses [key].Kill ();
+                StartedProcesses.Remove (key);
+            }
+            // Add the new process to the list
             StartedProcesses.Add (key, process);
 
             try {

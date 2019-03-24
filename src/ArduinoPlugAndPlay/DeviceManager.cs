@@ -88,15 +88,15 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("Starting DeviceManager loop...");
             Console.WriteLine ("");
 
-            // Clean up any problems first
+            // Check devices
+            CheckForNewDevices ();
+            CheckForRemovedDevices ();
+
+            // Clean up any problems
             CheckProcessStatus ();
 
-            // Handle connected devices
-            CheckForNewDevices ();
+            // Handle device changes
             ProcessNewDevices ();
-
-            // Handle disconnected devices
-            CheckForRemovedDevices ();
             ProcessRemovedDevices ();
 
 
@@ -247,18 +247,22 @@ namespace ArduinoPlugAndPlay
 
         public bool LaunchAddDeviceCommand (DeviceInfo info)
         {
-            var cmd = FixCommand (DeviceAddedCommand, "add", info);
+            var action = "add";
 
-            info.AddCommandCompleted = StartBashCommand (cmd, info);
+            var cmd = FixCommand (DeviceAddedCommand, action, info);
+
+            info.AddCommandCompleted = StartBashCommand (action, cmd, info);
 
             return info.AddCommandCompleted;
         }
 
         public bool LaunchRemoveDeviceCommand (DeviceInfo info)
         {
-            var cmd = FixCommand (DeviceRemovedCommand, "remove", info);
+            var action = "remove";
 
-            info.RemoveCommandCompleted = StartBashCommand (cmd, info);
+            var cmd = FixCommand (DeviceRemovedCommand, action, info);
+
+            info.RemoveCommandCompleted = StartBashCommand (action, cmd, info);
 
             return info.RemoveCommandCompleted;
         }
@@ -293,7 +297,7 @@ namespace ArduinoPlugAndPlay
             return filePath;
         }
 
-        public bool StartBashCommand (string command, DeviceInfo info)
+        public bool StartBashCommand (string action, string command, DeviceInfo info)
         {
             Console.WriteLine ("");
             Console.WriteLine ("Starting BASH command:");
@@ -307,7 +311,7 @@ namespace ArduinoPlugAndPlay
                 cmd = "timeout";
             }
 
-            BackgroundStarter.Start (info.Port, cmd, arguments);
+            BackgroundStarter.Start (action + "-" + info.Port, cmd, arguments);
 
             if (BackgroundStarter.IsError)
                 Console.WriteLine ("Error in BASH command!");
@@ -416,6 +420,12 @@ namespace ArduinoPlugAndPlay
                         BackgroundStarter.StartedProcesses.Remove (key);
                     }
                 } else {
+                    // If the decive has been removed kill the process
+                    if (!DevicePorts.Contains (key) || RemovedDevicePorts.Contains (key)) {
+                        Console.WriteLine ("Device " + key + " was removed before add. Killing the add device command.");
+                        process.Kill ();
+                    }
+
                     totalRunningProcesses++;
                 }
             }

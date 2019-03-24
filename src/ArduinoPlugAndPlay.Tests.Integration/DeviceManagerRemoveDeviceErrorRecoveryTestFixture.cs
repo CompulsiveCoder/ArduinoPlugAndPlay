@@ -48,7 +48,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.StartedProcesses.Count, "Wrong number of processes found.");
 
-                var process = deviceManager.BackgroundStarter.StartedProcesses [info.Port];
+                var process = deviceManager.BackgroundStarter.StartedProcesses ["remove-" + info.Port];
 
                 while (!process.HasExited)
                     Thread.Sleep (5);
@@ -70,14 +70,6 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             }
         }
 
-        public void CreateExampleDeviceInfoFiles ()
-        {
-            var info = GetExampleDeviceInfo ();
-
-            var data = new DeviceInfoFileManager ();
-
-            data.WriteInfoToFile (info);
-        }
     }
 }
 

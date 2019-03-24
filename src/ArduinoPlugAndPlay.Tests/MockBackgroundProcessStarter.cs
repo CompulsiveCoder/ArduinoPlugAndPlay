@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ArduinoPlugAndPlay.Tests
 {
     public class MockBackgroundProcessStarter : BackgroundProcessStarter
     {
-        public string LastCommandRun { get; set; }
+        public Dictionary<string, string> CommandsRun = new Dictionary<string, string> ();
 
         public bool DidStart { get; set; }
 
         public bool EnableCommandExecution { get; set; }
-
-        public string Key { get; set; }
-
-        public string Arguments { get; set; }
 
         public MockBackgroundProcessStarter ()
         {
@@ -21,12 +20,11 @@ namespace ArduinoPlugAndPlay.Tests
 
         public override Process Start (string key, string command, string arguments)
         {
-            LastCommandRun = command + " " + arguments;
+            var fullCommand = command + " " + arguments;
+
+            CommandsRun.Add (key, fullCommand);
 
             DidStart = true;
-
-            Key = key;
-            Arguments = arguments;
 
             if (EnableCommandExecution)
                 return base.Start (key, command, arguments);
