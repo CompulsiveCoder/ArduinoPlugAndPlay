@@ -6,7 +6,7 @@ namespace ArduinoPlugAndPlay.Tests
 {
     public class TestProcessStarter
     {
-        public BackgroundProcessStarter Starter = new BackgroundProcessStarter ();
+        public ProcessStarter Starter = new ProcessStarter ();
 
         public string WorkingDirectory = Directory.GetCurrentDirectory ();
 
