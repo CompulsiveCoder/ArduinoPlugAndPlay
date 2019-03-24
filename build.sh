@@ -9,4 +9,8 @@ fi
 
 echo "Mode: $MODE"
 
-xbuild src/*.sln /p:Configuration=$MODE
+xbuild src/*.sln /p:Configuration=$MODE /verbosity:quiet && \
+
+echo "Finished building project tests." ||
+
+(echo "Failed building project tests!" && exit 1)

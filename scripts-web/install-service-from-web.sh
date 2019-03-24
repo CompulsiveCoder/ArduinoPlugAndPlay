@@ -13,9 +13,6 @@ fi
 
 echo "$BRANCH"
 
-#SERVICE_FILE_PATH=$1
-#SERVICE_FILE=$(basename -- "$SERVICE_FILE_PATH")
-
 # Get the service file
 
 SERVICE_FILE_NAME="arduino-plug-and-play.service"
