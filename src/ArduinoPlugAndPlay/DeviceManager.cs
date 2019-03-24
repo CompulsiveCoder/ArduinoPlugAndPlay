@@ -398,6 +398,9 @@ namespace ArduinoPlugAndPlay
 
         public void CheckProcessStatus ()
         {
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking status of existing processes...");
+
             var totalRunningProcesses = 0;
             var totalFailedProcesses = 0;
             var totalSuccessfulProcesses = 0;
@@ -422,7 +425,7 @@ namespace ArduinoPlugAndPlay
                 } else {
                     // If the decive has been removed kill the process
                     if (!DevicePorts.Contains (key) || RemovedDevicePorts.Contains (key)) {
-                        Console.WriteLine ("Device " + key + " was removed before add. Killing the add device command.");
+                        Console.WriteLine ("  Device " + key + " was removed before add. Killing the add device command.");
                         process.Kill ();
                     }
 
@@ -431,17 +434,16 @@ namespace ArduinoPlugAndPlay
             }
 
             if (totalRunningProcesses > 0) {
-                Console.WriteLine ("Processes running: " + totalRunningProcesses);
-                Console.WriteLine ("");
+                Console.WriteLine ("  Processes running: " + totalRunningProcesses);
             }
             if (totalFailedProcesses > 0) {
-                Console.WriteLine ("Processes failed: " + totalFailedProcesses);
-                Console.WriteLine ("");
+                Console.WriteLine ("  Processes failed: " + totalFailedProcesses);
             }
             if (totalSuccessfulProcesses > 0) {
-                Console.WriteLine ("Processes successful: " + totalFailedProcesses);
-                Console.WriteLine ("");
+                Console.WriteLine ("  Processes successful: " + totalFailedProcesses);
             }
+
+            Console.WriteLine ("");
         }
 
         public void ProcessFailure (Process process)
