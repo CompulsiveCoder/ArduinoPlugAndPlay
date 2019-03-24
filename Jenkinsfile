@@ -39,6 +39,12 @@ pipeline {
                 sh 'sh build-all.sh'
             }
         }
+        stage('Build') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh test-all.sh'
+            }
+        }
         stage('Clean') {
             when { expression { !shouldSkipBuild() } }
             steps {
