@@ -398,52 +398,54 @@ namespace ArduinoPlugAndPlay
 
         public void CheckProcessStatus ()
         {
-            Console.WriteLine ("");
-            Console.WriteLine ("Checking status of existing processes...");
+            if (BackgroundStarter.StartedProcesses.Count > 0) {
+                Console.WriteLine ("");
+                Console.WriteLine ("Checking status of existing processes...");
 
-            var totalRunningProcesses = 0;
-            var totalFailedProcesses = 0;
-            var totalSuccessfulProcesses = 0;
+                var totalRunningProcesses = 0;
+                var totalFailedProcesses = 0;
+                var totalSuccessfulProcesses = 0;
 
-            var keys = new List<string> ();
+                var keys = new List<string> ();
 
-            foreach (var item in BackgroundStarter.StartedProcesses) {
-                keys.Add (item.Key);
-            }
-
-            foreach (var key in keys) {
-                var process = BackgroundStarter.StartedProcesses [key];
-
-                if (process.HasExited) {
-                    if (process.ExitCode != 0) {
-                        totalFailedProcesses++;
-                        ProcessFailure (process);
-                    } else {
-                        totalSuccessfulProcesses++;
-                        BackgroundStarter.StartedProcesses.Remove (key);
-                    }
-                } else {
-                    // If the decive has been removed kill the process
-                    if (!DevicePorts.Contains (key) || RemovedDevicePorts.Contains (key)) {
-                        Console.WriteLine ("  Device " + key + " was removed before add. Killing the add device command.");
-                        process.Kill ();
-                    }
-
-                    totalRunningProcesses++;
+                foreach (var item in BackgroundStarter.StartedProcesses) {
+                    keys.Add (item.Key);
                 }
-            }
 
-            if (totalRunningProcesses > 0) {
-                Console.WriteLine ("  Processes running: " + totalRunningProcesses);
-            }
-            if (totalFailedProcesses > 0) {
-                Console.WriteLine ("  Processes failed: " + totalFailedProcesses);
-            }
-            if (totalSuccessfulProcesses > 0) {
-                Console.WriteLine ("  Processes successful: " + totalFailedProcesses);
-            }
+                foreach (var key in keys) {
+                    var process = BackgroundStarter.StartedProcesses [key];
 
-            Console.WriteLine ("");
+                    if (process.HasExited) {
+                        if (process.ExitCode != 0) {
+                            totalFailedProcesses++;
+                            ProcessFailure (process);
+                        } else {
+                            totalSuccessfulProcesses++;
+                            BackgroundStarter.StartedProcesses.Remove (key);
+                        }
+                    } else {
+                        // If the decive has been removed kill the process
+                        if (!DevicePorts.Contains (key) || RemovedDevicePorts.Contains (key)) {
+                            Console.WriteLine ("  Device " + key + " was removed before add. Killing the add device command.");
+                            process.Kill ();
+                        }
+
+                        totalRunningProcesses++;
+                    }
+                }
+
+                if (totalRunningProcesses > 0) {
+                    Console.WriteLine ("  Processes running: " + totalRunningProcesses);
+                }
+                if (totalFailedProcesses > 0) {
+                    Console.WriteLine ("  Processes failed: " + totalFailedProcesses);
+                }
+                if (totalSuccessfulProcesses > 0) {
+                    Console.WriteLine ("  Processes successful: " + totalFailedProcesses);
+                }
+
+                Console.WriteLine ("");
+            }
         }
 
         public void ProcessFailure (Process process)
