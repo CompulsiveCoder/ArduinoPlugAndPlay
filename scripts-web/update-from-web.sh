@@ -31,6 +31,13 @@ fi
 echo "Moving to install dir..."
 cd $INSTALL_DIR
 
+
+echo "Stopping plug and play service..."
+sh systemctl.sh stop arduino-plug-and-play.service || (echo "Failed to stop ArduinoPlugAndPlay service: arduino-plug-and-play.service" && exit 1) 
+
+echo "Removing old scripts..."
+rm *.sh || (echo "Failed to remove old scripts." && exit 1)
+
 echo "Removing old libraries..."
 rm ArduinoPlugAndPlay -R && \
 rm ArduinoPlugAndPlay*.nupkg || (echo "Failed to remove old ArduinoPlugAndPlay libraries." && exit 1)
