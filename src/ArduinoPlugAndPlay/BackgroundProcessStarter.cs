@@ -35,7 +35,7 @@ namespace ArduinoPlugAndPlay
         /// </summary>
         /// <param name='command'></param>
         /// <param name='arguments'></param>
-        public virtual Process Start (string action, string port, string command, string arguments)
+        public virtual Process Start (string action, DeviceInfo deviceInfo, string command, string arguments)
         {
             if (IsDebug) {
                 Console.WriteLine ("");
@@ -52,20 +52,20 @@ namespace ArduinoPlugAndPlay
             }
 
             // Create the process start information
-            ProcessStartInfo info = new ProcessStartInfo (
-                                        command,
-                                        arguments
-                                    );
+            ProcessStartInfo processStartInfo = new ProcessStartInfo (
+                                                    command,
+                                                    arguments
+                                                );
 
             // Configure the process
-            info.UseShellExecute = false;
+            processStartInfo.UseShellExecute = false;
 
             // Start the process
             Process process = new Process ();
 
-            process.StartInfo = info;
+            process.StartInfo = processStartInfo;
 
-            var key = action + "-" + port;
+            var key = action + "-" + deviceInfo.Port;
 
             // If an existing process is running kill it and remove it
             if (StartedProcesses.ContainsKey (key)) {
@@ -74,7 +74,7 @@ namespace ArduinoPlugAndPlay
             }
 
             // Add the new process to the list
-            StartedProcesses.Add (key, new ProcessWrapper (action, port, process));
+            StartedProcesses.Add (key, new ProcessWrapper (action, deviceInfo, process));
 
             try {
                 process.Start ();

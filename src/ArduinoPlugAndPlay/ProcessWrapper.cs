@@ -6,19 +6,19 @@ namespace ArduinoPlugAndPlay
     public class ProcessWrapper
     {
         public string Key = "";
-
         public string Action = "";
-        public string Port = "";
 
         public Process Process = null;
 
         public int TryCount = 0;
 
-        public ProcessWrapper (string action, string port, Process process)
+        public DeviceInfo Info { get; set; }
+
+        public ProcessWrapper (string action, DeviceInfo info, Process process)
         {
-            Key = action + "-" + port;
+            Key = action + "-" + info.Port;
             Action = action;
-            Port = port;
+            Info = info;
             Process = process;
         }
 

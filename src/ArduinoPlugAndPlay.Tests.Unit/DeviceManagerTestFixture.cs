@@ -104,15 +104,6 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             Assert.AreEqual (expectedResult, actualResult, "Value insertion failed.");
                     
         }
-
-        public void CreateExampleDeviceInfoFiles ()
-        {
-            var info = GetExampleDeviceInfo ();
-
-            var data = new DeviceInfoFileManager ();
-
-            data.WriteInfoToFile (info);
-        }
     }
 }
 

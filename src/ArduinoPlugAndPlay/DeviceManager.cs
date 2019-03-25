@@ -311,7 +311,7 @@ namespace ArduinoPlugAndPlay
                 cmd = "timeout";
             }
 
-            BackgroundStarter.Start (action, info.Port, cmd, arguments);
+            BackgroundStarter.Start (action, info, cmd, arguments);
 
             if (BackgroundStarter.IsError)
                 Console.WriteLine ("Error in BASH command!");
@@ -462,21 +462,36 @@ namespace ArduinoPlugAndPlay
         public void ProcessFailure (ProcessWrapper processWrapper)
         {
             if (processWrapper.TryCount >= CommandRetryMax) {
+                WriteToLog (processWrapper, "Previous add command failed more than " + CommandRetryMax + " times. Aborting...");
+
                 Console.WriteLine ("Process has been retried " + CommandRetryMax + ". Aborting.");
                 BackgroundStarter.StartedProcesses.Remove (processWrapper.Key);
-                var info = Data.ReadInfoFromFile (processWrapper.Port);
+                var info = Data.ReadInfoFromFile (processWrapper.Info.Port);
 
                 // If the add command failed launch the remove command to clean up any
                 // partially installed files
-                if (processWrapper.Action == "add")
+                if (processWrapper.Action == "add") {
+                    WriteToLog (processWrapper, "Launching remove command to clean up partial install....");
                     LaunchRemoveDeviceCommand (info);
+                }
             } else {
+                WriteToLog (processWrapper, "Previous execution failed. Retrying....");
+
                 processWrapper.IncrementTryCount ();
+
                 Console.WriteLine ("Processing previous failure...");
+
                 processWrapper.Process.Start ();
+
                 Console.WriteLine ("  Failed process has been restarted.");
                 Console.WriteLine ("");
             }
+        }
+
+        public void WriteToLog (ProcessWrapper processWrapper, string text)
+        {
+            var logFile = GetLogFile (processWrapper.Action, processWrapper.Info);
+            File.AppendAllText (logFile, text + Environment.NewLine);
         }
     }
 }
