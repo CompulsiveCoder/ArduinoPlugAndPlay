@@ -2,13 +2,10 @@ pipeline {
     agent any
     options {
         disableConcurrentBuilds();
-        skipDefaultCheckout true
     }
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
-                
                 shHide( 'git remote set-url origin https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git' )
                 sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                 sh "git fetch --no-tags"
