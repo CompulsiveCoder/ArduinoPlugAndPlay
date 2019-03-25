@@ -465,7 +465,11 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("Process has been retried " + CommandRetryMax + ". Aborting.");
                 BackgroundStarter.StartedProcesses.Remove (processWrapper.Key);
                 var info = Data.ReadInfoFromFile (processWrapper.Port);
-                LaunchRemoveDeviceCommand (info);
+
+                // If the add command failed launch the remove command to clean up any
+                // partially installed files
+                if (processWrapper.Action == "add")
+                    LaunchRemoveDeviceCommand (info);
             } else {
                 processWrapper.IncrementTryCount ();
                 Console.WriteLine ("Processing previous failure...");
