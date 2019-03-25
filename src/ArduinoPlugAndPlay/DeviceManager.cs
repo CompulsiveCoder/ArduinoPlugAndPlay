@@ -471,7 +471,7 @@ namespace ArduinoPlugAndPlay
                 // If the add command failed launch the remove command to clean up any
                 // partially installed files
                 if (processWrapper.Action == "add") {
-                    WriteToLog (processWrapper, "Launching remove command to clean up partial install....");
+                    WriteToLog (processWrapper, "Launching remove command to clean up failed install....");
                     LaunchRemoveDeviceCommand (info);
                 }
             } else {
