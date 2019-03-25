@@ -311,7 +311,7 @@ namespace ArduinoPlugAndPlay
                 cmd = "timeout";
             }
 
-            BackgroundStarter.Start (action + "-" + info.Port, cmd, arguments);
+            BackgroundStarter.Start (action, info.Port, cmd, arguments);
 
             if (BackgroundStarter.IsError)
                 Console.WriteLine ("Error in BASH command!");
@@ -464,6 +464,8 @@ namespace ArduinoPlugAndPlay
             if (processWrapper.TryCount >= CommandRetryMax) {
                 Console.WriteLine ("Process has been retried " + CommandRetryMax + ". Aborting.");
                 BackgroundStarter.StartedProcesses.Remove (processWrapper.Key);
+                var info = Data.ReadInfoFromFile (processWrapper.Port);
+                LaunchRemoveDeviceCommand (info);
             } else {
                 processWrapper.IncrementTryCount ();
                 Console.WriteLine ("Processing previous failure...");

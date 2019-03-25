@@ -70,8 +70,6 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.RunLoop ();
 
             Assert.IsFalse (deviceManager.BackgroundStarter.StartedProcesses.ContainsValue (processWrapper), "The process still exists in the BackgroundProcessStarter.StartedProcesses list when it shouldn't be.");
-
-
         }
     }
 }

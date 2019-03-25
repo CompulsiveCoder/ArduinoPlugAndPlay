@@ -18,16 +18,18 @@ namespace ArduinoPlugAndPlay.Tests
         {
         }
 
-        public override Process Start (string key, string command, string arguments)
+        public override Process Start (string action, string port, string command, string arguments)
         {
             var fullCommand = command + " " + arguments;
+
+            var key = action + "-" + port;
 
             CommandsRun.Add (key, fullCommand);
 
             DidStart = true;
 
             if (EnableCommandExecution)
-                return base.Start (key, command, arguments);
+                return base.Start (action, port, command, arguments);
             else
                 return null;
         }
