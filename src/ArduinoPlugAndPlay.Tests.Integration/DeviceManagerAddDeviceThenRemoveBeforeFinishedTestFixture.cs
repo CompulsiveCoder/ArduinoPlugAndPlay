@@ -64,11 +64,11 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             var reachableNumber = 1;
 
-            Assert.IsTrue (output.Contains (reachableNumber.ToString ()), "Script continued past timeout.");
+            Assert.IsTrue (output.Contains (reachableNumber.ToString ()), "Script didn't output anything.");
 
             var unreachableNumber = 5;
 
-            Assert.IsFalse (output.Contains (unreachableNumber.ToString ()), "Script continued past timeout.");
+            Assert.IsFalse (output.Contains (unreachableNumber.ToString ()), "Script continued too far.");
 
             Assert.AreEqual (2, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");
         }
