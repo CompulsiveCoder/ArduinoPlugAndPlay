@@ -24,7 +24,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsDebug = false;
 
-        public Dictionary<string, Process> StartedProcesses = new Dictionary<string, Process> ();
+        public Dictionary<string, ProcessWrapper> StartedProcesses = new Dictionary<string, ProcessWrapper> ();
 
         public BackgroundProcessStarter ()
         {
@@ -67,11 +67,12 @@ namespace ArduinoPlugAndPlay
 
             // If an existing process is running kill it and remove it
             if (StartedProcesses.ContainsKey (key)) {
-                StartedProcesses [key].Kill ();
+                StartedProcesses [key].Process.Kill ();
                 StartedProcesses.Remove (key);
             }
+
             // Add the new process to the list
-            StartedProcesses.Add (key, process);
+            StartedProcesses.Add (key, new ProcessWrapper (key, process));
 
             try {
                 process.Start ();

@@ -39,7 +39,7 @@ namespace ArduinoPlugAndPlay
 
         public int DeviceInfoLineCount = 15;
 
-        public bool IsVerbose = false;
+        public bool IsVerbose = true;
 
         public int CommandTimeoutInSeconds = 10 * 60;
         public int TimeoutExtractingDetailsInSeconds = 1 * 60;
@@ -413,25 +413,23 @@ namespace ArduinoPlugAndPlay
                 }
 
                 foreach (var key in keys) {
-                    var process = BackgroundStarter.StartedProcesses [key];
+                    var processWrapper = BackgroundStarter.StartedProcesses [key];
+                    var process = processWrapper.Process;
 
+                    // If the process has completed
                     if (process.HasExited) {
                         if (process.ExitCode != 0) {
                             totalFailedProcesses++;
-                            ProcessFailure (process);
+                            ProcessFailure (processWrapper);
                         } else {
                             totalSuccessfulProcesses++;
                             BackgroundStarter.StartedProcesses.Remove (key);
                         }
-                    } else {
-                        // If the device has been removed kill the process
+                    } else { // If the process is still running
+
                         var port = key.Replace ("add-", "").Replace ("remove-", "");
 
-                        if (!DevicePorts.Contains (port) || RemovedDevicePorts.Contains (port)) {
-                            Console.WriteLine ("  Device " + key + " was removed before add. Killing the add device command.");
-                            process.Kill ();
-                            BackgroundStarter.StartedProcesses.Remove (key);
-                        }
+                        CheckForAbortDueToDisconnect (port, processWrapper);
 
                         totalRunningProcesses++;
                     }
@@ -451,12 +449,28 @@ namespace ArduinoPlugAndPlay
             }
         }
 
-        public void ProcessFailure (Process process)
+        public void CheckForAbortDueToDisconnect (string port, ProcessWrapper process)
         {
-            Console.WriteLine ("Processing previous failure...");
-            process.Start ();
-            Console.WriteLine ("  Failed process has been restarted.");
-            Console.WriteLine ("");
+            // If the device has been removed kill the process
+            if (!DevicePorts.Contains (port) || RemovedDevicePorts.Contains (port)) {
+                Console.WriteLine ("  Device " + port + " was removed before add. Killing the add device command.");
+                process.Process.Kill ();
+                BackgroundStarter.StartedProcesses.Remove (process.Key);
+            }
+        }
+
+        public void ProcessFailure (ProcessWrapper processWrapper)
+        {
+            if (processWrapper.TryCount >= CommandRetryMax) {
+                Console.WriteLine ("Process has been retried " + CommandRetryMax + ". Aborting.");
+                BackgroundStarter.StartedProcesses.Remove (processWrapper.Key);
+            } else {
+                processWrapper.IncrementTryCount ();
+                Console.WriteLine ("Processing previous failure...");
+                processWrapper.Process.Start ();
+                Console.WriteLine ("  Failed process has been restarted.");
+                Console.WriteLine ("");
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
 
-            deviceManager.DeviceAddedCommand = "MAX=5; COUNT=0; [ -f \"fcf.txt\" ] && COUNT=\"$(cat fcf.txt)\"; COUNT=$(($COUNT+1)); echo \"$COUNT\" > \"fcf.txt\"; echo \"$COUNT\"; [ \"$COUNT\" -lt \"$MAX\" ] && echo \"Script intentionally failed\" && exit 1";
+            deviceManager.DeviceAddedCommand = "echo \"Intentionally failing.\" && exit 1";
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -45,9 +45,9 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.StartedProcesses.Count, "Wrong number of processes found.");
 
-                var process = deviceManager.BackgroundStarter.StartedProcesses ["add-" + info.Port];
+                var processWrapper = deviceManager.BackgroundStarter.StartedProcesses ["add-" + info.Port];
 
-                while (!process.HasExited)
+                while (!processWrapper.Process.HasExited)
                     Thread.Sleep (10);
 
                 countInFile = Convert.ToInt32 (File.ReadAllText (Path.GetFullPath ("fcf.txt")));
