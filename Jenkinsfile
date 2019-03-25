@@ -4,6 +4,11 @@ pipeline {
         disableConcurrentBuilds();
     }
     stages {
+        stage('CleanWS') {
+            steps {
+                cleanWs()
+            }
+        }
         stage('Checkout') {
             steps {
                 shHide( 'git remote set-url origin https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git' )
