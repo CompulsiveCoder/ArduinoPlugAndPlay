@@ -2,6 +2,7 @@ pipeline {
     agent any
     options {
         disableConcurrentBuilds();
+        skipDefaultCheckout true
     }
     stages {
         stage('Checkout') {
