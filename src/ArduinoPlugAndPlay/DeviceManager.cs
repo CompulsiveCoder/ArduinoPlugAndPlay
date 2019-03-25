@@ -424,10 +424,13 @@ namespace ArduinoPlugAndPlay
                             BackgroundStarter.StartedProcesses.Remove (key);
                         }
                     } else {
-                        // If the decive has been removed kill the process
-                        if (!DevicePorts.Contains (key) || RemovedDevicePorts.Contains (key)) {
+                        // If the device has been removed kill the process
+                        var port = key.Replace ("add-", "").Replace ("remove-", "");
+
+                        if (!DevicePorts.Contains (port) || RemovedDevicePorts.Contains (port)) {
                             Console.WriteLine ("  Device " + key + " was removed before add. Killing the add device command.");
                             process.Kill ();
+                            BackgroundStarter.StartedProcesses.Remove (key);
                         }
 
                         totalRunningProcesses++;
