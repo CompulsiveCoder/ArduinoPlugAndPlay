@@ -49,9 +49,9 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 assertion.AssertDeviceExists (info);
 
-                Assert.AreEqual (1, deviceManager.BackgroundStarter.StartedProcesses.Count, "Wrong number of processes found.");
+                Assert.AreEqual (1, deviceManager.BackgroundStarter.QueuedProcesses.Count, "Wrong number of processes found.");
 
-                processWrapper = deviceManager.BackgroundStarter.StartedProcesses ["add-" + info.Port];
+                processWrapper = deviceManager.BackgroundStarter.QueuedProcesses ["add-" + info.Port];
 
                 while (!processWrapper.Process.HasExited)
                     Thread.Sleep (10);
@@ -71,7 +71,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             Assert.IsTrue (processWrapper.Process.HasExited, "The process hasn't exited.");
 
-            Assert.IsFalse (deviceManager.BackgroundStarter.StartedProcesses.ContainsValue (processWrapper), "The process still exists in the BackgroundProcessStarter.StartedProcesses list when it shouldn't be.");
+            Assert.IsFalse (deviceManager.BackgroundStarter.QueuedProcesses.ContainsValue (processWrapper), "The process still exists in the BackgroundProcessStarter.StartedProcesses list when it shouldn't be.");
         }
     }
 }

@@ -24,7 +24,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsDebug = false;
 
-        public Dictionary<string, ProcessWrapper> StartedProcesses = new Dictionary<string, ProcessWrapper> ();
+        public Dictionary<string, ProcessWrapper> QueuedProcesses = new Dictionary<string, ProcessWrapper> ();
 
         public BackgroundProcessStarter ()
         {
@@ -67,36 +67,66 @@ namespace ArduinoPlugAndPlay
 
             var key = action + "-" + deviceInfo.Port;
 
+            var processWrapper = new ProcessWrapper (action, deviceInfo, process);
+
+            QueueProcess (key, processWrapper);
+
+            EnsureProcessRunning ();
+
+            return process;
+        }
+
+        public void QueueProcess (string key, ProcessWrapper processWrapper)
+        {
             // If an existing process is running kill it and remove it
-            if (StartedProcesses.ContainsKey (key)) {
-                StartedProcesses [key].Process.Kill ();
-                StartedProcesses.Remove (key);
+            if (QueuedProcesses.ContainsKey (key)) {
+                QueuedProcesses [key].Process.Kill ();
+                QueuedProcesses.Remove (key);
             }
 
             // Add the new process to the list
-            StartedProcesses.Add (key, new ProcessWrapper (action, deviceInfo, process));
+            QueuedProcesses.Add (key, processWrapper);
+        }
 
-            try {
-                process.Start ();
-            } catch (Exception ex) {
-                IsError = true;
+        public void EnsureProcessRunning ()
+        {
+            var isAProcessRunning = false;
+            ProcessWrapper topProcess = null;
 
-                var title = "\"Error starting process.\"";
+            // Figure out if a process is running yet
+            foreach (var process in QueuedProcesses) {
+                if (topProcess == null)
+                    topProcess = process.Value;
 
-                AppendOutputLine (title);
-                AppendOutputLine (ex.ToString ());
-
-                if (ThrowExceptionOnError)
-                    throw new Exception (title, ex);
-                else {
-                    Console.WriteLine ("");
-                    Console.WriteLine (title);
-                    Console.WriteLine (ex.ToString ());
-                    Console.WriteLine ("");
+                if (process.Value.HasStarted) {
+                    if (process.Value.Process.HasExited)
+                        isAProcessRunning = true;
                 }
             }
 
-            return process;
+            // If no process is running but there's one available start it
+            if (!isAProcessRunning && topProcess != null) {
+                try {
+                    topProcess.Start ();
+                } catch (Exception ex) {
+                    IsError = true;
+
+                    var title = "\"Error starting process.\"";
+
+                    AppendOutputLine (title);
+                    AppendOutputLine (ex.ToString ());
+
+                    if (ThrowExceptionOnError)
+                        throw new Exception (title, ex);
+                    else {
+                        Console.WriteLine ("");
+                        Console.WriteLine (title);
+                        Console.WriteLine (ex.ToString ());
+                        Console.WriteLine ("");
+                    }
+                }
+
+            }
         }
 
         public string[] FixArguments (string[] arguments)

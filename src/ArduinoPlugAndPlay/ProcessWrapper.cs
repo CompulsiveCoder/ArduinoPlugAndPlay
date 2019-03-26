@@ -14,6 +14,8 @@ namespace ArduinoPlugAndPlay
 
         public DeviceInfo Info { get; set; }
 
+        public bool HasStarted = false;
+
         public ProcessWrapper (string action, DeviceInfo info, Process process)
         {
             Key = action + "-" + info.Port;
@@ -25,6 +27,12 @@ namespace ArduinoPlugAndPlay
         public void IncrementTryCount ()
         {
             TryCount++;
+        }
+
+        public void Start ()
+        {
+            HasStarted = true;
+            Process.Start ();
         }
     }
 }

@@ -398,7 +398,10 @@ namespace ArduinoPlugAndPlay
 
         public void CheckProcessStatus ()
         {
-            if (BackgroundStarter.StartedProcesses.Count > 0) {
+            if (BackgroundStarter.QueuedProcesses.Count > 0) {
+
+                BackgroundStarter.EnsureProcessRunning ();
+
                 Console.WriteLine ("");
                 Console.WriteLine ("Checking status of existing processes...");
 
@@ -408,12 +411,12 @@ namespace ArduinoPlugAndPlay
 
                 var keys = new List<string> ();
 
-                foreach (var item in BackgroundStarter.StartedProcesses) {
+                foreach (var item in BackgroundStarter.QueuedProcesses) {
                     keys.Add (item.Key);
                 }
 
                 foreach (var key in keys) {
-                    var processWrapper = BackgroundStarter.StartedProcesses [key];
+                    var processWrapper = BackgroundStarter.QueuedProcesses [key];
                     var process = processWrapper.Process;
 
                     // If the process has completed
@@ -423,7 +426,7 @@ namespace ArduinoPlugAndPlay
                             ProcessFailure (processWrapper);
                         } else {
                             totalSuccessfulProcesses++;
-                            BackgroundStarter.StartedProcesses.Remove (key);
+                            BackgroundStarter.QueuedProcesses.Remove (key);
                         }
                     } else { // If the process is still running
 
@@ -455,7 +458,7 @@ namespace ArduinoPlugAndPlay
             if (!DevicePorts.Contains (port) || RemovedDevicePorts.Contains (port)) {
                 Console.WriteLine ("  Device " + port + " was removed before add. Killing the add device command.");
                 process.Process.Kill ();
-                BackgroundStarter.StartedProcesses.Remove (process.Key);
+                BackgroundStarter.QueuedProcesses.Remove (process.Key);
             }
         }
 
@@ -465,7 +468,7 @@ namespace ArduinoPlugAndPlay
                 WriteToLog (processWrapper, "Previous add command failed more than " + CommandRetryMax + " times. Aborting...");
 
                 Console.WriteLine ("Process has been retried " + CommandRetryMax + ". Aborting.");
-                BackgroundStarter.StartedProcesses.Remove (processWrapper.Key);
+                BackgroundStarter.QueuedProcesses.Remove (processWrapper.Key);
                 var info = Data.ReadInfoFromFile (processWrapper.Info.Port);
 
                 // If the add command failed launch the remove command to clean up any
@@ -481,7 +484,7 @@ namespace ArduinoPlugAndPlay
 
                 Console.WriteLine ("Processing previous failure...");
 
-                processWrapper.Process.Start ();
+                processWrapper.Start ();
 
                 Console.WriteLine ("  Failed process has been restarted.");
                 Console.WriteLine ("");

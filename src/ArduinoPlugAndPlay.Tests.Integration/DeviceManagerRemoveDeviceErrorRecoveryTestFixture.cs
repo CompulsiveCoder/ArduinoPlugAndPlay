@@ -46,9 +46,9 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 assertion.AssertDeviceIsNotList (info.Port);
 
-                Assert.AreEqual (1, deviceManager.BackgroundStarter.StartedProcesses.Count, "Wrong number of processes found.");
+                Assert.AreEqual (1, deviceManager.BackgroundStarter.QueuedProcesses.Count, "Wrong number of processes found.");
 
-                var processWrapper = deviceManager.BackgroundStarter.StartedProcesses ["remove-" + info.Port];
+                var processWrapper = deviceManager.BackgroundStarter.QueuedProcesses ["remove-" + info.Port];
 
                 while (!processWrapper.Process.HasExited)
                     Thread.Sleep (100);
