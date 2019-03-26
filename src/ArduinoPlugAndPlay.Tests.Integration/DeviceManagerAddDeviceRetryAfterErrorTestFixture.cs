@@ -67,6 +67,10 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             Console.WriteLine ("Running a loop which should abort and remove the process...");
             Console.WriteLine ("");
 
+            // The next loop should detect the failure
+            deviceManager.RunLoop ();
+
+            // The next loop should restart the process
             deviceManager.RunLoop ();
 
             Assert.IsTrue (processWrapper.Process.HasExited, "The process hasn't exited.");

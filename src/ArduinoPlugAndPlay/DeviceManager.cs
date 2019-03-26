@@ -418,6 +418,7 @@ namespace ArduinoPlugAndPlay
         {
             if (BackgroundStarter.QueuedProcesses.Count > 0) {
 
+                BackgroundStarter.EnsureProcessRunning ();
 
                 Console.WriteLine ("");
                 Console.WriteLine ("Checking status of existing processes...");
@@ -431,7 +432,6 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("  " + BackgroundStarter.QueuedProcesses.Count + " processes queued.");
 
                 var processWrapper = BackgroundStarter.QueuedProcesses.Peek ();
-                var process = processWrapper.Process;
 
                 // If the process has completed
                 if (processWrapper.HasExited) {
@@ -439,8 +439,6 @@ namespace ArduinoPlugAndPlay
                 } else if (processWrapper.HasStarted) { // Process is still running
                     CheckRunningProcess (processWrapper);
                 }
-
-                BackgroundStarter.EnsureProcessRunning ();
 
                 Console.WriteLine ("");
             }
@@ -520,7 +518,16 @@ namespace ArduinoPlugAndPlay
 
                 Console.WriteLine ("Processing previous failure...");
 
-                processWrapper.Start ();
+                // Remove from front of the queue
+                BackgroundStarter.QueuedProcesses.Dequeue ();
+
+                // Mark the process wrapper as having not started yet so it can restart
+                processWrapper.HasStarted = false;
+
+                // Add to the back of the queue
+                BackgroundStarter.QueuedProcesses.Enqueue (processWrapper);
+
+                BackgroundStarter.EnsureProcessRunning ();
 
                 Console.WriteLine ("  Failed process has been restarted.");
                 Console.WriteLine ("");
