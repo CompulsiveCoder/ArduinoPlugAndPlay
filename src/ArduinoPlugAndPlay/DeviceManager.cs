@@ -41,7 +41,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsVerbose = true;
 
-        public int CommandTimeoutInSeconds = 10 * 60;
+        public int CommandTimeoutInSeconds = 5 * 60;
         public int TimeoutExtractingDetailsInSeconds = 1 * 60;
 
         public bool UseCommandTimeout = true;
@@ -446,7 +446,7 @@ namespace ArduinoPlugAndPlay
 
         public void CheckRunningProcess (ProcessWrapper processWrapper)
         { 
-            Console.WriteLine ("  A process is running.");
+            Console.WriteLine ("  A process is running: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
 
             CheckForAbortDueToDisconnect (processWrapper);
         }
