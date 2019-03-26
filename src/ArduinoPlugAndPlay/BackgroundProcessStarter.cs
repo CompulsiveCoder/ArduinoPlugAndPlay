@@ -85,46 +85,33 @@ namespace ArduinoPlugAndPlay
 
         public void EnsureProcessRunning ()
         {
-            var isAProcessRunning = false;
-            /*ProcessWrapper topProcessWrapper = null;
+            if (QueuedProcesses.Count > 0) {
+                var processWrapper = QueuedProcesses.Peek ();
 
-            // Figure out if a process is running yet
-            foreach (var processWrapper in QueuedProcesses) {
-                if (topProcessWrapper == null)
-                    topProcessWrapper = processWrapper;
+                // If the latest process isn't started then start it
+                if (processWrapper != null && !processWrapper.HasStarted) {
+                    try {
+                        Console.WriteLine ("Starting the next process in the queue: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+                        processWrapper.Start ();
+                    } catch (Exception ex) {
+                        IsError = true;
 
+                        var title = "\"Error starting process.\"";
 
-                if (processWrapper.HasStarted) {
-                    if (processWrapper.HasExited)
-                        isAProcessRunning = true;
-                }
-            }*/
+                        AppendOutputLine (title);
+                        AppendOutputLine (ex.ToString ());
 
-            var processWrapper = QueuedProcesses.Peek ();
-
-            // If the latest process isn't started then start it
-            if (processWrapper != null && !processWrapper.HasStarted) {
-                try {
-                    Console.WriteLine ("Starting the next process in the queue: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
-                    processWrapper.Start ();
-                } catch (Exception ex) {
-                    IsError = true;
-
-                    var title = "\"Error starting process.\"";
-
-                    AppendOutputLine (title);
-                    AppendOutputLine (ex.ToString ());
-
-                    if (ThrowExceptionOnError)
-                        throw new Exception (title, ex);
-                    else {
-                        Console.WriteLine ("");
-                        Console.WriteLine (title);
-                        Console.WriteLine (ex.ToString ());
-                        Console.WriteLine ("");
+                        if (ThrowExceptionOnError)
+                            throw new Exception (title, ex);
+                        else {
+                            Console.WriteLine ("");
+                            Console.WriteLine (title);
+                            Console.WriteLine (ex.ToString ());
+                            Console.WriteLine ("");
+                        }
                     }
-                }
 
+                }
             }
         }
 

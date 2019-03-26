@@ -37,7 +37,7 @@ namespace ArduinoPlugAndPlay
 
         public int DefaultBaudRate = 9600;
 
-        public int DeviceInfoLineCount = 20;
+        public int DeviceInfoLineCount = 16;
 
         public bool IsVerbose = true;
 
@@ -163,13 +163,17 @@ namespace ArduinoPlugAndPlay
 
         public void AddDevice (string devicePort)
         {
-            if (IsVerbose)
-                Console.WriteLine ("Adding device: " + devicePort);
 
-
-            if (!Platformio.PortIsInList (devicePort))
+            if (!Platformio.PortIsInList (devicePort)) {
                 Console.WriteLine ("The device has been disconnected. Aborting.");
-            else {
+                NewDevicePorts.Remove (devicePort);
+            } else {
+
+                if (IsVerbose)
+                    Console.WriteLine ("Adding device: " + devicePort);
+
+                NewDevicePorts.Remove (devicePort);
+
                 if (!DevicePorts.Contains (devicePort) && Platformio.PortIsInList (devicePort)) {
                     var info = ExtractDeviceInfo (devicePort);
 
@@ -177,7 +181,6 @@ namespace ArduinoPlugAndPlay
 
                     DevicePorts.Add (devicePort);
                     Data.WriteInfoToFile (info);
-                    NewDevicePorts.Remove (devicePort);
 
                     LaunchAddDeviceCommand (info);
                 }
@@ -373,6 +376,8 @@ namespace ArduinoPlugAndPlay
             if (!Platformio.PortIsInList (portName))
                 Console.WriteLine ("The device has been disconnected. Aborting.");
             else {
+                Console.WriteLine ("  Reading new device info from USB/serial output: " + portName);
+
                 ReaderWriter.Open (portName, DefaultBaudRate);
 
                 var builder = new StringBuilder ();
@@ -417,8 +422,6 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("");
                 Console.WriteLine ("Checking status of existing processes...");
 
-                BackgroundStarter.EnsureProcessRunning ();
-
                 var keys = new List<string> ();
 
                 foreach (var item in BackgroundStarter.QueuedProcesses) {
@@ -427,28 +430,38 @@ namespace ArduinoPlugAndPlay
 
                 Console.WriteLine ("  " + BackgroundStarter.QueuedProcesses.Count + " processes queued.");
 
-                //foreach (var key in keys) {
                 var processWrapper = BackgroundStarter.QueuedProcesses.Peek ();
                 var process = processWrapper.Process;
 
                 // If the process has completed
-                if (process.HasExited) {
-                    // Process failed
-                    if (process.ExitCode != 0) {
-                        Console.WriteLine ("  A process failed.");
-                        ProcessFailure (processWrapper);
-                    } else { // Process succeeded
-                        Console.WriteLine ("  A process completed successfully.");
-                        BackgroundStarter.QueuedProcesses.Dequeue ();
-                    }
-                } else { // Process is still running
-                    Console.WriteLine ("  A process is running.");
-
-                    CheckForAbortDueToDisconnect (processWrapper);
+                if (processWrapper.HasExited) {
+                    HandleProcessExit (processWrapper);
+                } else if (processWrapper.HasStarted) { // Process is still running
+                    CheckRunningProcess (processWrapper);
                 }
-                //}
+
+                BackgroundStarter.EnsureProcessRunning ();
 
                 Console.WriteLine ("");
+            }
+        }
+
+        public void CheckRunningProcess (ProcessWrapper processWrapper)
+        { 
+            Console.WriteLine ("  A process is running.");
+
+            CheckForAbortDueToDisconnect (processWrapper);
+        }
+
+        public void HandleProcessExit (ProcessWrapper processWrapper)
+        {
+            // Process failed
+            if (processWrapper.Process.ExitCode != 0) {
+                Console.WriteLine ("  A process failed.");
+                ProcessFailure (processWrapper);
+            } else { // Process succeeded
+                Console.WriteLine ("  A process completed successfully.");
+                BackgroundStarter.QueuedProcesses.Dequeue ();
             }
         }
 
@@ -461,22 +474,27 @@ namespace ArduinoPlugAndPlay
             return null;
         }
 
-        public void CheckForAbortDueToDisconnect (ProcessWrapper process)
+        public void CheckForAbortDueToDisconnect (ProcessWrapper processWrapper)
         {
-            var deviceHasBeenDisconnected = !DevicePorts.Contains (process.Info.Port)
-                                            || RemovedDevicePorts.Contains (process.Info.Port)
-                                            || !Platformio.PortIsInList (process.Info.Port);
+            var deviceHasBeenDisconnected = !DevicePorts.Contains (processWrapper.Info.Port)
+                                            || RemovedDevicePorts.Contains (processWrapper.Info.Port)
+                                            || !Platformio.PortIsInList (processWrapper.Info.Port);
 
             // If the device has been removed kill the process
-            if (deviceHasBeenDisconnected) {
-                Console.WriteLine ("Aborting connect command due to device being disconnected while it's still running: " + process.Info.Port);
-                process.Process.Kill ();
-                BackgroundStarter.QueuedProcesses.Dequeue ();
+            if (deviceHasBeenDisconnected && !processWrapper.HasExited) {
+                AbortDueToDisconnect (processWrapper);
+            }
+        }
 
-                if (process.Action == "add") {
-                    Console.WriteLine ("  Launching remove command to clean up partial install.");
-                    LaunchRemoveDeviceCommand (process.Info);
-                }
+        public void AbortDueToDisconnect (ProcessWrapper processWrapper)
+        {
+            Console.WriteLine ("Aborting connect command due to device being disconnected while it's still running: " + processWrapper.Info.Port);
+            processWrapper.Process.Kill ();
+            BackgroundStarter.QueuedProcesses.Dequeue ();
+
+            if (processWrapper.Action == "add") {
+                Console.WriteLine ("  Launching remove command to clean up partial install.");
+                LaunchRemoveDeviceCommand (processWrapper.Info);
             }
         }
 
