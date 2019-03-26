@@ -24,7 +24,7 @@ namespace ArduinoPlugAndPlay
 
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
-        public int SleepTimeInSeconds = 1;
+        public int SleepTimeInSeconds = 15;
 
         public bool IsActive = true;
 
@@ -37,7 +37,7 @@ namespace ArduinoPlugAndPlay
 
         public int DefaultBaudRate = 9600;
 
-        public int DeviceInfoLineCount = 15;
+        public int DeviceInfoLineCount = 20;
 
         public bool IsVerbose = true;
 
