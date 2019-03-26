@@ -527,6 +527,8 @@ namespace ArduinoPlugAndPlay
                 // Add to the back of the queue
                 BackgroundStarter.QueuedProcesses.Enqueue (processWrapper);
 
+                // Ensure that there's a process running.
+                // This will restart the current one if its still at the front of the queue
                 BackgroundStarter.EnsureProcessRunning ();
 
                 Console.WriteLine ("  Failed process has been restarted.");
