@@ -76,6 +76,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             Assert.IsTrue (processWrapper.Process.HasExited, "The process hasn't exited.");
 
             Assert.IsFalse (deviceManager.BackgroundStarter.QueuedProcesses.Contains (processWrapper), "The process still exists in the BackgroundProcessStarter.StartedProcesses list when it shouldn't be.");
+
+            Assert.IsTrue (processWrapper.HasStarted, "The process hasn't started.");
         }
     }
 }

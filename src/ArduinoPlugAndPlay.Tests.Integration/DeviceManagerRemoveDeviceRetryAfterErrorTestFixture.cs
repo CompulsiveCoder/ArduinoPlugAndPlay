@@ -6,10 +6,10 @@ using System.IO;
 namespace ArduinoPlugAndPlay.Tests.Integration
 {
     [TestFixture (Category = "Integration")]
-    public class DeviceManagerRemoveDeviceErrorRecoveryTestFixture : BaseTestFixture
+    public class DeviceManagerRemoveDeviceRetryAfterErrorTestFixture : BaseTestFixture
     {
         [Test]
-        public void Test_RemoveDevice_ErrorRecovery ()
+        public void Test_RemoveDevice_RetryAfterError ()
         {
             var info = GetExampleDeviceInfo ();
 
@@ -41,6 +41,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             var countInFile = 0;
 
+            ProcessWrapper processWrapper = null;
+
             for (int i = 1; i <= deviceManager.CommandRetryMax; i++) {
                 deviceManager.RunLoop ();
 
@@ -48,7 +50,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.QueuedProcesses.Count, "Wrong number of processes found.");
 
-                var processWrapper = deviceManager.BackgroundStarter.QueuedProcesses.Peek ();
+                processWrapper = deviceManager.BackgroundStarter.QueuedProcesses.Peek ();
 
                 while (!processWrapper.HasExited)
                     Thread.Sleep (100);
@@ -58,16 +60,17 @@ namespace ArduinoPlugAndPlay.Tests.Integration
                 Assert.AreEqual (i, countInFile);
             }
 
-            // Make sure the process has stopped
-            for (int i = 1; i <= 5; i++) {
-                deviceManager.RunLoop ();
+            // The next loop should detect the failure
+            deviceManager.RunLoop ();
 
-                countInFile = Convert.ToInt32 (File.ReadAllText (Path.GetFullPath ("fcf.txt")));
+            // The next loop should restart the process
+            deviceManager.RunLoop ();
 
-                Assert.AreEqual (deviceManager.CommandRetryMax, countInFile, "The number in the count file doesn't match.");
+            Assert.IsTrue (processWrapper.Process.HasExited, "The process hasn't exited.");
 
-                assertion.AssertDeviceIsNotList (info.Port);
-            }
+            Assert.IsFalse (deviceManager.BackgroundStarter.QueuedProcesses.Contains (processWrapper), "The process still exists in the BackgroundProcessStarter.StartedProcesses list when it shouldn't be.");
+
+            Assert.IsTrue (processWrapper.HasStarted, "The process hasn't started.");
         }
 
     }
