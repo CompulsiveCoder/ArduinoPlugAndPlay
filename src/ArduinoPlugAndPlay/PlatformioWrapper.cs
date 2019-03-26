@@ -32,6 +32,11 @@ namespace ArduinoPlugAndPlay
             return deviceList;
         }
 
+        public virtual bool PortIsInList (string portName)
+        {
+            return Array.IndexOf (GetDeviceList (), portName) > -1;
+        }
+
         public virtual bool AreDevicesDetected ()
         {
             Starter.Start ("pio device list");

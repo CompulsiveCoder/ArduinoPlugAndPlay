@@ -48,9 +48,9 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.QueuedProcesses.Count, "Wrong number of processes found.");
 
-                var processWrapper = deviceManager.BackgroundStarter.QueuedProcesses ["remove-" + info.Port];
+                var processWrapper = deviceManager.BackgroundStarter.QueuedProcesses.Peek ();
 
-                while (!processWrapper.Process.HasExited)
+                while (!processWrapper.HasExited)
                     Thread.Sleep (100);
 
                 countInFile = Convert.ToInt32 (File.ReadAllText (Path.GetFullPath ("fcf.txt")));

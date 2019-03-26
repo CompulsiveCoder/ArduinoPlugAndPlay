@@ -8,7 +8,7 @@ namespace ArduinoPlugAndPlay.Tests
 {
     public class MockBackgroundProcessStarter : BackgroundProcessStarter
     {
-        public Dictionary<string, string> CommandsRun = new Dictionary<string, string> ();
+        public List<string> CommandsRun = new List<string> ();
 
         public bool DidStart { get; set; }
 
@@ -22,9 +22,7 @@ namespace ArduinoPlugAndPlay.Tests
         {
             var fullCommand = command + " " + arguments;
 
-            var key = action + "-" + deviceInfo.Port;
-
-            CommandsRun.Add (key, fullCommand);
+            CommandsRun.Add (fullCommand);
 
             DidStart = true;
 

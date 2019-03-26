@@ -3,6 +3,7 @@ using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
+using System.Collections;
 
 namespace ArduinoPlugAndPlay
 {
@@ -24,7 +25,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsDebug = false;
 
-        public Dictionary<string, ProcessWrapper> QueuedProcesses = new Dictionary<string, ProcessWrapper> ();
+        public Queue<ProcessWrapper> QueuedProcesses = new Queue<ProcessWrapper> ();
 
         public BackgroundProcessStarter ()
         {
@@ -78,36 +79,34 @@ namespace ArduinoPlugAndPlay
 
         public void QueueProcess (string key, ProcessWrapper processWrapper)
         {
-            // If an existing process is running kill it and remove it
-            if (QueuedProcesses.ContainsKey (key)) {
-                QueuedProcesses [key].Process.Kill ();
-                QueuedProcesses.Remove (key);
-            }
-
             // Add the new process to the list
-            QueuedProcesses.Add (key, processWrapper);
+            QueuedProcesses.Enqueue (processWrapper);
         }
 
         public void EnsureProcessRunning ()
         {
             var isAProcessRunning = false;
-            ProcessWrapper topProcess = null;
+            /*ProcessWrapper topProcessWrapper = null;
 
             // Figure out if a process is running yet
-            foreach (var process in QueuedProcesses) {
-                if (topProcess == null)
-                    topProcess = process.Value;
+            foreach (var processWrapper in QueuedProcesses) {
+                if (topProcessWrapper == null)
+                    topProcessWrapper = processWrapper;
 
-                if (process.Value.HasStarted) {
-                    if (process.Value.Process.HasExited)
+
+                if (processWrapper.HasStarted) {
+                    if (processWrapper.HasExited)
                         isAProcessRunning = true;
                 }
-            }
+            }*/
 
-            // If no process is running but there's one available start it
-            if (!isAProcessRunning && topProcess != null) {
+            var processWrapper = QueuedProcesses.Peek ();
+
+            // If the latest process isn't started then start it
+            if (processWrapper != null && !processWrapper.HasStarted) {
                 try {
-                    topProcess.Start ();
+                    Console.WriteLine ("Starting the next process in the queue: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+                    processWrapper.Start ();
                 } catch (Exception ex) {
                     IsError = true;
 

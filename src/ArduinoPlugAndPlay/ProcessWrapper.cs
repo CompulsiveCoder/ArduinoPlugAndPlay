@@ -16,6 +16,16 @@ namespace ArduinoPlugAndPlay
 
         public bool HasStarted = false;
 
+        public bool HasExited {
+            get {
+                if (HasStarted) {
+                    if (Process.HasExited)
+                        return true;
+                }
+                return false;
+            }
+        }
+
         public ProcessWrapper (string action, DeviceInfo info, Process process)
         {
             Key = action + "-" + info.Port;
