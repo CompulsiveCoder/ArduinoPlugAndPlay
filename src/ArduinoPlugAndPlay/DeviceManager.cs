@@ -129,7 +129,7 @@ namespace ArduinoPlugAndPlay
 
             foreach (var item in list) {
 
-                var isNewDevice = !DevicePorts.Contains (item);
+                var isNewDevice = !DevicePorts.Contains (item.Trim ());
 
                 var deviceStatus = "";
 
@@ -307,11 +307,11 @@ namespace ArduinoPlugAndPlay
         public bool StartBashCommand (string action, string command, DeviceInfo info)
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Starting BASH command:");
+            Console.WriteLine ("Starting BASH command...");
             //Console.WriteLine (Environment.CurrentDirectory);
 
             var cmd = "/bin/bash";
-            var arguments = "-c '" + EscapeCharacters (command) + "' &";
+            var arguments = "-c '" + EscapeCharacters (command) + "'";
 
             if (UseCommandTimeout) {
                 arguments = CommandTimeoutInSeconds + "s " + cmd + " " + arguments;
