@@ -1,16 +1,19 @@
 echo "Uninstalling plug and play..."
 
-DESTINATION=$1
+BRANCH=$1
+INSTALL_DIR=$2
 
-EXAMPLE_COMMAND="Example:\n..sh [branch] [destination]"
+EXAMPLE_COMMAND="Example:\n..sh [Branch] [InstallDir]"
 
-if [ ! $DESTINATION ]; then
-  DESTINATION="/usr/local/ArduinoPlugAndPlay"
+if [ ! $BRANCH ]; then
+  BRANCH="master"
 fi
 
-echo "Destination: $DESTINATION"
+if [ ! $INSTALL_DIR ]; then
+  INSTALL_DIR="/usr/local/ArduinoPlugAndPlay"
+fi
 
-INSTALL_DIR=$DESTINATION
+echo "Destination: $INSTALL_DIR"
 
 if [ ! -d $INSTALL_DIR ]; then
   echo "ArduinoPlugAndPlay doesn't appear to be installed at:"
