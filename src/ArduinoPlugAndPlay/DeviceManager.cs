@@ -401,8 +401,6 @@ namespace ArduinoPlugAndPlay
                 ReaderWriter.WriteLine ("#");
 
                 while (!allDetailsHaveBeenDetected && !deviceHasBeenDisconnected) {
-                    deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
-
                     var line = ReaderWriter.ReadLine ();
                     if (!String.IsNullOrEmpty (line))
                         builder.AppendLine (line.Trim ());
@@ -415,6 +413,8 @@ namespace ArduinoPlugAndPlay
                     output.Contains (Extractor.BoardTypePreText);
 
                     Timeout.Check (TimeoutExtractingDetailsInSeconds * 1000, "Timed out attempting to read the details from the device.");
+
+                    deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
                 }
 
                 var serialOutput = builder.ToString ();
