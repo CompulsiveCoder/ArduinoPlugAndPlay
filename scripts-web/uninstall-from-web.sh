@@ -38,8 +38,12 @@ sh systemctl.sh stop arduino-plug-and-play.service || (echo "Failed to stop Ardu
 echo "Disabling plug and play service..."
 sh systemctl.sh disable arduino-plug-and-play.service || (echo "Failed to disable ArduinoPlugAndPlay service: arduino-plug-and-play.service" && exit 1) 
 
-echo "Removing the plug and play service file..."
-rm $SERVICES_DIRECTORY/arduino-plug-and-play.service || (echo "Failed to remove ArduinoPlugAndPlay service file: arduino-plug-and-play.service" && exit 1) 
+if [ -f $SERVICES_DIRECTORY/arduino-plug-and-play.service ]; then
+  echo "Removing the plug and play service file..."
+  rm $SERVICES_DIRECTORY/arduino-plug-and-play.service || (echo "Failed to remove ArduinoPlugAndPlay service file: arduino-plug-and-play.service" && exit 1)
+else
+  echo "Skipping removal of service file because it's not found: $SERVICES_DIRECTORY/arduino-plug-and-play.service" 
+fi
 
 echo "Removing the ArduinoPlugAndPlay install directory..."
 rm ../ArduinoPlugAndPlay/ -R || (echo "Failed to remove ArduinoPlugAndPlay install directory" && exit 1)
