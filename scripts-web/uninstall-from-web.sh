@@ -46,6 +46,6 @@ else
 fi
 
 echo "Removing the ArduinoPlugAndPlay install directory..."
-rm ../ArduinoPlugAndPlay/ -R || (echo "Failed to remove ArduinoPlugAndPlay install directory" && exit 1)
+rm $INSTALL_DIR -R || (echo "Failed to remove ArduinoPlugAndPlay install directory" && exit 1)
 
 echo "Finished uninstalling plug and play"

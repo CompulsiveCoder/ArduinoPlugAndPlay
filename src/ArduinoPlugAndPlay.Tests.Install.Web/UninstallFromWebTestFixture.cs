@@ -17,7 +17,7 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
 
             var branch = new BranchDetector ().GetBranch ();
 
-            var installDir = "installation/ArduinoPlugAndPlay";
+            var installDir = Path.GetFullPath ("installation/ArduinoPlugAndPlay");
 
             CreateDemoInstallation (branch, installDir);
 
