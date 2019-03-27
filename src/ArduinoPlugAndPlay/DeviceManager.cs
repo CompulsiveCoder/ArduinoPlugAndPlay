@@ -67,6 +67,8 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("  Sleep time: " + SleepTimeInSeconds + " seconds between loops");
             Console.WriteLine ("");
 
+            LoadExistingDeviceList ();
+
             while (IsActive) {
                 try {
                     RunLoop ();
@@ -84,7 +86,7 @@ namespace ArduinoPlugAndPlay
 
         public void RunLoop ()
         {
-            Console.WriteLine ("---------------------------------");
+            Console.WriteLine ("----------");
             Console.WriteLine ("Starting DeviceManager loop...");
             Console.WriteLine ("");
 
@@ -102,8 +104,15 @@ namespace ArduinoPlugAndPlay
 
             Console.WriteLine ("");
             Console.WriteLine ("Loop Completed!");
-            Console.WriteLine ("---------------------------------");
+            Console.WriteLine ("----------");
             Console.WriteLine ("");
+        }
+
+        public void LoadExistingDeviceList ()
+        {
+            foreach (var device in Data.ReadAllDevicesFromFile()) {
+                DevicePorts.Add (device.Port);
+            }
         }
 
         #region New Devices
