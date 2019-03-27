@@ -29,7 +29,7 @@ cd $INSTALL_DIR
 SERVICES_DIRECTORY="/lib/systemd/system"
 
 if [ -f "is-mock-systemctl.txt" ]; then
-  SERVICES_DIRECTORY="mock/services"
+  SERVICES_DIRECTORY="$INSTALL_DIR/mock/services"
 fi
 
 echo "Stopping plug and play service..."
