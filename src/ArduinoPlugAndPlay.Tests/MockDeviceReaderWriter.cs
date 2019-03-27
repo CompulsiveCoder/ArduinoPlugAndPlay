@@ -57,6 +57,11 @@ namespace ArduinoPlugAndPlay.Tests
                 return line;
             }
         }
+
+        public override void WriteLine (string lineOfText)
+        {
+            
+        }
     }
 }
 

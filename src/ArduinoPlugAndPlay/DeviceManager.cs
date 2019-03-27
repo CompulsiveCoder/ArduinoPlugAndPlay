@@ -397,6 +397,9 @@ namespace ArduinoPlugAndPlay
 
                 var deviceHasBeenDisconnected = false;
 
+                // Send a command requesting the device info
+                ReaderWriter.WriteLine ("#");
+
                 while (!allDetailsHaveBeenDetected && !deviceHasBeenDisconnected) {
                     deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
 

@@ -31,6 +31,11 @@ namespace ArduinoPlugAndPlay
         {
             return Client.ReadLine ();
         }
+
+        public virtual void WriteLine (string lineOfText)
+        {
+            Client.WriteLine (lineOfText);
+        }
     }
 }
 
