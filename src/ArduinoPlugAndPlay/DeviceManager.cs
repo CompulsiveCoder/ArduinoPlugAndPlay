@@ -69,6 +69,8 @@ namespace ArduinoPlugAndPlay
 
             LoadExistingDeviceList ();
 
+            CheckForPortChanges ();
+
             while (IsActive) {
                 try {
                     RunLoop ();
@@ -112,6 +114,24 @@ namespace ArduinoPlugAndPlay
         {
             foreach (var device in Data.ReadAllDevicesFromFile()) {
                 DevicePorts.Add (device.Port);
+            }
+        }
+
+        public void CheckForPortChanges ()
+        {
+            for (int i = 0; i < DevicePorts.Count; i++) {
+                var port = DevicePorts [i];
+
+                var infoFromFile = Data.ReadInfoFromFile (port);
+                var infoFromDevice = ExtractDeviceInfo (port);
+
+                var portHasChanged = !infoFromFile.DoesMatch (infoFromDevice);
+
+                if (portHasChanged) {
+                    Console.WriteLine ("Device on port " + port + " has changed.");
+                    RemoveDevice (port);
+                    i--;
+                }
             }
         }
 

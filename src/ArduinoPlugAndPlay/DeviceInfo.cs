@@ -15,6 +15,14 @@ namespace ArduinoPlugAndPlay
         public DeviceInfo ()
         {
         }
+
+        public bool DoesMatch (DeviceInfo info)
+        {
+            return FamilyName == info.FamilyName &&
+            GroupName == info.GroupName &&
+            ProjectName == info.ProjectName &&
+            BoardType == info.BoardType;
+        }
     }
 }
 

@@ -104,6 +104,48 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             Assert.AreEqual (expectedResult, actualResult, "Value insertion failed.");
                     
         }
+
+        [Test]
+        public void Test_CheckForChangedPorts ()
+        {
+            // Set up the mock objects
+            var mockPlatformio = new MockPlatformioWrapper ();
+            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+
+            // Set up the device manager with the mock dependencies
+            var deviceManager = new DeviceManager ();
+            deviceManager.Platformio = mockPlatformio;
+            deviceManager.ReaderWriter = mockReaderWriter;
+            deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+
+            var assertion = new AssertionHelper (deviceManager);
+
+            var info = GetExampleDeviceInfo ();
+
+            // Set the mock output from the device
+            //mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (info));
+
+            // Connect the virtual (mock) device
+            mockPlatformio.ConnectDevice (info.Port);
+
+            // Add the device to the ports list so it appears the device exists
+            deviceManager.DevicePorts.Add (info.Port);
+
+            // Create the example device info files so it appears the device exists
+            CreateExampleDeviceInfoFiles ();
+
+            var info2 = GetExampleDeviceInfo2 ();
+
+            // Set the mock device info to a different device
+            mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (info2));
+
+            deviceManager.CheckForPortChanges ();
+
+            // Assert that the expected command was started
+            assertion.AssertRemoveDeviceCommandStarted (info, mockBackgroundProcessStarter);
+
+        }
     }
 }
 

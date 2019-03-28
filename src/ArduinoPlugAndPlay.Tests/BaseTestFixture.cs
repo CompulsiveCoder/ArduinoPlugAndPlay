@@ -176,6 +176,29 @@ namespace ArduinoPlugAndPlay.Tests
             return info;
         }
 
+        public DeviceInfo GetExampleDeviceInfo2 ()
+        {
+            return GetExampleDeviceInfo2 ("/dev/ttyUSB1");
+        }
+
+        public DeviceInfo GetExampleDeviceInfo2 (int portIndex)
+        {
+            return GetExampleDeviceInfo ("/dev/ttyUSB" + portIndex);
+        }
+
+        public DeviceInfo GetExampleDeviceInfo2 (string portName)
+        {
+            var info = new DeviceInfo ();
+
+            info.FamilyName = "ExampleFamily2";
+            info.GroupName = "ExampleGroup2";
+            info.ProjectName = "ProjectName2";
+            info.BoardType = "nano";
+            info.Port = portName;
+
+            return info;
+        }
+
         public void PullFileFromProject (string fileName)
         {
             PullFileFromProject (fileName, false);

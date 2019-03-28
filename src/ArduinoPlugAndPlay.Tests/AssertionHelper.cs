@@ -70,6 +70,12 @@ namespace ArduinoPlugAndPlay.Tests
         {
             var fullExpectedCommand = "timeout " + Manager.CommandTimeoutInSeconds + "s /bin/bash -c '" + expectedCommand.Replace ("'", "\\'") + " >> " + logFile + "'";
 
+            Console.WriteLine ("Expected command:");
+            Console.WriteLine ("  " + fullExpectedCommand);
+            Console.WriteLine ("Commands run:");
+            foreach (var cmd in starter.CommandsRun) {
+                Console.WriteLine ("  " + cmd);
+            }
             Assert.IsTrue (starter.CommandsRun.Contains (fullExpectedCommand), "The expected command wasn't run.");
 
             Console.WriteLine ("The expected bash command was started.");
