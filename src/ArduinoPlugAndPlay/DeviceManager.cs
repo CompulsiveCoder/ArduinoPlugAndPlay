@@ -417,13 +417,19 @@ namespace ArduinoPlugAndPlay
 
                 var deviceHasBeenDisconnected = false;
 
+                // Send a blank command. This is a hack to work around the issue of ESP boards
+                // not always receiving the first command properly
+                ReaderWriter.WriteLine (" ");
+
                 // Send a command requesting the device info
                 ReaderWriter.WriteLine ("#");
 
                 while (!allDetailsHaveBeenDetected && !deviceHasBeenDisconnected) {
                     var line = ReaderWriter.ReadLine ();
-                    if (!String.IsNullOrEmpty (line))
+                    if (!String.IsNullOrEmpty (line)) {
+                        Console.WriteLine (line);
                         builder.AppendLine (line.Trim ());
+                    }
 
                     var output = builder.ToString ();
 
