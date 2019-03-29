@@ -12,7 +12,7 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
         public void Test_Update_FromWeb ()
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Preparing Update from web test...");
+            Console.WriteLine ("Preparing update from web test...");
             Console.WriteLine ("");
 
             var branch = new BranchDetector ().GetBranch ();
