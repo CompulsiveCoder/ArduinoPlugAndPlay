@@ -18,6 +18,9 @@ namespace ArduinoPlugAndPlay
 
         public bool DoesMatch (DeviceInfo info)
         {
+            if (info == null)
+                return false;
+
             return FamilyName == info.FamilyName &&
             GroupName == info.GroupName &&
             ProjectName == info.ProjectName &&

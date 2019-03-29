@@ -48,6 +48,7 @@
     <Compile Include="BackgroundProcessStarter.cs" />
     <Compile Include="ProcessStarter.cs" />
     <Compile Include="ProcessWrapper.cs" />
+    <Compile Include="TimeoutExeption.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

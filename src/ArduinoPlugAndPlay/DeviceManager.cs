@@ -74,6 +74,9 @@ namespace ArduinoPlugAndPlay
             while (IsActive) {
                 try {
                     RunLoop ();
+                } catch (TimeoutException ex) {
+                    Console.WriteLine ("Timeout error:");
+                    Console.WriteLine (ex.Message);
                 } catch (Exception ex) {
                     Console.WriteLine ("==============================");
                     Console.WriteLine ("Error:");
@@ -127,7 +130,7 @@ namespace ArduinoPlugAndPlay
 
                 var portHasChanged = !infoFromFile.DoesMatch (infoFromDevice);
 
-                if (portHasChanged) {
+                if (portHasChanged || infoFromDevice == null) {
                     Console.WriteLine ("Device on port " + port + " has changed. Removing so it can be readded.");
                     RemoveDevice (port);
                     i--;
@@ -417,23 +420,29 @@ namespace ArduinoPlugAndPlay
 
                 var deviceHasBeenDisconnected = false;
 
-                Thread.Sleep (1000);
-
-                // Send a blank command. This is a hack to work around the issue of ESP boards
-                // not always receiving the first command properly
-                ReaderWriter.WriteLine (" ");
-
-                Thread.Sleep (1000);
+                // Read the first line from the device before sending a command.
+                // This seems to allow commands to function properly
+                ReaderWriter.ReadLine ();
 
                 // Send a command requesting the device info
                 ReaderWriter.WriteLine ("#");
 
-                Thread.Sleep (1000);
+                var i = 0;
+
+                Console.WriteLine ("");
 
                 while (!allDetailsHaveBeenDetected && !deviceHasBeenDisconnected) {
+                    i++;
+
+                    // Resend the # command after 5 lines
+                    var modValue = i % 5;
+                    if (modValue == 0) {
+                        ReaderWriter.WriteLine ("#");
+                    }
+
                     var line = ReaderWriter.ReadLine ();
                     if (!String.IsNullOrEmpty (line)) {
-                        Console.WriteLine (line);
+                        Console.WriteLine ("> " + line);
                         builder.AppendLine (line.Trim ());
                     }
 
@@ -448,6 +457,8 @@ namespace ArduinoPlugAndPlay
 
                     deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
                 }
+
+                Console.WriteLine ("");
 
                 var serialOutput = builder.ToString ();
 
@@ -499,10 +510,10 @@ namespace ArduinoPlugAndPlay
         {
             // Process failed
             if (processWrapper.Process.ExitCode != 0) {
-                Console.WriteLine ("  A process failed.");
+                Console.WriteLine ("  A process failed: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
                 ProcessFailure (processWrapper);
             } else { // Process succeeded
-                Console.WriteLine ("  A process completed successfully.");
+                Console.WriteLine ("  A process completed successfully: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
                 BackgroundStarter.QueuedProcesses.Dequeue ();
             }
         }
@@ -530,7 +541,7 @@ namespace ArduinoPlugAndPlay
 
         public void AbortDueToDisconnect (ProcessWrapper processWrapper)
         {
-            Console.WriteLine ("Aborting connect command due to device being disconnected while it's still running: " + processWrapper.Info.Port);
+            Console.WriteLine ("Aborting connect command due to device being disconnected while it's still running: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
             processWrapper.Process.Kill ();
             BackgroundStarter.QueuedProcesses.Dequeue ();
 

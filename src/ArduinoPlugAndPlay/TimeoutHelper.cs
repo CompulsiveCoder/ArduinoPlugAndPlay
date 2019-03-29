@@ -24,7 +24,7 @@ namespace ArduinoPlugAndPlay
             var hasTimedOut = timeoutEnd < DateTime.Now;
 
             if (hasTimedOut)
-                throw new Exception (errorMessage);
+                throw new TimeoutException (errorMessage);
         }
 
         #endregion
