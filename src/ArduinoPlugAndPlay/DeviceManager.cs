@@ -128,7 +128,7 @@ namespace ArduinoPlugAndPlay
                 var portHasChanged = !infoFromFile.DoesMatch (infoFromDevice);
 
                 if (portHasChanged) {
-                    Console.WriteLine ("Device on port " + port + " has changed.");
+                    Console.WriteLine ("Device on port " + port + " has changed. Removing so it can be readded.");
                     RemoveDevice (port);
                     i--;
                 }
