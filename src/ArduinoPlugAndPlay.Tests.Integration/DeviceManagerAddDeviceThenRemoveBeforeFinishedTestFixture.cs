@@ -70,10 +70,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             Assert.IsFalse (output.Contains (unreachableNumber.ToString ()), "Script continued too far.");
 
-            // TODO: Check the number 3 here. In theory only an add and a remove command is being run.
-            // But the remove command gets launched once because of the failure, and once because it's been detected as removed.
-            // Currently running twice should be acceptable.
-            Assert.AreEqual (3, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");
+            Assert.AreEqual (2, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");
         }
 
     }

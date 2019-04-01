@@ -195,28 +195,29 @@ namespace ArduinoPlugAndPlay
 
         public void AddDevice (string devicePort)
         {
-
-            if (!Platformio.PortIsInList (devicePort)) {
+            // TODO: Remove if not needed. This check is slow.
+            /*if (!Platformio.PortIsInList (devicePort)) {
                 Console.WriteLine ("The device has been disconnected. Aborting.");
                 NewDevicePorts.Remove (devicePort);
-            } else {
+            } else {*/
 
-                if (IsVerbose)
-                    Console.WriteLine ("Adding device: " + devicePort);
+            if (IsVerbose)
+                Console.WriteLine ("Adding device: " + devicePort);
 
-                NewDevicePorts.Remove (devicePort);
+            NewDevicePorts.Remove (devicePort);
 
-                if (!DevicePorts.Contains (devicePort) && Platformio.PortIsInList (devicePort)) {
-                    var info = ExtractDeviceInfo (devicePort);
+            if (!DevicePorts.Contains (devicePort)) {
+                // && Platformio.PortIsInList (devicePort)) // TODO: Check if this should be used. It's slow.
+                var info = ExtractDeviceInfo (devicePort);
 
-                    Console.WriteLine ("  " + devicePort);
+                Console.WriteLine ("  " + devicePort);
 
-                    DevicePorts.Add (devicePort);
-                    Data.WriteInfoToFile (info);
+                DevicePorts.Add (devicePort);
+                Data.WriteInfoToFile (info);
 
-                    LaunchAddDeviceCommand (info);
-                }
+                LaunchAddDeviceCommand (info);
             }
+            // }
         }
 
         #endregion
@@ -405,11 +406,13 @@ namespace ArduinoPlugAndPlay
         {
             DeviceInfo info = null;
 
-            if (!Platformio.PortIsInList (portName))
-                Console.WriteLine ("The device has been disconnected. Aborting.");
-            else {
-                Console.WriteLine ("  Reading new device info from USB/serial output: " + portName);
+            // TODO: Remove if not needed. This check is slow
+            //if (!Platformio.PortIsInList (portName))
+            //    Console.WriteLine ("The device has been disconnected. Aborting.");
+            //else {
+            Console.WriteLine ("  Reading new device info from USB/serial output: " + portName);
 
+            try {
                 ReaderWriter.Open (portName, DefaultBaudRate);
 
                 var builder = new StringBuilder ();
@@ -431,11 +434,12 @@ namespace ArduinoPlugAndPlay
 
                 Console.WriteLine ("");
 
-                while (!allDetailsHaveBeenDetected && !deviceHasBeenDisconnected) {
+                while (!allDetailsHaveBeenDetected) {
+                    // && !deviceHasBeenDisconnected) { // TODO: Remove if not needed. This check is slow
                     i++;
 
-                    // Resend the # command after 5 lines
-                    var modValue = i % 5;
+                    // Resend the # command after 8 lines
+                    var modValue = i % 8;
                     if (modValue == 0) {
                         ReaderWriter.WriteLine ("#");
                     }
@@ -455,7 +459,8 @@ namespace ArduinoPlugAndPlay
 
                     Timeout.Check (TimeoutExtractingDetailsInSeconds * 1000, "Timed out attempting to read the details from the device.");
 
-                    deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
+                    // TODO: Remove if not needed. This check is slow
+                    //deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
                 }
 
                 Console.WriteLine ("");
@@ -465,6 +470,14 @@ namespace ArduinoPlugAndPlay
                 info = Extractor.ExtractInfo (portName, serialOutput);
 
                 ReaderWriter.Close ();
+                //}
+            } catch (IOException ex) {
+                if (ex.Message.Contains ("Input/output error")) {
+                    Console.WriteLine ("Device was disconnected. Aborting install.");
+                } else {
+                    Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
+                    Console.WriteLine (ex.ToString ());
+                }
             }
             return info;
         }
@@ -473,29 +486,37 @@ namespace ArduinoPlugAndPlay
         {
             if (BackgroundStarter.QueuedProcesses.Count > 0) {
 
-                BackgroundStarter.EnsureProcessRunning ();
+                var latestProcess = BackgroundStarter.QueuedProcesses.Peek ();
+                if (RemovedDevicePorts.Contains (latestProcess.Info.Port)) {
+                    Console.WriteLine ("Device was removed. Aborting install process.");
+                    BackgroundStarter.QueuedProcesses.Dequeue ();
+                    RemoveDevice (latestProcess.Info.Port);
+                } else {
 
-                Console.WriteLine ("");
-                Console.WriteLine ("Checking status of existing processes...");
+                    BackgroundStarter.EnsureProcessRunning ();
 
-                var keys = new List<string> ();
+                    Console.WriteLine ("");
+                    Console.WriteLine ("Checking status of existing processes...");
 
-                foreach (var item in BackgroundStarter.QueuedProcesses) {
-                    keys.Add (item.Key);
+                    var keys = new List<string> ();
+
+                    foreach (var item in BackgroundStarter.QueuedProcesses) {
+                        keys.Add (item.Key);
+                    }
+
+                    Console.WriteLine ("  " + BackgroundStarter.QueuedProcesses.Count + " processes queued.");
+
+                    var processWrapper = BackgroundStarter.QueuedProcesses.Peek ();
+
+                    // If the process has completed
+                    if (processWrapper.HasExited) {
+                        HandleProcessExit (processWrapper);
+                    } else if (processWrapper.HasStarted) { // Process is still running
+                        CheckRunningProcess (processWrapper);
+                    }
+
+                    Console.WriteLine ("");
                 }
-
-                Console.WriteLine ("  " + BackgroundStarter.QueuedProcesses.Count + " processes queued.");
-
-                var processWrapper = BackgroundStarter.QueuedProcesses.Peek ();
-
-                // If the process has completed
-                if (processWrapper.HasExited) {
-                    HandleProcessExit (processWrapper);
-                } else if (processWrapper.HasStarted) { // Process is still running
-                    CheckRunningProcess (processWrapper);
-                }
-
-                Console.WriteLine ("");
             }
         }
 
