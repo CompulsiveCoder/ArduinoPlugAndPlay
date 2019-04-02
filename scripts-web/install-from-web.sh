@@ -31,10 +31,10 @@ cd $INSTALL_DIR
 
 echo "Initializing plug and play (by downloading init-from-web.sh file)..."
 
-wget -v --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | bash -s - $BRANCH $SMTP_SERVER $ADMIN_EMAIL || (echo "Failed to initialize plug and play. Script: init-from-web.sh" && exit 1)
+wget -v --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | bash -s -- $BRANCH $SMTP_SERVER $ADMIN_EMAIL || (echo "Failed to initialize plug and play. Script: init-from-web.sh" && exit 1)
 
 echo "Initializing plug and play (by downloading install-service-from-web.sh file)..."
 
-wget -v --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-service-from-web.sh | bash -s - $BRANCH || (echo "Failed to install plug and play service. Script: install-service-from-web.sh" && exit 1)
+wget -v --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-service-from-web.sh | bash -s -- $BRANCH || (echo "Failed to install plug and play service. Script: install-service-from-web.sh" && exit 1)
 
 echo "Finished setting up plug and play"
