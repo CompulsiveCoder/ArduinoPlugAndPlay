@@ -3,8 +3,8 @@ echo "Installing plug and play from the web..."
 BRANCH=$1
 DESTINATION=$2
 
-SMTP_SERVER=$1
-ADMIN_EMAIL=$2
+SMTP_SERVER=$3
+ADMIN_EMAIL=$4
 
 EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail]"
 
