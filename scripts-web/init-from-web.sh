@@ -1,4 +1,4 @@
-echo "Retrieving required libraries..."
+echo "Initializing plug and play from the web..."
 
 echo "Current directory:"
 echo "  $PWD"
