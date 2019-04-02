@@ -19,7 +19,6 @@ if [ ! -d $INSTALL_DIR ]; then
   echo "ArduinoPlugAndPlay doesn't appear to be installed at:"
   echo "  $INSTALL_DIR"
   echo "Aborting uninstall."
-  exit 1
 fi
 
 echo "Moving to install dir..."
