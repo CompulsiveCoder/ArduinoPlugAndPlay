@@ -51,7 +51,7 @@ else
 fi
 
 echo "Installing the ArduinoPlugAndPlay library..."
-sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.96 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
+sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.97 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
 
 echo "Injecting email details into configuration file"
 if [ $SMTP_SERVER ]; then
