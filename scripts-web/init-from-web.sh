@@ -31,17 +31,6 @@ echo "  $PWD/$CONFIG_FILE"
 echo "Saved config file:"
 echo "  $PWD/$CONFIG_FILE_SAVED"
 
-# If the config file is found in the downloaded package
-if [ -f $CONFIG_FILE ]; then
-  echo "Config file found. Preserving."
-
-  # If no custom config file is found
-  if [ ! -f $CONFIG_FILE_SAVED ]; then
-    # Copy the config file from the package into the saved location
-    cp -v $CONFIG_FILE $CONFIG_FILE_SAVED || ("Failed to save a copy of the ArduinoPlugAndPlay.exe.config file" && exit 1)
-  fi
-fi
-
 if [ ! -f "install-package.sh" ]; then
   echo "Downloading install-package.sh script...."
   INSTALL_SCRIPT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-package-from-web.sh"
@@ -52,6 +41,21 @@ fi
 
 echo "Installing the ArduinoPlugAndPlay library..."
 sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.97 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
+
+# If the config file is found in the downloaded package
+if [ -f $CONFIG_FILE ]; then
+  echo "Config file found. Preserving."
+
+  # If no custom config file is found
+  if [ ! -f $CONFIG_FILE_SAVED ]; then
+    # Copy the config file from the package into the saved location
+    cp -v $CONFIG_FILE $CONFIG_FILE_SAVED || ("Failed to save a copy of the ArduinoPlugAndPlay.exe.config file" && exit 1)
+  fi
+else
+  echo "Can't find config file in library:"
+  echo "  $CONFIG_FILE"
+  exit 1
+fi
 
 echo "Injecting email details into configuration file"
 if [ $SMTP_SERVER ]; then
