@@ -5,6 +5,7 @@ using duinocom;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Net.Mail;
 
 namespace ArduinoPlugAndPlay
 {
@@ -30,6 +31,9 @@ namespace ArduinoPlugAndPlay
 
         public string DeviceAddedCommand = "echo 'Device added ({FAMILY} {GROUP} {BOARD})'";
         public string DeviceRemovedCommand = "echo 'Device removed ({FAMILY} {GROUP} {BOARD})'";
+
+        public string SmtpServer;
+        public string EmailAddress;
 
         public List<string> DevicePorts = new List<string> ();
         public List<string> NewDevicePorts = new List<string> ();
@@ -77,11 +81,15 @@ namespace ArduinoPlugAndPlay
                 } catch (TimeoutException ex) {
                     Console.WriteLine ("Timeout error:");
                     Console.WriteLine (ex.Message);
+
+                    SendErrorEmail (ex);
                 } catch (Exception ex) {
                     Console.WriteLine ("==============================");
                     Console.WriteLine ("Error:");
                     Console.WriteLine (ex.ToString ());
                     Console.WriteLine ("==============================");
+
+                    SendErrorEmail (ex);
                 }
 
                 // Sleep for a while
@@ -478,6 +486,7 @@ namespace ArduinoPlugAndPlay
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
                     Console.WriteLine (ex.ToString ());
                 }
+                SendErrorEmail (ex);
             }
             return info;
         }
@@ -616,6 +625,42 @@ namespace ArduinoPlugAndPlay
         {
             var logFile = GetLogFile (processWrapper.Action, processWrapper.Info);
             File.AppendAllText (logFile, text + Environment.NewLine);
+        }
+
+        public void SendErrorEmail (Exception error)
+        {
+            var areDetailsProvided = (SmtpServer != "mail.example.com" &&
+                                     EmailAddress != "user@example.com" &&
+                                     SmtpServer.ToLower () != "na" &&
+                                     EmailAddress.ToLower () != "na" &&
+                                     !String.IsNullOrWhiteSpace (SmtpServer) &&
+                                     !String.IsNullOrWhiteSpace (EmailAddress));
+
+            if (areDetailsProvided) {
+                try {
+                    var subject = "Error: ArduinoPlugAndPlay";
+                    var body = "The following error was thrown ArduinoPlugAndPlay utility...\n\n" + error.ToString ();
+
+                    var mail = new MailMessage (EmailAddress, EmailAddress, subject, body);
+
+                    var smtpClient = new SmtpClient (SmtpServer);
+
+                    smtpClient.Send (mail);
+
+                } catch (Exception ex) {
+                    Console.WriteLine ("");
+                    Console.WriteLine ("An error occurred while sending error report...");
+                    Console.WriteLine ("SMTP Server: " + SmtpServer);
+                    Console.WriteLine ("Email Address: " + EmailAddress);
+                    Console.WriteLine ("");
+                    Console.WriteLine (ex.ToString ());
+                    Console.WriteLine ("");
+                }
+            } else {
+                Console.WriteLine ("");
+                Console.WriteLine ("SMTP server and email address not provided. Skipping error report email.");
+                Console.WriteLine ("");
+            }
         }
     }
 }

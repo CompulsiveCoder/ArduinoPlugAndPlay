@@ -39,6 +39,9 @@ namespace ArduinoPlugAndPlay.ClientConsole
             deviceManager.DeviceAddedCommand = config.GetValue ("DeviceAddedCommand");
             deviceManager.DeviceRemovedCommand = config.GetValue ("DeviceRemovedCommand");
 
+            deviceManager.SmtpServer = config.GetValue ("SmtpServer");
+            deviceManager.EmailAddress = config.GetValue ("EmailAddress");
+
 
             deviceManager.Run ();
 

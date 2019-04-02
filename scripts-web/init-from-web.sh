@@ -7,13 +7,19 @@ DIR=$PWD
 
 BRANCH=$1
 
-EXAMPLE_COMMAND="Example:\n..sh [branch]"
+SMTP_SERVER=$2
+ADMIN_EMAIL=$3
+
+EXAMPLE_COMMAND="Example:\n..sh [Branch] [SmtpServer] [AdminEmail]"
 
 if [ ! $BRANCH ]; then
   BRANCH="master"
 fi
 
-echo "$BRANCH"
+echo "Branch: $BRANCH"
+
+echo "SMTP server: $SMTP_SERVER"
+echo "Admin email: $ADMIN_EMAIL"
 
 echo "Installing libraries..."
 
@@ -46,6 +52,14 @@ fi
 
 echo "Installing the ArduinoPlugAndPlay library..."
 sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.96 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
+
+echo "Injecting email details into configuration file"
+if [ $SMTP_SERVER ]; then
+  xmlstarlet ed -L -u '/configuration/appSettings/add[@key="SmtpServer"]/@value' -v "$SMTP_SERVER" $CONFIG_FILE_SAVED
+fi
+if [ $ADMIN_EMAIL ]; then
+  xmlstarlet ed -L -u '/configuration/appSettings/add[@key="EmailAddress"]/@value' -v "$ADMIN_EMAIL" $CONFIG_FILE_SAVED
+fi
 
 # If a saved/custom config file is found then install it
 if [ -f $CONFIG_FILE_SAVED ]; then

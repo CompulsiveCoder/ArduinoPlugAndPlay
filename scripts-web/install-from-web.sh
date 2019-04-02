@@ -3,7 +3,10 @@ echo "Installing plug and play..."
 BRANCH=$1
 DESTINATION=$2
 
-EXAMPLE_COMMAND="Example:\n..sh [branch] [destination]"
+SMTP_SERVER=$1
+ADMIN_EMAIL=$2
+
+EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail]"
 
 if [ ! $BRANCH ]; then
   BRANCH="master"
