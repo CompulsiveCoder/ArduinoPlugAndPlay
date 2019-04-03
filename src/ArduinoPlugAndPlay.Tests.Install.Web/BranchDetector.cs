@@ -4,20 +4,20 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
 {
     public class BranchDetector
     {
+        public string Branch { get; set; }
+
         public BranchDetector ()
         {
+            Initialize ();
         }
 
-        public string GetBranch ()
+        public void Initialize ()
         {
-            return "dev";
-            // TODO: Clean up
-            /*var cmd = "/bin/bash -c \"echo ${git branch | sed -n -e 's/^\\* \\(.*\\)/\\1/p'}\"";
-            //var cmd = "git branch | sed -n -e 's/^\\* \\(.*\\)/\\1/p'";
+            var cmd = "/bin/bash -c \"echo $(git branch | sed -n -e 's/^\\* \\(.*\\)/\\1/p')\"";
             var starter = new ProcessStarter ();
+            starter.WriteOutputToConsole = false;
             starter.Start (cmd);
-            var branch = starter.Output.Trim ();
-            return branch;*/
+            Branch = starter.Output.Trim ();
         }
     }
 }

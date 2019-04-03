@@ -19,7 +19,7 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
 
             var scriptPath = Path.GetFullPath ("install-from-web.sh");
 
-            var branch = new BranchDetector ().GetBranch ();
+            var branch = new BranchDetector ().Branch;
 
             var destination = "installation/ArduinoPlugAndPlay";
 
