@@ -8,7 +8,7 @@ namespace ArduinoPlugAndPlay
     {
         public SerialClient Client;
 
-        public int TimeoutReadingLineInSeconds = 60;
+        public int TimeoutReadingLineInSeconds = 15;
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
         public DeviceReaderWriter ()
