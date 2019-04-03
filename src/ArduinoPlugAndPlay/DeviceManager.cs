@@ -32,12 +32,13 @@ namespace ArduinoPlugAndPlay
         public string DeviceAddedCommand = "echo 'Device added ({FAMILY} {GROUP} {BOARD})'";
         public string DeviceRemovedCommand = "echo 'Device removed ({FAMILY} {GROUP} {BOARD})'";
 
-        public string SmtpServer;
-        public string EmailAddress;
+        public string SmtpServer = String.Empty;
+        public string EmailAddress = String.Empty;
 
         public List<string> DevicePorts = new List<string> ();
         public List<string> NewDevicePorts = new List<string> ();
         public List<string> RemovedDevicePorts = new List<string> ();
+        public List<string> UnusableDevicePorts = new List<string> ();
 
         public int DefaultBaudRate = 9600;
 
@@ -46,7 +47,8 @@ namespace ArduinoPlugAndPlay
         public bool IsVerbose = true;
 
         public int CommandTimeoutInSeconds = 5 * 60;
-        public int TimeoutExtractingDetailsInSeconds = 1 * 60;
+        public int TimeoutExtractingDetailsInSeconds = 60;
+        //1 * 60;
 
         public bool UseCommandTimeout = true;
 
@@ -171,11 +173,15 @@ namespace ArduinoPlugAndPlay
 
                 var isNewDevice = !DevicePorts.Contains (item.Trim ());
 
+                var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
+
                 var deviceStatus = "";
 
-                if (isNewDevice) {
+                if (isNewDevice && isUsableDevice) {
                     deviceStatus = "new";
                     NewDevicePorts.Add (item);
+                } else if (!isUsableDevice) {
+                    deviceStatus = "unusable";
                 } else {
                     deviceStatus = "existing";
                 }
@@ -218,12 +224,14 @@ namespace ArduinoPlugAndPlay
                 // && Platformio.PortIsInList (devicePort)) // TODO: Check if this should be used. It's slow.
                 var info = ExtractDeviceInfo (devicePort);
 
-                Console.WriteLine ("  " + devicePort);
+                if (info != null) {
+                    Console.WriteLine ("  " + devicePort);
 
-                DevicePorts.Add (devicePort);
-                Data.WriteInfoToFile (info);
+                    DevicePorts.Add (devicePort);
+                    Data.WriteInfoToFile (info);
 
-                LaunchAddDeviceCommand (info);
+                    LaunchAddDeviceCommand (info);
+                }
             }
             // }
         }
@@ -427,28 +435,30 @@ namespace ArduinoPlugAndPlay
 
                 var allDetailsHaveBeenDetected = false;
 
-                Timeout.Start ();
-
                 var deviceHasBeenDisconnected = false;
+
+                Thread.Sleep (1000);
+
 
                 // Read the first line from the device before sending a command.
                 // This seems to allow commands to function properly
                 ReaderWriter.ReadLine ();
 
-                // Send a command requesting the device info
-                ReaderWriter.WriteLine ("#");
-
                 var i = 0;
 
                 Console.WriteLine ("");
 
+                Timeout.Start ();
+
                 while (!allDetailsHaveBeenDetected) {
                     // && !deviceHasBeenDisconnected) { // TODO: Remove if not needed. This check is slow
+
+
                     i++;
 
                     // Resend the # command after 8 lines
                     var modValue = i % 8;
-                    if (modValue == 0) {
+                    if (i == 0 || modValue == 0) {
                         ReaderWriter.WriteLine ("#");
                     }
 
@@ -479,13 +489,22 @@ namespace ArduinoPlugAndPlay
 
                 ReaderWriter.Close ();
                 //}
+            } catch (TimeoutException ex) {
+                Console.WriteLine ("Timed out. Aborting.");
+                UnusableDevicePorts.Add (portName);
             } catch (IOException ex) {
+                UnusableDevicePorts.Add (portName);
                 if (ex.Message.Contains ("Input/output error")) {
                     Console.WriteLine ("Device was disconnected. Aborting install.");
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
                     Console.WriteLine (ex.ToString ());
                 }
+                SendErrorEmail (ex);
+            } catch (Exception ex) {
+                UnusableDevicePorts.Add (portName);
+                Console.WriteLine ("An error occurred.");
+                Console.WriteLine (ex.ToString ());
                 SendErrorEmail (ex);
             }
             return info;

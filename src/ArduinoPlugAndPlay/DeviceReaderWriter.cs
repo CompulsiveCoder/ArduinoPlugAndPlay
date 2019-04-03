@@ -1,11 +1,15 @@
 ﻿using System;
 using duinocom;
+using System.Threading;
 
 namespace ArduinoPlugAndPlay
 {
     public class DeviceReaderWriter
     {
         public SerialClient Client;
+
+        public int TimeoutReadingLineInSeconds = 60;
+        public TimeoutHelper Timeout = new TimeoutHelper ();
 
         public DeviceReaderWriter ()
         {
@@ -29,6 +33,11 @@ namespace ArduinoPlugAndPlay
 
         public virtual string ReadLine ()
         {
+            Timeout.Start ();
+            while (Client.Port.BytesToRead == 0) {
+                Thread.Sleep (100);
+                Timeout.Check (TimeoutReadingLineInSeconds * 1000, "Timed out reading a line from the serial port.");
+            }
             return Client.ReadLine ();
         }
 
