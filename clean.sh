@@ -5,3 +5,7 @@ sh inject-version.sh 1.0.0.1
 if [ -d "mock" ]; then
   rm "mock" -r
 fi
+
+if [ -d "_tmp" ]; then
+  rm "_tmp" -r
+fi

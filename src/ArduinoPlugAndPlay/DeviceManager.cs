@@ -330,7 +330,7 @@ namespace ArduinoPlugAndPlay
             var fixedCommand = initialCommand;
 
             fixedCommand = InsertValues (fixedCommand, info);
-            fixedCommand = fixedCommand + " >> " + GetLogFile (action, info) + "";
+            fixedCommand = fixedCommand + " >> " + GetLogFile (info.Port, info.GroupName) + "";
 
             return fixedCommand;
 
@@ -338,7 +338,7 @@ namespace ArduinoPlugAndPlay
 
         #endregion
 
-        public string GetLogFile (string action, DeviceInfo info)
+        public string GetLogFile (string portName, string groupName)
         {
             var logsDir = Path.GetFullPath ("logs");
             if (!Directory.Exists (logsDir))
@@ -348,11 +348,48 @@ namespace ArduinoPlugAndPlay
 
             var dateString = date.Year + "-" + date.Month + "-" + date.Day;
 
-            var logFileName = dateString + "-" + info.Port.Replace ("/dev/", "") + "-" + info.GroupName + ".txt";
+            var logFileName = dateString + "-" + portName.Replace ("/dev/", "") + "-" + groupName + ".txt";
 
             var filePath = Path.Combine (logsDir, logFileName);
 
             return filePath;
+        }
+
+        public string GetLogFile (string portName)
+        {
+            var logsDir = Path.GetFullPath ("logs");
+            if (!Directory.Exists (logsDir))
+                Directory.CreateDirectory (logsDir);
+
+            var date = DateTime.Now;
+
+            var dateString = date.Year + "-" + date.Month + "-" + date.Day;
+
+            var logFileNameSection = dateString + "-" + portName.Replace ("/dev/", "");
+
+            var logFilePath = String.Empty;
+
+            foreach (var filePath in Directory.GetFiles(Path.GetFullPath("logs"))) {
+                var fileName = Path.GetFileName (filePath);
+                if (fileName.Contains (logFileNameSection))
+                    logFilePath = filePath;
+            }
+
+            return logFilePath;
+        }
+
+        public string ReadAllLogFiles ()
+        {
+            var builder = new StringBuilder ();
+            foreach (var file in Directory.GetFiles(Path.GetFullPath("logs"))) {
+                var content = File.ReadAllText (file);
+                builder.AppendLine (Path.GetFileName (file));
+                builder.AppendLine ("");
+                builder.AppendLine (content);
+                builder.AppendLine ("");
+                builder.AppendLine ("");
+            }
+            return builder.ToString ();
         }
 
         public bool StartBashCommand (string action, string command, DeviceInfo info)
@@ -495,19 +532,18 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("Timed out. Aborting.");
                 UnusableDevicePorts.Add (portName);
             } catch (IOException ex) {
-                UnusableDevicePorts.Add (portName);
                 if (ex.Message.Contains ("Input/output error")) {
-                    Console.WriteLine ("Device was disconnected. Aborting install.");
+                    Console.WriteLine ("Device was likely disconnected. Aborting install.");
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
                     Console.WriteLine (ex.ToString ());
+                    SendErrorEmail (ex, portName);
                 }
-                SendErrorEmail (ex);
             } catch (Exception ex) {
                 UnusableDevicePorts.Add (portName);
                 Console.WriteLine ("An error occurred.");
                 Console.WriteLine (ex.ToString ());
-                SendErrorEmail (ex);
+                SendErrorEmail (ex, portName);
             }
             return info;
         }
@@ -644,11 +680,39 @@ namespace ArduinoPlugAndPlay
 
         public void WriteToLog (ProcessWrapper processWrapper, string text)
         {
-            var logFile = GetLogFile (processWrapper.Action, processWrapper.Info);
+            var logFile = GetLogFile (processWrapper.Info.Port, processWrapper.Info.GroupName);
             File.AppendAllText (logFile, text + Environment.NewLine);
         }
 
         public void SendErrorEmail (Exception error)
+        {
+            
+            var message = "The following error was thrown ArduinoPlugAndPlay utility...\n\n" + error.ToString ();
+
+            var logs = ReadAllLogFiles ();
+
+            message += "\n\nLog files...\n\n" + logs;
+
+            SendErrorEmail (message);
+            
+        }
+
+        public void SendErrorEmail (Exception error, string portName)
+        {
+            
+            var message = "The following error was thrown ArduinoPlugAndPlay utility...\n\nPort: " + portName + "\n\n" + error.ToString ();
+
+            var logFile = GetLogFile (portName);
+
+            var logFileContent = File.ReadAllText (logFile);
+
+            message += "\n\nLog file...\n\n" + logFileContent;
+
+            SendErrorEmail (message);
+            
+        }
+
+        public void SendErrorEmail (string message)
         {
             var areDetailsProvided = (SmtpServer != "mail.example.com" &&
                                      EmailAddress != "user@example.com" &&
@@ -660,7 +724,7 @@ namespace ArduinoPlugAndPlay
             if (areDetailsProvided) {
                 try {
                     var subject = "Error: ArduinoPlugAndPlay";
-                    var body = "The following error was thrown ArduinoPlugAndPlay utility...\n\n" + error.ToString ();
+                    var body = message;
 
                     var mail = new MailMessage (EmailAddress, EmailAddress, subject, body);
 
