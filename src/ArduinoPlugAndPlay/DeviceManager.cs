@@ -221,10 +221,11 @@ namespace ArduinoPlugAndPlay
                 // && Platformio.PortIsInList (devicePort)) // TODO: Check if this should be used. It's slow.
                 var info = ExtractDeviceInfo (devicePort);
 
+                DevicePorts.Add (devicePort);
+
                 if (info != null) {
                     Console.WriteLine ("  " + devicePort);
 
-                    DevicePorts.Add (devicePort);
                     Data.WriteInfoToFile (info);
 
                     LaunchAddDeviceCommand (info);
@@ -242,23 +243,23 @@ namespace ArduinoPlugAndPlay
             if (IsVerbose)
                 Console.WriteLine ("Checking for removed devices...");
 
-            var existingDevices = Data.ReadAllDevicesFromFile ();
+            //var existingDevices = Data.ReadAllDevicesFromFile ();
 
-            if (existingDevices.Length > 0) {
+            if (DevicePorts.Count > 0) {
                 if (IsVerbose)
                     Console.WriteLine ("Existing devices (stored in file):");
 
                 var detectedDevices = new List<string> (GetDeviceList ());
 
-                foreach (var device in existingDevices) {
-
-                    var deviceHasBeenRemoved = !detectedDevices.Contains (device.Port);
+                for (int i = 0; i < DevicePorts.Count; i++) {
+                    var portName = DevicePorts [i];
+                    var deviceHasBeenRemoved = !detectedDevices.Contains (portName);
 
                     if (IsVerbose)
                         Console.WriteLine ("Has been removed: " + deviceHasBeenRemoved);
                 
                     if (deviceHasBeenRemoved) {
-                        RemovedDevicePorts.Add (device.Port);
+                        RemovedDevicePorts.Add (portName);
                     }
                 }
             }
@@ -284,17 +285,23 @@ namespace ArduinoPlugAndPlay
         public void RemoveDevice (string devicePort)
         {
             if (!String.IsNullOrEmpty (devicePort)) {
-                Console.WriteLine ("  " + devicePort);
-
-                var info = Data.ReadInfoFromFile (devicePort);
-
-                Data.DeleteInfoFromFile (info.Port);
 
                 DevicePorts.Remove (devicePort);
 
                 RemovedDevicePorts.Remove (devicePort);
+                
+                Console.WriteLine ("  " + devicePort);
 
-                LaunchRemoveDeviceCommand (info);
+                if (UnusableDevicePorts.Contains (devicePort)) {
+                    UnusableDevicePorts.Remove (devicePort);
+                } else {
+
+                    var info = Data.ReadInfoFromFile (devicePort);
+
+                    Data.DeleteInfoFromFile (info.Port);
+
+                    LaunchRemoveDeviceCommand (info);
+                }
 
             }
         }
@@ -530,19 +537,25 @@ namespace ArduinoPlugAndPlay
                 //}
             } catch (TimeoutException ex) {
                 Console.WriteLine ("Timed out. Aborting.");
-                UnusableDevicePorts.Add (portName);
+
+                if (!UnusableDevicePorts.Contains (portName))
+                    UnusableDevicePorts.Add (portName);
             } catch (IOException ex) {
                 if (ex.Message.Contains ("Input/output error")) {
                     Console.WriteLine ("Device was likely disconnected. Aborting install.");
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
                     Console.WriteLine (ex.ToString ());
+
                     SendErrorEmail (ex, portName);
                 }
             } catch (Exception ex) {
-                UnusableDevicePorts.Add (portName);
+                if (!UnusableDevicePorts.Contains (portName))
+                    UnusableDevicePorts.Add (portName);
+
                 Console.WriteLine ("An error occurred.");
                 Console.WriteLine (ex.ToString ());
+
                 SendErrorEmail (ex, portName);
             }
             return info;

@@ -44,6 +44,7 @@
     <Compile Include="DeviceManagerAddDeviceRetryAfterErrorTestFixture.cs" />
     <Compile Include="DeviceManagerRemoveDeviceRetryAfterErrorTestFixture.cs" />
     <Compile Include="DeviceManagerLoadExistingDevicesIntegrationTestFixture.cs" />
+    <Compile Include="DeviceManagerAddUnusableDeviceTestFixture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
