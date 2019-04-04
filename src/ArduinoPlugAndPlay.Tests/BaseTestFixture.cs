@@ -225,5 +225,12 @@ namespace ArduinoPlugAndPlay.Tests
 
             data.WriteInfoToFile (info);
         }
+
+        public void CreateExampleDeviceInfoFiles (DeviceInfo info)
+        {
+            var data = new DeviceInfoFileManager ();
+
+            data.WriteInfoToFile (info);
+        }
     }
 }

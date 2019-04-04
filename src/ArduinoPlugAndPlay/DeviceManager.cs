@@ -75,8 +75,6 @@ namespace ArduinoPlugAndPlay
 
             LoadExistingDeviceList ();
 
-            CheckForPortChanges ();
-
             while (IsActive) {
                 try {
                     RunLoop ();
@@ -125,27 +123,26 @@ namespace ArduinoPlugAndPlay
 
         public void LoadExistingDeviceList ()
         {
-            foreach (var device in Data.ReadAllDevicesFromFile()) {
-                DevicePorts.Add (device.Port);
+            Console.WriteLine ("Loading existing device list from files...");
+            foreach (var infoFromFile in Data.ReadAllDevicesFromFile()) {
+                var infoFromDevice = ExtractDeviceInfo (infoFromFile.Port);
+                var filesMatchDeviceInfo = infoFromFile.DoesMatch (infoFromDevice);
+
+                var physicalDeviceIsFound = infoFromDevice != null;
+
+                if (!physicalDeviceIsFound)
+                    RemoveDevice (infoFromFile.Port);
+                else if (!filesMatchDeviceInfo)
+                    HandlePortDeviceMismatch (infoFromFile.Port);
+                else
+                    DevicePorts.Add (infoFromFile.Port);
             }
         }
 
-        public void CheckForPortChanges ()
+        public void HandlePortDeviceMismatch (string portName)
         {
-            for (int i = 0; i < DevicePorts.Count; i++) {
-                var port = DevicePorts [i];
-
-                var infoFromFile = Data.ReadInfoFromFile (port);
-                var infoFromDevice = ExtractDeviceInfo (port);
-
-                var portHasChanged = !infoFromFile.DoesMatch (infoFromDevice);
-
-                if (portHasChanged || infoFromDevice == null) {
-                    Console.WriteLine ("Device on port " + port + " has changed. Removing so it can be readded.");
-                    RemoveDevice (port);
-                    i--;
-                }
-            }
+            Console.WriteLine ("Device on port " + portName + " has changed. Removing so it can be readded.");
+            RemoveDevice (portName);
         }
 
         #region New Devices
@@ -277,6 +274,11 @@ namespace ArduinoPlugAndPlay
                     RemoveDevice (RemovedDevicePorts [0]);
                 }
             }
+        }
+
+        public void HandlePortDisconnected (string devicePort)
+        {
+            RemoveDevice (devicePort);
         }
 
         public void RemoveDevice (string devicePort)

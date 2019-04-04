@@ -105,7 +105,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
                     
         }
 
-        [Test]
+        // TODO: Remove if not needed. Should be obsolete
+        /*[Test]
         public void Test_CheckForChangedPorts ()
         {
             // Set up the mock objects
@@ -145,7 +146,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             // Assert that the expected command was started
             assertion.AssertRemoveDeviceCommandStarted (info, mockBackgroundProcessStarter);
 
-        }
+        }*/
     }
 }
 
