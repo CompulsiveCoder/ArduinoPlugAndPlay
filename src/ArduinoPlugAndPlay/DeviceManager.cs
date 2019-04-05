@@ -541,7 +541,8 @@ namespace ArduinoPlugAndPlay
                 if (!UnusableDevicePorts.Contains (portName))
                     UnusableDevicePorts.Add (portName);
             } catch (IOException ex) {
-                if (ex.Message.Contains ("Input/output error")) {
+                if (ex.Message.Contains ("Input/output error")
+                    || ex.Message.Contains ("No such file or directory")) {
                     Console.WriteLine ("Device was likely disconnected. Aborting install.");
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
@@ -717,12 +718,13 @@ namespace ArduinoPlugAndPlay
 
             var logFile = GetLogFile (portName);
 
-            var logFileContent = File.ReadAllText (logFile);
+            if (!String.IsNullOrEmpty (logFile)) {
+                var logFileContent = File.ReadAllText (logFile);
 
-            message += "\n\nLog file...\n\n" + logFileContent;
+                message += "\n\nLog file...\n\n" + logFileContent;
+            }
 
             SendErrorEmail (message);
-            
         }
 
         public void SendErrorEmail (string message)
