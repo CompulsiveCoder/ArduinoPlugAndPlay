@@ -34,7 +34,7 @@ echo "  $PWD/$CONFIG_FILE_SAVED"
 if [ ! -f "install-package.sh" ]; then
   echo "Downloading install-package.sh script...."
   INSTALL_SCRIPT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-package-from-web.sh"
-  wget --no-cache -O install-package-from-web.sh $INSTALL_SCRIPT_FILE_URL || ("Failed to download install-package.sh script" && exit 1)
+  wget -q --no-cache -O install-package-from-web.sh $INSTALL_SCRIPT_FILE_URL || ("Failed to download install-package.sh script" && exit 1)
 else
   echo "The install-package.sh script already exists. Skipping download."
 fi
