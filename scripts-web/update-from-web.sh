@@ -44,7 +44,7 @@ rm ArduinoPlugAndPlay*.nupkg || (echo "Failed to remove old ArduinoPlugAndPlay l
 
 echo "Reinitializing plug and play (by downloading init-from-web.sh file)..."
 
-wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | bash -s $BRANCH $INSTALL_DIR || (echo "Failed to initialize plug and play. Script: init-from-web.sh" && exit 1)
+wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | bash -s $BRANCH || (echo "Failed to initialize plug and play. Script: init-from-web.sh" && exit 1)
 
 echo "Reinstalling the service file (by downloading install-service-from-web.sh file)..."
 
