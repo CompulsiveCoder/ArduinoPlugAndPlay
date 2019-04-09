@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace ArduinoPlugAndPlay.Tests
 {
@@ -9,6 +10,8 @@ namespace ArduinoPlugAndPlay.Tests
         public string RemainingMockOutput = "";
 
         public bool MockOutputHasBeenSet = false;
+
+        public bool EnableVirtualDelay = false;
 
         public MockDeviceReaderWriter ()
         {
@@ -53,6 +56,11 @@ namespace ArduinoPlugAndPlay.Tests
                 RemainingMockOutput = RemainingMockOutput.Substring (line.Length + 1, RemainingMockOutput.Length - line.Length - 1);
 
                 Console.WriteLine (line);
+
+                if (EnableVirtualDelay) {
+                    // Sleep for a while because a ReadLine command normally takes time
+                    Thread.Sleep (200);
+                }
 
                 return line;
             }
