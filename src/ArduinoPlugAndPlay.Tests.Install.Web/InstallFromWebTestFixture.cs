@@ -53,7 +53,7 @@ namespace ArduinoPlugAndPlay.Tests.Install.Web
 
             var expectedServiceFile = Path.Combine (installDir, "mock/services/arduino-plug-and-play.service");
 
-            Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service file not found.");
+            Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service file not found: " + expectedServiceFile);
 
             var configFile = Path.Combine (installDir, "ArduinoPlugAndPlay.exe.config");
 

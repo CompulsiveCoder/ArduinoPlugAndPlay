@@ -496,8 +496,6 @@ namespace ArduinoPlugAndPlay
                 Timeout.Start ();
 
                 while (!allDetailsHaveBeenDetected) {
-                    // && !deviceHasBeenDisconnected) { // TODO: Remove if not needed. This check is slow
-
                     // Resend the # command after every 10 lines if the data hasn't been received
                     var modValue = i % 10;
                     if (i == 0 || modValue == 0) {
@@ -518,9 +516,6 @@ namespace ArduinoPlugAndPlay
                     output.Contains (Extractor.BoardTypePreText);
 
                     Timeout.Check (TimeoutExtractingDetailsInSeconds * 1000, "Timed out attempting to read the details from the device.");
-
-                    // TODO: Remove if not needed. This check is slow
-                    //deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
 
                     i++;
                 }
