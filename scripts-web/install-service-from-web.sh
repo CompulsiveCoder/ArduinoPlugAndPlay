@@ -16,7 +16,7 @@ if [ ! $DESTINATION ]; then
   DESTINATION="/usr/local/ArduinoPlugAndPlay"
 fi
 
-echo "$BRANCH"
+echo "  Branch: $BRANCH"
 
 # Get the service file
 

@@ -47,8 +47,7 @@ namespace ArduinoPlugAndPlay
         public bool IsVerbose = true;
 
         public int CommandTimeoutInSeconds = 5 * 60;
-        public int TimeoutExtractingDetailsInSeconds = 15;
-        //1 * 60;
+        public int TimeoutExtractingDetailsInSeconds = 30;
 
         public bool UseCommandTimeout = true;
 
