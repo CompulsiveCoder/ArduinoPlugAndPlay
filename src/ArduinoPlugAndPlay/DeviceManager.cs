@@ -498,11 +498,8 @@ namespace ArduinoPlugAndPlay
                 while (!allDetailsHaveBeenDetected) {
                     // && !deviceHasBeenDisconnected) { // TODO: Remove if not needed. This check is slow
 
-
-                    i++;
-
-                    // Resend the # command after 8 lines
-                    var modValue = i % 8;
+                    // Resend the # command after every 10 lines if the data hasn't been received
+                    var modValue = i % 10;
                     if (i == 0 || modValue == 0) {
                         ReaderWriter.WriteLine ("#");
                     }
@@ -524,6 +521,8 @@ namespace ArduinoPlugAndPlay
 
                     // TODO: Remove if not needed. This check is slow
                     //deviceHasBeenDisconnected = !Platformio.PortIsInList (portName);
+
+                    i++;
                 }
 
                 Console.WriteLine ("");
