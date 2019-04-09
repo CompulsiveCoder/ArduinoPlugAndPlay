@@ -40,7 +40,7 @@ else
 fi
 
 echo "Installing the ArduinoPlugAndPlay library..."
-sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.121 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
+sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.130 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
 
 # If the config file is found in the downloaded package
 if [ -f $CONFIG_FILE ]; then
