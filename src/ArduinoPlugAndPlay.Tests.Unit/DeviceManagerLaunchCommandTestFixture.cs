@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace ArduinoPlugAndPlay.Tests.Unit
 {
-    [TestFixture]
+    [TestFixture (Category = "Unit")]
     public class DeviceManagerLaunchCommandTestFixture : BaseTestFixture
     {
         public DeviceManagerLaunchCommandTestFixture ()
