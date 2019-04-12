@@ -103,15 +103,15 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("");
 
             // Check devices
-            CheckForNewDevices ();
             CheckForRemovedDevices ();
+            CheckForNewDevices ();
 
             // Clean up any problems
             CheckRunningProcesses ();
 
             // Handle device changes
-            ProcessNewDevices ();
             ProcessRemovedDevices ();
+            ProcessNewDevices ();
 
 
             Console.WriteLine ("");
