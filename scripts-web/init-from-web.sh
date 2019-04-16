@@ -34,13 +34,13 @@ echo "  $PWD/$CONFIG_FILE_SAVED"
 if [ ! -f "install-package.sh" ]; then
   echo "Downloading install-package.sh script...."
   INSTALL_SCRIPT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-package-from-web.sh"
-  wget -q --no-cache -O install-package-from-web.sh $INSTALL_SCRIPT_FILE_URL || ("Failed to download install-package.sh script" && exit 1)
+  wget -q --no-cache -O install-package-from-web.sh $INSTALL_SCRIPT_FILE_URL || exit 1
 else
   echo "The install-package.sh script already exists. Skipping download."
 fi
 
 echo "Installing the ArduinoPlugAndPlay library..."
-sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.136 || ("Failed to install ArduinoPlugAndPlay package" && exit 1)
+sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.136 || exit 1
 
 # If the config file is found in the downloaded package
 if [ -f $CONFIG_FILE ]; then
@@ -49,7 +49,7 @@ if [ -f $CONFIG_FILE ]; then
   # If no custom config file is found
   if [ ! -f $CONFIG_FILE_SAVED ]; then
     # Copy the config file from the package into the saved location
-    cp -v $CONFIG_FILE $CONFIG_FILE_SAVED || ("Failed to save a copy of the ArduinoPlugAndPlay.exe.config file" && exit 1)
+    cp -v $CONFIG_FILE $CONFIG_FILE_SAVED || exit 1
   fi
 else
   echo "Can't find config file in library:"
@@ -71,11 +71,11 @@ if [ -f $CONFIG_FILE_SAVED ]; then
 
   # Copy the default config file to a .bak file
   echo "Backing up empty config file"
-  cp $CONFIG_FILE $CONFIG_FILE.bak || ("Failed to backup default config file" && exit 1)
+  cp $CONFIG_FILE $CONFIG_FILE.bak || exit 1
 
   echo "Restoring saved config file"
   # Install the saved/custom config file into the library
-  cp $CONFIG_FILE_SAVED $CONFIG_FILE || ("Failed to install saved config file" && exit 1)
+  cp $CONFIG_FILE_SAVED $CONFIG_FILE || exit 1
 
 fi
 
