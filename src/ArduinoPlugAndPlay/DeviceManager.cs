@@ -106,7 +106,7 @@ namespace ArduinoPlugAndPlay
             CheckForRemovedDevices ();
             CheckForNewDevices ();
 
-            // Clean up any problems
+            // Check existing processes
             CheckRunningProcesses ();
 
             // Handle device changes
