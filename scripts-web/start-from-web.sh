@@ -8,7 +8,7 @@ fi
 echo "Reinitializing plug and play (by downloading init-from-web.sh file)..."
 
 echo "Downloading init-from-web.sh script..."
-curl -o init-from-web.sh -f https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh || echo "Failed to download init-from-web.sh script"
+curl --connect-timeout 3 -o init-from-web.sh -f https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh || echo "Failed to download init-from-web.sh script"
 
 echo "Running init-from-web.sh script..."
 bash init-from-web.sh $BRANCH || exit 1
