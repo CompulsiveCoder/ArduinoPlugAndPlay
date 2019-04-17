@@ -18,9 +18,11 @@ PACKAGE_FILE_EXT="$PACKAGE_NAME.$PACKAGE_VERSION.nupkg"
 
 # TODO: Remove the reference to GreenSense
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
-	wget -q --no-cache "https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg" -O $PACKAGE_FILE_EXT || (echo "Failed to download $PACKAGE_NAME library package." && exit 1)
+  echo "Downloading package..."
+	curl -f "https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg" -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
 
-	unzip -q -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/" || (echo "Failed to unzip package" && exit 1)
+  echo "Unzipping package..."
+	unzip -q -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/" || exit 1
 else
 	echo "  Already exists. Skipping download."
 fi
