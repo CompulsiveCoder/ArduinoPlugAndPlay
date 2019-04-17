@@ -15,11 +15,13 @@ echo "Installing package $PACKAGE_NAME $PACKAGE_VERSION..."
 
 PACKAGE_FILE="$PACKAGE_NAME.$PACKAGE_VERSION"
 PACKAGE_FILE_EXT="$PACKAGE_NAME.$PACKAGE_VERSION.nupkg"
+PACKAGE_URL="https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg"
 
 # TODO: Remove the reference to GreenSense
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
   echo "Downloading package..."
-	curl -f "https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg" -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
+  echo "  $PACKAGE_URL"
+	curl -v -LO -f $PACKAGE_URL -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
 
   echo "Unzipping package..."
 	unzip -q -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/" || exit 1

@@ -113,7 +113,6 @@ namespace ArduinoPlugAndPlay
             ProcessRemovedDevices ();
             ProcessNewDevices ();
 
-
             Console.WriteLine ("");
             Console.WriteLine ("Loop Completed!");
             Console.WriteLine ("----------");
