@@ -21,7 +21,7 @@ PACKAGE_URL="https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg"
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
   echo "Downloading package..."
   echo "  $PACKAGE_URL"
-	curl -v -LO -f $PACKAGE_URL -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
+	curl -LO -f $PACKAGE_URL -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
 
   echo "Unzipping package..."
 	unzip -q -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/" || exit 1
