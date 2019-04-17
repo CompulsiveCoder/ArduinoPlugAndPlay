@@ -4,7 +4,7 @@
 
  [Service]
  Type=idle
- ExecStart=/bin/bash -c "mkdir -p {INSTALL_PATH}; cd {INSTALL_PATH}; wget --no-cache -O start-from-web.sh https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/{BRANCH}/scripts-web/start-from-web.sh; bash start-from-web.sh {BRANCH}"
+ ExecStart=/bin/bash -c "mkdir -p {INSTALL_PATH}; cd {INSTALL_PATH}; curl -o start-from-web.sh -f https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/{BRANCH}/scripts-web/start-from-web.sh; bash start-from-web.sh {BRANCH}"
 
  [Install]
  WantedBy=multi-user.target
