@@ -25,7 +25,7 @@ namespace ArduinoPlugAndPlay
 
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
-        public int SleepTimeInSeconds = 3;
+        public int SleepTimeInSeconds = 5;
 
         public bool IsActive = true;
 
@@ -487,6 +487,8 @@ namespace ArduinoPlugAndPlay
                 // Read the first line from the device before sending a command.
                 // This seems to allow commands to function properly
                 ReaderWriter.ReadLine ();
+
+                ReaderWriter.WriteLine ("#");
 
                 var i = 0;
 
