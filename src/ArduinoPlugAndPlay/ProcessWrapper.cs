@@ -26,6 +26,14 @@ namespace ArduinoPlugAndPlay
             }
         }
 
+        public DateTime StartTime = DateTime.MinValue;
+
+        public TimeSpan Duration {
+            get {
+                return DateTime.Now.Subtract (StartTime);
+            }
+        }
+
         public ProcessWrapper (string action, DeviceInfo info, Process process)
         {
             Key = action + "-" + info.Port;
@@ -41,6 +49,7 @@ namespace ArduinoPlugAndPlay
 
         public void Start ()
         {
+            StartTime = DateTime.Now;
             HasStarted = true;
             Process.Start ();
         }
