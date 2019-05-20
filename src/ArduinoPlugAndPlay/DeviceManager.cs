@@ -25,7 +25,7 @@ namespace ArduinoPlugAndPlay
 
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
-        public int SleepTimeInSeconds = 5;
+        public int SleepTimeInSeconds = 4;
 
         public bool IsActive = true;
 
