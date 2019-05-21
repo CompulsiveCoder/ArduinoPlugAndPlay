@@ -597,6 +597,7 @@ namespace ArduinoPlugAndPlay
         public void CheckRunningProcess (ProcessWrapper processWrapper)
         { 
             Console.WriteLine ("  A process is running: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+            Console.WriteLine ("    Start time: " + processWrapper.StartTime.ToString ());
             Console.WriteLine ("    Duration: " + processWrapper.Duration.ToString ());
 
             CheckForAbortDueToDisconnect (processWrapper);
@@ -607,10 +608,12 @@ namespace ArduinoPlugAndPlay
             // Process failed
             if (processWrapper.Process.ExitCode != 0) {
                 Console.WriteLine ("  A process failed: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+                Console.WriteLine ("    Start time: " + processWrapper.StartTime.ToString ());
                 Console.WriteLine ("    Duration: " + processWrapper.Duration.ToString ());
                 ProcessFailure (processWrapper);
             } else { // Process succeeded
                 Console.WriteLine ("  A process completed successfully: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+                Console.WriteLine ("    Start time: " + processWrapper.StartTime.ToString ());
                 Console.WriteLine ("    Duration: " + processWrapper.Duration.ToString ());
                 BackgroundStarter.QueuedProcesses.Dequeue ();
             }
