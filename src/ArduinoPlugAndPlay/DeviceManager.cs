@@ -102,16 +102,20 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("Starting Plug and Play loop...");
             Console.WriteLine ("");
 
-            // Check devices
-            CheckForRemovedDevices ();
-            CheckForNewDevices ();
-
             // Check existing processes
             CheckRunningProcesses ();
 
-            // Handle device changes
-            ProcessRemovedDevices ();
-            ProcessNewDevices ();
+            // Check for removed devices
+            if (BackgroundStarter.QueuedProcesses.Count == 0) {
+                CheckForRemovedDevices ();
+                ProcessRemovedDevices ();
+            }
+
+            // Check for new devices
+            if (BackgroundStarter.QueuedProcesses.Count == 0) {
+                CheckForNewDevices ();
+                ProcessNewDevices ();
+            }
 
             Console.WriteLine ("");
             Console.WriteLine ("Loop Completed!");
