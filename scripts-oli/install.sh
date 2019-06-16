@@ -39,17 +39,17 @@ cd $INSTALL_DIR || exit 1
 echo ""
 echo "Downloading init.sh file..."
 
-wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/init.sh || exit 1
+wget -q --no-cache https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/init.sh || exit 1
 
 echo ""
 echo "Downloading install-service.sh..."
 
-wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-service.sh || exit 1
+wget -q --no-cache https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-service.sh || exit 1
 
 echo ""
 echo "Downloading install-package.sh..."
 
-wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package.sh || exit 1
+wget -q --no-cache https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package.sh || exit 1
 
 echo ""
 echo "Starting init.sh script..."
