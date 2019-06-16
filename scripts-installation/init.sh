@@ -1,4 +1,4 @@
-echo "Initializing plug and play from the web..."
+echo "Initializing plug and play..."
 
 echo "Current directory:"
 echo "  $PWD"
@@ -31,16 +31,8 @@ echo "  $PWD/$CONFIG_FILE"
 echo "Saved config file:"
 echo "  $PWD/$CONFIG_FILE_SAVED"
 
-if [ ! -f "install-package.sh" ]; then
-  echo "Downloading install-package.sh script...."
-  INSTALL_SCRIPT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-package-from-web.sh"
-  curl -o install-package-from-web.sh -f $INSTALL_SCRIPT_FILE_URL || echo "Failed to download install-package-from-web.sh script."
-else
-  echo "The install-package.sh script already exists. Skipping download."
-fi
-
 echo "Installing the ArduinoPlugAndPlay library..."
-sh install-package-from-web.sh ArduinoPlugAndPlay 1.0.0.164 || exit 1
+sh install-package.sh ArduinoPlugAndPlay 1.0.0.164 || exit 1
 
 # If the config file is found in the downloaded package
 if [ -f $CONFIG_FILE ]; then
@@ -81,6 +73,6 @@ fi
 
 cd $DIR
 
-echo "Arduino plug and play initialization complete"
+echo "Arduino plug and play initialization complete."
 
 

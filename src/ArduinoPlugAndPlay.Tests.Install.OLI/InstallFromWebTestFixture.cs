@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using System.IO;
 
-namespace ArduinoPlugAndPlay.Tests.Install.Web
+namespace ArduinoPlugAndPlay.Tests.Install.OLI
 {
-    [TestFixture (Category = "InstallFromWeb")]
+    [TestFixture (Category = "OLI")]
     public class InstallFromWebTestFixture : BaseInstallTestFixture
     {
 

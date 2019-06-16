@@ -4,7 +4,7 @@
 
  [Service]
  Type=idle
- ExecStart=/bin/bash -c "mkdir -p /usr/local/ArduinoPlugAndPlay; cd /usr/local/ArduinoPlugAndPlay/; curl --connect-timeout 3 -o start-from-web.sh -f https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/master/scripts-web/start-from-web.sh; bash start-from-web.sh master"
+ ExecStart=/bin/bash -c "mkdir -p /usr/local/ArduinoPlugAndPlay; cd /usr/local/ArduinoPlugAndPlay/; bash start-plug-and-play.sh master"
 
  [Install]
  WantedBy=multi-user.target

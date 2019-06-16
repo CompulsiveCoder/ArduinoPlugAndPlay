@@ -45,6 +45,7 @@
     <Compile Include="MockProcessStarter.cs" />
     <Compile Include="TestProcessStarter.cs" />
     <Compile Include="MockBackgroundProcessStarter.cs" />
+    <Compile Include="BranchDetector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

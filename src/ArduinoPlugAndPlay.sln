@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Install.Web", "ArduinoPlugAndPlay.Tests.Install.Web\ArduinoPlugAndPlay.Tests.Install.Web.csproj", "{6A1DF5B7-F390-4B0A-B95E-FC63CF849C89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Install.OLI", "ArduinoPlugAndPlay.Tests.Install.OLI\ArduinoPlugAndPlay.Tests.Install.OLI.csproj", "{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,5 +51,9 @@ Global
 		{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

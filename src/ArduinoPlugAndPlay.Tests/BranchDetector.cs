@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ArduinoPlugAndPlay.Tests.Install.Web
+namespace ArduinoPlugAndPlay.Tests
 {
     public class BranchDetector
     {
