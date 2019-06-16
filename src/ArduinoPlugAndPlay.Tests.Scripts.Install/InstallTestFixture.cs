@@ -22,6 +22,8 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.Install
 
             Assert.IsFalse (starter.Starter.IsError, "An error occurred.");
 
+            Console.WriteLine ("Checking service file exists...");
+
             var expectedServiceFile = Path.Combine (ProjectDirectory, "mock/services/arduino-plug-and-play.service");
 
             Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service file not found.");

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E26A5693-20E2-426E-9B1E-B07AF554AD0D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ArduinoPlugAndPlay.Tests.Scripts</RootNamespace>
+    <AssemblyName>ArduinoPlugAndPlay.Tests.Scripts</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\lib\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TransformServiceTemplateTestFixture.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests\ArduinoPlugAndPlay.Tests.csproj">
+      <Project>{7BDFE167-8319-43CA-81CF-57537324B3DC}</Project>
+      <Name>ArduinoPlugAndPlay.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArduinoPlugAndPlay\ArduinoPlugAndPlay.csproj">
+      <Project>{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}</Project>
+      <Name>ArduinoPlugAndPlay</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

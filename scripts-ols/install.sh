@@ -61,7 +61,7 @@ wget -q --no-cache $INSTALL_PACKAGE_URL || exit 1
 
 echo ""
 echo "  Downloading transform-service-template.sh script..."
-TRANSFORM_SERVICE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/transform-service-template.sh"
+TRANSFORM_SERVICE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/transform-service-template.sh"
 echo "    URL: $TRANSFORM_SERVICE_URL"
 echo "    File name: transform-service-template.sh"
 wget -q --no-cache $TRANSFORM_SERVICE_URL || exit 1

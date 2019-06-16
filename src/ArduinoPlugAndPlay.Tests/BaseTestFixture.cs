@@ -207,6 +207,10 @@ namespace ArduinoPlugAndPlay.Tests
 
         public void PullFileFromProject (string fileName, bool removeDestinationDirectory)
         {
+            Console.WriteLine ("Pulling file from project:");
+            Console.WriteLine ("  " + fileName);
+            Console.WriteLine ("  Remove destination directory: " + removeDestinationDirectory);
+
             var sourceFile = Path.Combine (ProjectDirectory, fileName);
 
             if (!File.Exists (sourceFile))
@@ -219,7 +223,14 @@ namespace ArduinoPlugAndPlay.Tests
                 destinationFile = Path.Combine (TemporaryDirectory, shortenedFileName);
             }
 
+            var destinationDirectory = Path.GetDirectoryName (destinationFile);
+
+            if (!Directory.Exists (destinationDirectory))
+                Directory.CreateDirectory (destinationDirectory);
+
             File.Copy (sourceFile, destinationFile);
+
+            Console.WriteLine ("");
         }
 
         public void CreateExampleDeviceInfoFiles ()

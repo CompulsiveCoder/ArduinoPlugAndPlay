@@ -13,25 +13,16 @@ fi
 
 SERVICE_TEMPLATE_FILE="arduino-plug-and-play.service.template"
 SERVICE_FILE="arduino-plug-and-play.service"
-SERVICE_PATH="svc"
-SERVICE_FILE_PATH="$SERVICE_PATH/$SERVICE_FILE"
-SERVICE_TEMPLATE_FILE_PATH="$SERVICE_PATH/$SERVICE_TEMPLATE_FILE"
+SERVICE_DIR="svc"
+SERVICE_FILE_PATH="$SERVICE_DIR/$SERVICE_FILE"
+SERVICE_TEMPLATE_FILE_PATH="$SERVICE_DIR/$SERVICE_TEMPLATE_FILE"
 
 echo "Template file:"
 echo "$SERVICE_TEMPLATE_FILE_PATH"
 echo "Service file:"
 echo "$SERVICE_FILE_PATH"
 
-echo "Copying service file..."
-
-cp $SERVICE_TEMPLATE_FILE_PATH $SERVICE_FILE_PATH || exit 1
-
-echo "Injecting values into template service file..."
-
-ESCAPED_INSTALL_DIR="${INSTALL_DIR//\//\\/}"
-
-sed -i -e "s/{INSTALL_PATH}/$ESCAPED_INSTALL_DIR/g" "$SERVICE_FILE_PATH" || exit 1
-sed -i -e "s/{BRANCH}/$BRANCH/g" "$SERVICE_FILE_PATH" || exit 1
+sh transform-service-template.sh $BRANCH $INSTALL_DIR $SERVICE_TEMPLATE_FILE_PATH
 
 echo "Service file:"
 echo "$SERVICE_FILE_PATH"
