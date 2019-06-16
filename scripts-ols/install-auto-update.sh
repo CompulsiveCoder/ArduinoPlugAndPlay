@@ -22,10 +22,27 @@ if [ ! $DESTINATION ]; then
   DESTINATION="/usr/local/ArduinoPlugAndPlay"
 fi
 
+if [ ! $SMTP_SERVER ]; then
+  SMTP_SERVER="na"
+fi
+
+if [ ! $ADMIN_EMAIL ]; then
+  ADMIN_EMAIL="na"
+fi
+
 echo ""
 echo "  Downloading install.sh script..."
-INIT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/install.sh"
-echo "    URL: $INIT_FILE_URL"
-echo "    File name: init.sh"
-wget -q --no-cache $INIT_FILE_URL || exit 1
+INSTALL_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/install.sh"
+echo "    URL: $INSTALL_FILE_URL"
+echo "    File name: install.sh"
+wget -q --no-cache $INSTALL_FILE_URL || exit 1
+
+SERVICE_TEMPLATE_FILE_NAME="arduino-plug-and-play-auto-update.service"
+
+echo ""
+echo "  Running install.sh script..."
+bash install.sh $BRANCH $DESTINATION $SMTP_SERVER $ADMIN_EMAIL $SERVICE_TEMPLATE_FILE_NAME
+
+echo ""
+echo "Finished installing arduino plug and play with auto updates"
 

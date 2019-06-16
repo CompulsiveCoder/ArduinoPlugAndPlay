@@ -22,6 +22,14 @@ if [ ! $DESTINATION ]; then
   DESTINATION="/usr/local/ArduinoPlugAndPlay"
 fi
 
+if [ ! $SMTP_SERVER ]; then
+  SMTP_SERVER="na"
+fi
+
+if [ ! $ADMIN_EMAIL ]; then
+  ADMIN_EMAIL="na"
+fi
+
 SERVICE_FILE_NAME="arduino-plug-and-play.service"
 
 if [ ! $SERVICE_TEMPLATE_FILE_NAME ]; then
