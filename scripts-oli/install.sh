@@ -37,19 +37,40 @@ echo "Moving to install dir..."
 cd $INSTALL_DIR || exit 1
 
 echo ""
-echo "Downloading init.sh file..."
-
-wget -q --no-cache https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/init.sh || exit 1
-
-echo ""
-echo "Downloading install-service.sh..."
-
-wget -q --no-cache https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-service.sh || exit 1
+echo "Downloading init.sh script..."
+INIT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/init.sh"
+echo "  URL: $INIT_FILE_URL"
+echo "  File name: init.sh"
+wget -q --no-cache $INIT_FILE_URL || exit 1
 
 echo ""
-echo "Downloading install-package.sh..."
+echo "Downloading install-service.sh script..."
+INSTALL_SERVICE_FILE="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/install-service.sh"
+echo "  URL: $INSTALL_SERVICE_FILE"
+echo "  File name: install-service.sh"
+wget -q --no-cache $INSTALL_SERVICE_FILE || exit 1
 
-wget -q --no-cache https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package.sh || exit 1
+echo ""
+echo "Downloading install-package.sh script..."
+INSTALL_PACKAGE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package.sh"
+echo "  URL: $INSTALL_PACKAGE_URL"
+echo "  File name: install-package.sh"
+wget -q --no-cache $INSTALL_PACKAGE_URL || exit 1
+
+echo ""
+echo "Downloading systemctl.sh script..."
+SYSTEMCTL_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/systemctl.sh"
+echo "  URL: $SYSTEMCTL_URL"
+echo "  File name: systemctl.sh"
+wget -q --no-cache $SYSTEMCTL_URL || exit 1
+
+echo ""
+echo "  Downloading service file..."
+SERVICE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_FILE_NAME.template"
+SERVICE_FILE_NAME="$SERVICE_FILE_NAME.template"
+echo "    URL: $SERVICE_FILE_URL"
+echo "    File name: $SERVICE_FILE_NAME"
+wget -q --no-cache $SERVICE_FILE_URL -O $SERVICE_FILE_NAME || exit 1
 
 echo ""
 echo "Starting init.sh script..."
