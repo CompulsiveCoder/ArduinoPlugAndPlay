@@ -74,19 +74,25 @@ echo "    File name: systemctl.sh"
 wget -q --no-cache $SYSTEMCTL_URL || exit 1
 
 echo ""
-echo "  Downloading service file..."
-SERVICE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_FILE_NAME.template"
-SERVICE_FILE_NAME="arduino-plug-and-play.template"
-echo "    URL: $SERVICE_FILE_URL"
-echo "    File name: $SERVICE_FILE_NAME"
-wget -q --no-cache $SERVICE_FILE_URL -O $SERVICE_FILE_NAME || exit 1
+echo "  Downloading service template file..."
+SERVICE_FILE_NAME="arduino-plug-and-play.service"
+SERVICE_TEMPLATE_FILE_NAME="$SERVICE_FILE_NAME.template"
+SERVICE_TEMPLATE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_TEMPLATE_FILE_NAME"
+echo "    URL: $SERVICE_TEMPLATE_FILE_NAME"
+echo "    File name: $SERVICE_TEMPLATE_FILE_NAME"
+wget -q --no-cache $SERVICE_TEMPLATE_FILE_URL -O $SERVICE_TEMPLATE_FILE_NAME || exit 1
+
 
 echo ""
 echo "Starting init.sh script..."
-bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL"
+bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
 
 echo ""
-echo "Starting transform-service-file.sh script..."
-bash transform-service-file.sh "$BRANCH" "$DESTINATION"
+echo "Starting transform-service-template.sh script..."
+bash transform-service-template.sh "$BRANCH" "$DESTINATION" $SERVICE_TEMPLATE_FILE_NAME $SERVICE_FILE_NAME || exit 1
+
+echo ""
+echo "Starting install-service.sh script..."
+bash install-service.sh $SERVICE_FILE_NAME || exit 1
 
 echo "Finished setting up plug and play"
