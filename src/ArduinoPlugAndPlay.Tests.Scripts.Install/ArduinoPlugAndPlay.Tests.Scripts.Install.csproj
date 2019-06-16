@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ArduinoPlugAndPlay.Tests.Install</RootNamespace>
+    <RootNamespace>ArduinoPlugAndPlay.Tests.Scripts.Install</RootNamespace>
     <AssemblyName>ArduinoPlugAndPlay.Tests.Install</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>

@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Un
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Integration", "ArduinoPlugAndPlay.Tests.Integration\ArduinoPlugAndPlay.Tests.Integration.csproj", "{9E95F228-3FA2-4495-8F5F-846489829465}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Install", "ArduinoPlugAndPlay.Tests.Install\ArduinoPlugAndPlay.Tests.Install.csproj", "{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Scripts.Install", "ArduinoPlugAndPlay.Tests.Scripts.Install\ArduinoPlugAndPlay.Tests.Scripts.Install.csproj", "{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Install.Web", "ArduinoPlugAndPlay.Tests.Install.Web\ArduinoPlugAndPlay.Tests.Install.Web.csproj", "{6A1DF5B7-F390-4B0A-B95E-FC63CF849C89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Scripts.OLS", "ArduinoPlugAndPlay.Tests.Scripts.Install.OLS\ArduinoPlugAndPlay.Tests.Scripts.OLS.csproj", "{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Install.OLI", "ArduinoPlugAndPlay.Tests.Install.OLI\ArduinoPlugAndPlay.Tests.Install.OLI.csproj", "{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArduinoPlugAndPlay.Tests.Scripts.Install.Web", "ArduinoPlugAndPlay.Tests.Scripts.Install.Web\ArduinoPlugAndPlay.Tests.Scripts.Install.Web.csproj", "{6A1DF5B7-F390-4B0A-B95E-FC63CF849C89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

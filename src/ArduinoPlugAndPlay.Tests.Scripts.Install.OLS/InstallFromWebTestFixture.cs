@@ -1,10 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
 using System.IO;
+using ArduinoPlugAndPlay.Tests.Scripts.Install;
 
-namespace ArduinoPlugAndPlay.Tests.Install.OLI
+namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
 {
-    [TestFixture (Category = "OLI")]
+    [TestFixture (Category = "OLS")]
     public class InstallOLITestFixture : BaseInstallTestFixture
     {
 
@@ -15,7 +16,7 @@ namespace ArduinoPlugAndPlay.Tests.Install.OLI
             Console.WriteLine ("Preparing install from web test...");
             Console.WriteLine ("");
 
-            PullFileFromProject ("scripts-oli/install.sh", true);
+            PullFileFromProject ("scripts-ols/install.sh", true);
 
             var scriptPath = Path.GetFullPath ("install.sh");
 

@@ -2,17 +2,17 @@
 using NUnit.Framework;
 using System.IO;
 
-namespace ArduinoPlugAndPlay.Tests.Install
+namespace ArduinoPlugAndPlay.Tests.Scripts.Install
 {
     [TestFixture (Category = "Install")]
-    public class InstallAutoUpdateTestFixture : BaseInstallTestFixture
+    public class InstallTestFixture : BaseInstallTestFixture
     {
         [Test]
-        public void Test_InstallAutoUpdate ()
+        public void Test_Install ()
         {
             MoveToProjectDirectory ();
 
-            var scriptPath = Path.Combine (ProjectDirectory, "install-auto-update.sh");
+            var scriptPath = Path.Combine (ProjectDirectory, "install.sh");
 
             var cmd = "sh " + scriptPath;
             var starter = GetTestProcessStarter ();

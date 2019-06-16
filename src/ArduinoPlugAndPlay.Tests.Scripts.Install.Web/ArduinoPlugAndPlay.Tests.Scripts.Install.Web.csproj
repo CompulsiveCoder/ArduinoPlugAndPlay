@@ -46,9 +46,5 @@
       <Project>{7BDFE167-8319-43CA-81CF-57537324B3DC}</Project>
       <Name>ArduinoPlugAndPlay.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests.Install\ArduinoPlugAndPlay.Tests.Install.csproj">
-      <Project>{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}</Project>
-      <Name>ArduinoPlugAndPlay.Tests.Install</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

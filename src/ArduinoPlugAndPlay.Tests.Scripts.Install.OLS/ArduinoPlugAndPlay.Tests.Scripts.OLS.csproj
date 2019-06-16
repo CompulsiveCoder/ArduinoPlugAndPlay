@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C0A6ECAE-0412-4830-8A65-9F6D132F76DB}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ArduinoPlugAndPlay.Tests.Install.OLI</RootNamespace>
+    <RootNamespace>ArduinoPlugAndPlay.Tests.Scripts.OLS</RootNamespace>
     <AssemblyName>ArduinoPlugAndPlay.Tests.Install.OLI</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -42,10 +42,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests.Install\ArduinoPlugAndPlay.Tests.Install.csproj">
-      <Project>{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}</Project>
-      <Name>ArduinoPlugAndPlay.Tests.Install</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ArduinoPlugAndPlay.Tests\ArduinoPlugAndPlay.Tests.csproj">
       <Project>{7BDFE167-8319-43CA-81CF-57537324B3DC}</Project>
       <Name>ArduinoPlugAndPlay.Tests</Name>
@@ -53,6 +49,10 @@
     <ProjectReference Include="..\ArduinoPlugAndPlay\ArduinoPlugAndPlay.csproj">
       <Project>{B9AAF8A3-418C-455B-8504-EC088CEFBC3B}</Project>
       <Name>ArduinoPlugAndPlay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ArduinoPlugAndPlay.Tests.Scripts.Install\ArduinoPlugAndPlay.Tests.Scripts.Install.csproj">
+      <Project>{0E019402-4E37-4CB3-8E32-95EFAE12BE5A}</Project>
+      <Name>ArduinoPlugAndPlay.Tests.Scripts.Install</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

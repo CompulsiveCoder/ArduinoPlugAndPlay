@@ -60,6 +60,13 @@ echo "    File name: install-package.sh"
 wget -q --no-cache $INSTALL_PACKAGE_URL || exit 1
 
 echo ""
+echo "  Downloading transform-service-template.sh script..."
+TRANSFORM_SERVICE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/transform-service-template.sh"
+echo "    URL: $TRANSFORM_SERVICE_URL"
+echo "    File name: transform-service-template.sh"
+wget -q --no-cache $TRANSFORM_SERVICE_URL || exit 1
+
+echo ""
 echo "  Downloading systemctl.sh script..."
 SYSTEMCTL_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/systemctl.sh"
 echo "    URL: $SYSTEMCTL_URL"
@@ -79,7 +86,7 @@ echo "Starting init.sh script..."
 bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL"
 
 echo ""
-echo "Starting install-service.sh script..."
-bash install-service.sh "$BRANCH"
+echo "Starting transform-service-file.sh script..."
+bash transform-service-file.sh "$BRANCH" "$DESTINATION"
 
 echo "Finished setting up plug and play"

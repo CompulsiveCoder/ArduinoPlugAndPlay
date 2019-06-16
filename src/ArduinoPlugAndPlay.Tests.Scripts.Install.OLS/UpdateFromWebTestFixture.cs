@@ -1,10 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
 using System.IO;
+using ArduinoPlugAndPlay.Tests.Scripts.Install;
 
-namespace ArduinoPlugAndPlay.Tests.Install.OLI
+namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
 {
-    [TestFixture (Category = "OLI")]
+    [TestFixture (Category = "OLS")]
     public class UpgradeOLITestFixture : BaseInstallTestFixture
     {
 
@@ -21,7 +22,7 @@ namespace ArduinoPlugAndPlay.Tests.Install.OLI
 
             CreateDemoInstallation (branch, installDir);
 
-            PullFileFromProject ("scripts-oli/upgrade.sh", true);
+            PullFileFromProject ("scripts-ols/upgrade.sh", true);
 
             var scriptPath = Path.GetFullPath ("upgrade.sh");
 
