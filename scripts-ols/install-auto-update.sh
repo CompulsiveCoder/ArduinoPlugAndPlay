@@ -1,10 +1,12 @@
-echo "Installing plug and play from the web..."
+echo "Installing plug and play with auto updates..."
 
 BRANCH=$1
 DESTINATION=$2
 
 SMTP_SERVER=$3
 ADMIN_EMAIL=$4
+
+SERVICE_TEMPLATE_FILE_NAME=$5
 
 EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail]"
 
@@ -20,26 +22,10 @@ if [ ! $DESTINATION ]; then
   DESTINATION="/usr/local/ArduinoPlugAndPlay"
 fi
 
-echo "Branch: $BRANCH"
-echo "Destination: $DESTINATION"
+echo ""
+echo "  Downloading install.sh script..."
+INIT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/install.sh"
+echo "    URL: $INIT_FILE_URL"
+echo "    File name: init.sh"
+wget -q --no-cache $INIT_FILE_URL || exit 1
 
-echo "SMTP server: $SMTP_SERVER"
-echo "Admin email: $ADMIN_EMAIL"
-
-INSTALL_DIR=$DESTINATION
-
-echo "Making install dir..."
-mkdir -p $INSTALL_DIR || exit 1
-
-echo "Moving to install dir..."
-cd $INSTALL_DIR || exit 1
-
-echo "Initializing plug and play (by downloading init-from-web.sh file)..."
-
-wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/init-from-web.sh | bash -s -- "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
-
-echo "Initializing plug and play (by downloading install-service-from-web.sh file)..."
-
-wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-web/install-service-from-web.sh | bash -s -- "$BRANCH" || exit 1
-
-echo "Finished setting up plug and play"

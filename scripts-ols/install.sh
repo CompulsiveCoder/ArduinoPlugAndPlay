@@ -6,6 +6,8 @@ DESTINATION=$2
 SMTP_SERVER=$3
 ADMIN_EMAIL=$4
 
+SERVICE_TEMPLATE_FILE_NAME=$5
+
 EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail]"
 
 if [ ! $BRANCH ]; then
@@ -18,6 +20,12 @@ fi
 
 if [ ! $DESTINATION ]; then
   DESTINATION="/usr/local/ArduinoPlugAndPlay"
+fi
+
+SERVICE_FILE_NAME="arduino-plug-and-play.service"
+
+if [ ! $SERVICE_TEMPLATE_FILE_NAME ]; then
+  SERVICE_TEMPLATE_FILE_NAME="$SERVICE_FILE_NAME.template"
 fi
 
 echo "  Branch: $BRANCH"
@@ -75,8 +83,6 @@ wget -q --no-cache $SYSTEMCTL_URL || exit 1
 
 echo ""
 echo "  Downloading service template file..."
-SERVICE_FILE_NAME="arduino-plug-and-play.service"
-SERVICE_TEMPLATE_FILE_NAME="$SERVICE_FILE_NAME.template"
 SERVICE_TEMPLATE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_TEMPLATE_FILE_NAME"
 echo "    URL: $SERVICE_TEMPLATE_FILE_NAME"
 echo "    File name: $SERVICE_TEMPLATE_FILE_NAME"
