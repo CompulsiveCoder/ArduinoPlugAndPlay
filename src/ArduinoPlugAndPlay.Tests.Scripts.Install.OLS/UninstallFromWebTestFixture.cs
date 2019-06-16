@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.IO;
 using ArduinoPlugAndPlay.Tests.Scripts.Install;
 
-namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
+namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 {
     [TestFixture (Category = "OLS")]
     public class UninstallOLITestFixture : BaseInstallTestFixture

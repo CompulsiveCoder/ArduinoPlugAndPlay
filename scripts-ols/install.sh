@@ -42,6 +42,8 @@ echo "  Destination: $DESTINATION"
 echo "  SMTP server: $SMTP_SERVER"
 echo "  Admin email: $ADMIN_EMAIL"
 
+echo "  Service template file: $SERVICE_TEMPLATE_FILE_NAME"
+
 INSTALL_DIR=$DESTINATION
 
 echo ""
@@ -92,7 +94,7 @@ wget -q --no-cache $SYSTEMCTL_URL || exit 1
 echo ""
 echo "  Downloading service template file..."
 SERVICE_TEMPLATE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_TEMPLATE_FILE_NAME"
-echo "    URL: $SERVICE_TEMPLATE_FILE_NAME"
+echo "    URL: $SERVICE_TEMPLATE_FILE_URL"
 echo "    File name: $SERVICE_TEMPLATE_FILE_NAME"
 wget -q --no-cache $SERVICE_TEMPLATE_FILE_URL -O $SERVICE_TEMPLATE_FILE_NAME || exit 1
 

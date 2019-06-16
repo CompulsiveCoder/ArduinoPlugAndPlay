@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System.IO;
 using ArduinoPlugAndPlay.Tests.Scripts.Install;
 
-namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
+namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 {
     [TestFixture (Category = "OLS")]
     public class InstallOLITestFixture : BaseInstallTestFixture
@@ -52,13 +52,22 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
 
             var installDir = Path.Combine (TemporaryDirectory, destination);
 
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking service file was installed...");
+
             var expectedServiceFile = Path.Combine (installDir, "mock/services/arduino-plug-and-play.service");
 
             Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service file not found: " + expectedServiceFile);
 
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking config file was installed...");
+
             var configFile = Path.Combine (installDir, "ArduinoPlugAndPlay.exe.config");
 
             Assert.IsTrue (File.Exists (configFile), "ArduinoPlugAndPlay.exe.config file not found at: " + configFile);
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking email details were installed...");
 
             var configFileContent = File.ReadAllText (configFile);
 

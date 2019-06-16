@@ -3,22 +3,22 @@ using NUnit.Framework;
 using System.IO;
 using ArduinoPlugAndPlay.Tests.Scripts.Install;
 
-namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
+namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 {
     [TestFixture (Category = "OLS")]
     public class InstallAutoUpdateOLITestFixture : BaseInstallTestFixture
     {
 
         [Test]
-        public void Test_Install ()
+        public void Test_Install_OLS ()
         {
             Console.WriteLine ("");
             Console.WriteLine ("Preparing install auto up from web test...");
             Console.WriteLine ("");
 
-            PullFileFromProject ("scripts-ols/install.sh", true);
+            PullFileFromProject ("scripts-ols/install-auto-update.sh", true);
 
-            var scriptPath = Path.GetFullPath ("install.sh");
+            var scriptPath = Path.GetFullPath ("install-auto-update.sh");
 
             var branch = new BranchDetector ().Branch;
 
@@ -52,13 +52,27 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLI
 
             var installDir = Path.Combine (TemporaryDirectory, destination);
 
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking service file was installed...");
+
             var expectedServiceFile = Path.Combine (installDir, "mock/services/arduino-plug-and-play.service");
 
             Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service file not found: " + expectedServiceFile);
 
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking config file was installed...");
+
             var configFile = Path.Combine (installDir, "ArduinoPlugAndPlay.exe.config");
 
             Assert.IsTrue (File.Exists (configFile), "ArduinoPlugAndPlay.exe.config file not found at: " + configFile);
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking auto update service was used...");
+
+            Assert.IsTrue (starter.Output.Contains ("Service template file: arduino-plug-and-play-auto-update.service.template"), "Auto update service wasn't used.");
+
+            Console.WriteLine ("");
+            Console.WriteLine ("Checking email details were installed...");
 
             var configFileContent = File.ReadAllText (configFile);
 
