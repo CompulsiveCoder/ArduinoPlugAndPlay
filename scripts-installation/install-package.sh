@@ -1,3 +1,5 @@
+echo "Installing package...."
+
 PACKAGE_NAME=$1
 PACKAGE_VERSION=$2
 
@@ -11,7 +13,8 @@ if [ ! "$PACKAGE_VERSION" ]; then
 	exit 1
 fi
 
-echo "Installing package $PACKAGE_NAME $PACKAGE_VERSION..."
+echo "  Name: $PACKAGE_NAME"
+echo "  Version: $PACKAGE_VERSION"
 
 PACKAGE_FILE="$PACKAGE_NAME.$PACKAGE_VERSION"
 PACKAGE_FILE_EXT="$PACKAGE_NAME.$PACKAGE_VERSION.nupkg"
@@ -19,12 +22,17 @@ PACKAGE_FILE_EXT="$PACKAGE_NAME.$PACKAGE_VERSION.nupkg"
 PACKAGE_URL="https://github.com/GreenSense/libs/raw/master/$PACKAGE_FILE.nupkg"
 
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
+  echo ""
   echo "  Downloading package..."
   echo "    $PACKAGE_URL"
 	curl -s -LO -f $PACKAGE_URL -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
 
+  echo ""
   echo "  Unzipping package..."
 	unzip -q -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_NAME/" || exit 1
 else
 	echo "  Already exists. Skipping download."
 fi
+
+echo ""
+echo "Finished installing package"
