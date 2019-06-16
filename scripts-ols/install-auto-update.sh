@@ -30,7 +30,7 @@ if [ ! $ADMIN_EMAIL ]; then
   ADMIN_EMAIL="na"
 fi
 
-SERVICE_TEMPLATE_FILE_NAME="arduino-plug-and-play-auto-update.service"
+SERVICE_TEMPLATE_FILE_NAME="arduino-plug-and-play-auto-update.service.template"
 
 echo "  Branch: $BRANCH"
 echo "  Destination: $DESTINATION"
@@ -45,7 +45,7 @@ echo "  Downloading install.sh script..."
 INSTALL_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/install.sh"
 echo "    URL: $INSTALL_FILE_URL"
 echo "    File name: install.sh"
-wget -q --no-cache $INSTALL_FILE_URL || exit 1
+wget -nv --no-cache $INSTALL_FILE_URL || exit 1
 
 echo ""
 echo "  Running install.sh script..."
