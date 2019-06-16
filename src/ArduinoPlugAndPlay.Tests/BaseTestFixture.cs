@@ -208,6 +208,10 @@ namespace ArduinoPlugAndPlay.Tests
         public void PullFileFromProject (string fileName, bool removeDestinationDirectory)
         {
             var sourceFile = Path.Combine (ProjectDirectory, fileName);
+
+            if (!File.Exists (sourceFile))
+                throw new FileNotFoundException ("File not found", sourceFile);
+
             var destinationFile = Path.Combine (TemporaryDirectory, fileName);
 
             if (removeDestinationDirectory) {

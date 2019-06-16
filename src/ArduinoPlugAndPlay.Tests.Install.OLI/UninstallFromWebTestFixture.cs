@@ -5,11 +5,11 @@ using System.IO;
 namespace ArduinoPlugAndPlay.Tests.Install.OLI
 {
     [TestFixture (Category = "OLI")]
-    public class UninstallFromWebTestFixture : BaseInstallTestFixture
+    public class UninstallOLITestFixture : BaseInstallTestFixture
     {
 
         [Test]
-        public void Test_Uninstall_FromWeb ()
+        public void Test_Uninstall_OLI ()
         {
             Console.WriteLine ("");
             Console.WriteLine ("Preparing uninstall from web test...");
@@ -21,10 +21,9 @@ namespace ArduinoPlugAndPlay.Tests.Install.OLI
 
             CreateDemoInstallation (branch, installDir);
 
-            PullFileFromProject ("scripts-web/uninstall-from-web.sh", true);
+            PullFileFromProject ("scripts-oli/uninstall.sh", true);
 
-            var scriptPath = Path.GetFullPath ("uninstall-from-web.sh");
-
+            var scriptPath = Path.GetFullPath ("uninstall.sh");
 
             // Configure systemctl mocking
             var isMockSystemCtlFile = Path.Combine (TemporaryDirectory, installDir + "/is-mock-systemctl.txt");

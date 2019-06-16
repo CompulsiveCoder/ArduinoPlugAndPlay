@@ -5,11 +5,11 @@ using System.IO;
 namespace ArduinoPlugAndPlay.Tests.Install.OLI
 {
     [TestFixture (Category = "OLI")]
-    public class UpdateFromWebTestFixture : BaseInstallTestFixture
+    public class UpgradeOLITestFixture : BaseInstallTestFixture
     {
 
         [Test]
-        public void Test_Update_FromWeb ()
+        public void Test_Upgrade_OLI ()
         {
             Console.WriteLine ("");
             Console.WriteLine ("Preparing update from web test...");
@@ -21,9 +21,9 @@ namespace ArduinoPlugAndPlay.Tests.Install.OLI
 
             CreateDemoInstallation (branch, installDir);
 
-            PullFileFromProject ("scripts-web/update-from-web.sh", true);
+            PullFileFromProject ("scripts-oli/upgrade.sh", true);
 
-            var scriptPath = Path.GetFullPath ("update-from-web.sh");
+            var scriptPath = Path.GetFullPath ("upgrade.sh");
 
             // Configure systemctl mocking
             var isMockSystemCtlFile = Path.Combine (TemporaryDirectory, installDir + "/is-mock-systemctl.txt");

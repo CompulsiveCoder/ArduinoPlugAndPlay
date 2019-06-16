@@ -5,19 +5,19 @@ using System.IO;
 namespace ArduinoPlugAndPlay.Tests.Install.OLI
 {
     [TestFixture (Category = "OLI")]
-    public class InstallFromWebTestFixture : BaseInstallTestFixture
+    public class InstallOLITestFixture : BaseInstallTestFixture
     {
 
         [Test]
-        public void Test_Install_FromWeb ()
+        public void Test_Install_OLI ()
         {
             Console.WriteLine ("");
             Console.WriteLine ("Preparing install from web test...");
             Console.WriteLine ("");
 
-            PullFileFromProject ("scripts-web/install-from-web.sh", true);
+            PullFileFromProject ("scripts-oli/install.sh", true);
 
-            var scriptPath = Path.GetFullPath ("install-from-web.sh");
+            var scriptPath = Path.GetFullPath ("install.sh");
 
             var branch = new BranchDetector ().Branch;
 
