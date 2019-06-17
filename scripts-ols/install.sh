@@ -100,15 +100,31 @@ wget -nv --no-cache $SERVICE_TEMPLATE_FILE_URL -O $SERVICE_TEMPLATE_FILE_NAME ||
 
 
 echo ""
-echo "Starting init.sh script..."
+echo "  Starting init.sh script..."
 bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
 
 echo ""
-echo "Starting transform-service-template.sh script..."
+echo "  Starting transform-service-template.sh script..."
 bash transform-service-template.sh "$BRANCH" "$DESTINATION" $SERVICE_TEMPLATE_FILE_NAME $SERVICE_FILE_NAME || exit 1
 
 echo ""
-echo "Starting install-service.sh script..."
+echo "  Starting install-service.sh script..."
 bash install-service.sh $SERVICE_FILE_NAME || exit 1
 
+echo ""
+echo "  Saving email details to file..."
+echo $SMTP_SERVER > "smtp-server.txt"
+echo $ADMIN_EMAIL > "admin-email.txt"
+
+echo ""
+echo "  Saving version details to file..."
+BUILD_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/buildnumber.txt")
+VERSION_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/version.txt")
+
+VERSION="$VERSION_NUMBER-$BUILD_NUMBER"
+
+echo "    Version: $VERSION"
+echo $VERSION > "version.txt"
+
+echo ""
 echo "Finished setting up plug and play"

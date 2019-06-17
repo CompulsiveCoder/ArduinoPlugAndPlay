@@ -13,7 +13,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
         public void Test_Upgrade_OLI ()
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Preparing update from web test...");
+            Console.WriteLine ("Preparing upgrade test...");
             Console.WriteLine ("");
 
             var branch = new BranchDetector ().Branch;
@@ -21,6 +21,12 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
             var installDir = "installation/ArduinoPlugAndPlay";
 
             CreateDemoInstallation (branch, installDir);
+
+            Console.WriteLine ("Setting version to 1.0.0.1...");
+
+            var versionFile = Path.Combine (Path.GetFullPath (installDir), "version.txt");
+
+            File.WriteAllText (versionFile, "1.0.0.1");
 
             PullFileFromProject ("scripts-ols/upgrade.sh", true);
 
@@ -39,7 +45,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
             var starter = new ProcessStarter ();
 
             Console.WriteLine ("");
-            Console.WriteLine ("Performing update from web test...");
+            Console.WriteLine ("Performing upgrade test...");
             Console.WriteLine ("");
 
             starter.Start (cmd);
@@ -55,9 +61,9 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 
         public void CreateDemoInstallation (string branch, string installDir)
         {
-            PullFileFromProject ("scripts-web/install-from-web.sh", true);
+            PullFileFromProject ("scripts-ols/install.sh", true);
 
-            var scriptPath = Path.GetFullPath ("install-from-web.sh");
+            var scriptPath = Path.GetFullPath ("install.sh");
 
             var destination = "installation/ArduinoPlugAndPlay";
 

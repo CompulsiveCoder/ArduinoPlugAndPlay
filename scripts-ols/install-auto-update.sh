@@ -50,7 +50,14 @@ wget -nv --no-cache $INSTALL_FILE_URL || exit 1
 echo ""
 echo "  Running install.sh script..."
 echo "    bash install.sh \"$BRANCH\" \"$DESTINATION\" \"$SMTP_SERVER\" \"$ADMIN_EMAIL\" \"$SERVICE_TEMPLATE_FILE_NAME\""
+echo ""
 bash install.sh "$BRANCH" "$DESTINATION" "$SMTP_SERVER" "$ADMIN_EMAIL" "$SERVICE_TEMPLATE_FILE_NAME"
+
+echo ""
+echo "  Moving to destination..."
+cd $DESTINATION
+
+echo "1" > "enable-auto-update.txt"
 
 echo ""
 echo "Finished installing arduino plug and play with auto updates"

@@ -55,9 +55,9 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 
         public void CreateDemoInstallation (string branch, string installDir)
         {
-            PullFileFromProject ("scripts-web/install-from-web.sh", true);
+            PullFileFromProject ("scripts-ols/install.sh", true);
 
-            var scriptPath = Path.GetFullPath ("install-from-web.sh");
+            var scriptPath = Path.GetFullPath ("install.sh");
 
             var destination = "installation/ArduinoPlugAndPlay";
 
