@@ -34,8 +34,7 @@ namespace ArduinoPlugAndPlay.ClientConsole
                 Boolean.TryParse (isVerboseString, out IsVerbose);
             deviceManager.IsVerbose = IsVerbose;
 
-            //deviceManager.SleepTimeInSeconds = config.GetInt32 ("SleepTime", 3);
-            deviceManager.SleepTimeInSeconds = 3;
+            deviceManager.SleepTimeInSeconds = config.GetInt32 ("SleepTime", 1);
             deviceManager.DeviceAddedCommand = config.GetValue ("DeviceAddedCommand");
             deviceManager.DeviceRemovedCommand = config.GetValue ("DeviceRemovedCommand");
 

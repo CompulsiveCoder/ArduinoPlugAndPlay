@@ -24,6 +24,8 @@ namespace ArduinoPlugAndPlay.ClientConsole
         {
             if (String.IsNullOrWhiteSpace (argumentKey))
                 return defaultValue;
+            else if (!Arguments.Contains (argumentKey))
+                return defaultValue;
             else {
                 var value = 0;
                 Int32.TryParse (GetValue (argumentKey), out value);
