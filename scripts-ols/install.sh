@@ -77,6 +77,19 @@ echo "    URL: $INSTALL_PACKAGE_URL"
 echo "    File name: install-package.sh"
 wget -nv --no-cache $INSTALL_PACKAGE_URL || exit 1
 
+START_SCRIPT_NAME="start-plug-and-play.sh"
+
+if [ "$SERVICE_TEMPLATE_FILE_NAME" = "arduino-plug-and-play-auto-update.service.template" ]; then
+  START_SCRIPT_NAME="start-plug-and-play-after-update.sh"
+fi
+
+echo ""
+echo "  Downloading $START_SCRIPT_NAME script..."
+START_SCRIPT_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/$START_SCRIPT_NAME"
+echo "    URL: $START_SCRIPT_URL"
+echo "    File name: $START_SCRIPT_NAME"
+wget -nv --no-cache $START_SCRIPT_URL || exit 1
+
 echo ""
 echo "  Downloading transform-service-template.sh script..."
 TRANSFORM_SERVICE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/transform-service-template.sh"
