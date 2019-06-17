@@ -75,7 +75,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   echo "    SMTP Server: $SMTP_SERVER"
   echo "    Admin email: $ADMIN_EMAIL"
   
-  if [ $ENABLE_AUTO_UPDATES = "1" ]; then
+  if [ "$ENABLE_AUTO_UPDATE" = "1" ]; then
     INSTALL_SCRIPT_FILE_NAME="install-auto-update.sh"
   fi  
 
