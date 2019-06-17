@@ -6,14 +6,14 @@ using ArduinoPlugAndPlay.Tests.Scripts.Install;
 namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 {
     [TestFixture (Category = "OLS")]
-    public class InstallOLITestFixture : BaseInstallTestFixture
+    public class InstallOLSTestFixture : BaseInstallTestFixture
     {
 
         [Test]
-        public void Test_Install_OLI ()
+        public void Test_Install_OLS ()
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Preparing install from web test...");
+            Console.WriteLine ("Preparing install OLS test...");
             Console.WriteLine ("");
 
             PullFileFromProject ("scripts-ols/install.sh", true);
@@ -41,7 +41,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
             var starter = new ProcessStarter ();
 
             Console.WriteLine ("");
-            Console.WriteLine ("Performing install from web test...");
+            Console.WriteLine ("Performing install OLS test...");
             Console.WriteLine ("");
 
             starter.Start (cmd);

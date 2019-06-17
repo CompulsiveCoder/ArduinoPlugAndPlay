@@ -8,7 +8,7 @@ ADMIN_EMAIL=$4
 
 SERVICE_TEMPLATE_FILE_NAME=$5
 
-EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail]"
+EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail] [ServiceTemplateName]"
 
 if [ ! $BRANCH ]; then
   BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')

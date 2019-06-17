@@ -6,25 +6,31 @@ using ArduinoPlugAndPlay.Tests.Scripts.Install;
 namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 {
     [TestFixture (Category = "OLS")]
-    public class UninstallOLITestFixture : BaseInstallTestFixture
+    public class UpgradeOLSTestFixture : BaseInstallTestFixture
     {
 
         [Test]
-        public void Test_Uninstall_OLI ()
+        public void Test_Upgrade_OLS ()
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Preparing uninstall from web test...");
+            Console.WriteLine ("Preparing upgrade test...");
             Console.WriteLine ("");
 
             var branch = new BranchDetector ().Branch;
 
-            var installDir = Path.GetFullPath ("installation/ArduinoPlugAndPlay");
+            var installDir = "installation/ArduinoPlugAndPlay";
 
             CreateDemoInstallation (branch, installDir);
 
-            PullFileFromProject ("scripts-ols/uninstall.sh", true);
+            Console.WriteLine ("Setting version to 1.0.0.1...");
 
-            var scriptPath = Path.GetFullPath ("uninstall.sh");
+            var versionFile = Path.Combine (Path.GetFullPath (installDir), "version.txt");
+
+            File.WriteAllText (versionFile, "1.0.0.1");
+
+            PullFileFromProject ("scripts-ols/upgrade.sh", true);
+
+            var scriptPath = Path.GetFullPath ("upgrade.sh");
 
             // Configure systemctl mocking
             var isMockSystemCtlFile = Path.Combine (TemporaryDirectory, installDir + "/is-mock-systemctl.txt");
@@ -39,7 +45,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
             var starter = new ProcessStarter ();
 
             Console.WriteLine ("");
-            Console.WriteLine ("Performing uninstall from web test...");
+            Console.WriteLine ("Performing upgrade test...");
             Console.WriteLine ("");
 
             starter.Start (cmd);
@@ -50,7 +56,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 
             var expectedServiceFile = Path.Combine (Path.Combine (TemporaryDirectory, installDir), "mock/services/arduino-plug-and-play.service");
 
-            Assert.IsFalse (File.Exists (expectedServiceFile), "Plug and play service still exists when it should have been removed.");
+            Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service wasn't found.");
         }
 
         public void CreateDemoInstallation (string branch, string installDir)

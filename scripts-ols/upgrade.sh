@@ -68,6 +68,13 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   
   echo "  Enable auto update: $ENABLE_AUTO_UPDATE"
   
+  echo ""
+  echo "  Getting email details from file..."
+  SMTP_SERVER="$(cat smtp-server.txt)"
+  ADMIN_EMAIL="$(cat smtp-server.txt)"
+  echo "    SMTP Server: $SMTP_SERVER"
+  echo "    Admin email: $ADMIN_EMAIL"
+  
   if [ $ENABLE_AUTO_UPDATES = "1" ]; then
     INSTALL_SCRIPT_FILE_NAME="install-auto-update.sh"
   fi  

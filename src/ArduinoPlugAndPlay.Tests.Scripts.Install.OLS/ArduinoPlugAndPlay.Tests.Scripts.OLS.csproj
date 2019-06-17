@@ -35,10 +35,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="InstallAutoUpdateFromWebTestFixture.cs" />
-    <Compile Include="InstallFromWebTestFixture.cs" />
-    <Compile Include="UninstallFromWebTestFixture.cs" />
-    <Compile Include="UpdateFromWebTestFixture.cs" />
+    <Compile Include="InstallAutoUpdateOLSTestFixture.cs" />
+    <Compile Include="InstallOLSTestFixture.cs" />
+    <Compile Include="UninstallOLSTestFixture.cs" />
+    <Compile Include="UpdateOLSTestFixture.cs" />
+    <Compile Include="ReinstallOLSTestFixture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
