@@ -121,7 +121,7 @@ echo "  Saving version details to file..."
 BUILD_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/buildnumber.txt")
 VERSION_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/version.txt")
 
-VERSION="$VERSION_NUMBER-$BUILD_NUMBER"
+VERSION="$VERSION_NUMBER.$BUILD_NUMBER"
 
 echo "    Version: $VERSION"
 echo $VERSION > "version.txt"
