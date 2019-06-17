@@ -13,7 +13,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
         public void Test_Reinstall_OLS ()
         {
             Console.WriteLine ("");
-            Console.WriteLine ("Preparing reinstall test...");
+            Console.WriteLine ("Preparing reinstall OLS test...");
             Console.WriteLine ("");
 
             var branch = new BranchDetector ().Branch;
@@ -43,7 +43,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
             var starter = new ProcessStarter ();
 
             Console.WriteLine ("");
-            Console.WriteLine ("Performing reinstall test...");
+            Console.WriteLine ("Performing reinstall OLS test...");
             Console.WriteLine ("");
 
             starter.Start (cmd);
