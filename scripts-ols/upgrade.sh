@@ -61,7 +61,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   echo "  Getting auto update setting..."
   AUTO_UPDATE_SETTING_FILE="enable-auto-update.txt"
   if [ -f $AUTO_UPDATE_SETTING_FILE ]; then
-    ENABLE_AUTO_UPDATE="$(cat $AUTO_UPDATE_SETTING_FILE)"
+    ENABLE_AUTO_UPDATE=$(cat $AUTO_UPDATE_SETTING_FILE)
   else
     ENABLE_AUTO_UPDATE=0
   fi
@@ -71,7 +71,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   echo ""
   echo "  Getting email details from file..."
   SMTP_SERVER=$(cat smtp-server.txt)
-  ADMIN_EMAIL=$(cat smtp-server.txt)
+  ADMIN_EMAIL=$(cat admin-email.txt)
   echo "    SMTP Server: $SMTP_SERVER"
   echo "    Admin email: $ADMIN_EMAIL"
   
@@ -84,7 +84,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/$INSTALL_SCRIPT_FILE_NAME.sh"
   echo "    URL: $INSTALL_SCRIPT_URL"
   echo "    File name: $INSTALL_SCRIPT_FILE_NAME"
-  wget -nv --no-cache -O - $INSTALL_SCRIPT_URL | bash -s $BRANCH $DESTINATION $SMTP_SERVER $ADMIN_EMAIL || exit 1
+  wget -nv --no-cache -O - $INSTALL_SCRIPT_URL | bash -s "$BRANCH" "$DESTINATION" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
 else
   echo "  Up to date. Skipping upgrade."
 fi
