@@ -57,10 +57,16 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
 
   INSTALL_SCRIPT_FILE_NAME="install.sh"
   
-  ENABLE_AUTO_UPDATE="$(cat enable-auto-update.txt)"
-  
   echo ""
-  echo "  Enable auto updates: $ENABLE_AUTO_UPDATE"
+  echo "  Getting auto update setting..."
+  AUTO_UPDATE_SETTING_FILE="enable-auto-update.txt"
+  if [ -f $AUTO_UPDATE_SETTING_FILE ]; then
+    ENABLE_AUTO_UPDATE="$(cat $AUTO_UPDATE_SETTING_FILE)"
+  else
+    ENABLE_AUTO_UPDATE=0
+  fi
+  
+  echo "  Enable auto update: $ENABLE_AUTO_UPDATE"
   
   if [ $ENABLE_AUTO_UPDATES = "1" ]; then
     INSTALL_SCRIPT_FILE_NAME="install-auto-update.sh"
@@ -72,10 +78,6 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   echo "    URL: $INSTALL_SCRIPT_URL"
   echo "    File name: $INSTALL_SCRIPT_FILE_NAME"
   wget -q --no-cache -O - $INSTALL_SCRIPT_URL | bash -s $BRANCH $DESTINATION $SMTP_SERVER $ADMIN_EMAIL || exit 1
-
-#  echo 
-#  echo "Restarting service..."
-#  sh systemctl.sh restart arduino-plug-and-play.service || exit 1
 else
   echo "  Up to date. Skipping upgrade."
 fi
