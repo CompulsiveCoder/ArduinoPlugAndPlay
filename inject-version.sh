@@ -10,12 +10,16 @@ else
 fi
 
 echo "Injecting version into AssemblyInfo.cs file..."
-echo "Version: $FULL_VERSION"
+echo "  Version: $FULL_VERSION"
 
 sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay/Properties/AssemblyInfo.cs"
 sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.ClientConsole/Properties/AssemblyInfo.cs"
 sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests/Properties/AssemblyInfo.cs"
 sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Integration/Properties/AssemblyInfo.cs"
 sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Unit/Properties/AssemblyInfo.cs"
+sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Scripts/Properties/AssemblyInfo.cs"
+sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Scripts.Install/Properties/AssemblyInfo.cs"
+sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Scripts.Install.OLS/Properties/AssemblyInfo.cs"
+
 
 echo "Finished injecting version"
