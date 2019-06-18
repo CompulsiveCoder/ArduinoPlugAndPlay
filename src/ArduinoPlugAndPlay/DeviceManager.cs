@@ -25,7 +25,7 @@ namespace ArduinoPlugAndPlay
 
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
-        public int SleepTimeInSeconds = 4;
+        public int SleepTimeInSeconds = 1;
 
         public bool IsActive = true;
 
@@ -41,8 +41,6 @@ namespace ArduinoPlugAndPlay
         public List<string> UnusableDevicePorts = new List<string> ();
 
         public int DefaultBaudRate = 9600;
-
-        public int DeviceInfoLineCount = 16;
 
         public bool IsVerbose = true;
 
@@ -208,12 +206,6 @@ namespace ArduinoPlugAndPlay
 
         public void AddDevice (string devicePort)
         {
-            // TODO: Remove if not needed. This check is slow.
-            /*if (!Platformio.PortIsInList (devicePort)) {
-                Console.WriteLine ("The device has been disconnected. Aborting.");
-                NewDevicePorts.Remove (devicePort);
-            } else {*/
-
             if (IsVerbose)
                 Console.WriteLine ("Adding device: " + devicePort);
 
@@ -233,7 +225,6 @@ namespace ArduinoPlugAndPlay
                     LaunchAddDeviceCommand (info);
                 }
             }
-            // }
         }
 
         #endregion
@@ -470,10 +461,6 @@ namespace ArduinoPlugAndPlay
         {
             DeviceInfo info = null;
 
-            // TODO: Remove if not needed. This check is slow
-            //if (!Platformio.PortIsInList (portName))
-            //    Console.WriteLine ("The device has been disconnected. Aborting.");
-            //else {
             Console.WriteLine ("  Reading new device info from USB/serial output: " + portName);
 
             try {
@@ -484,9 +471,6 @@ namespace ArduinoPlugAndPlay
                 var allDetailsHaveBeenDetected = false;
 
                 var deviceHasBeenDisconnected = false;
-
-                Thread.Sleep (1000);
-
 
                 // Read the first line from the device before sending a command.
                 // This seems to allow commands to function properly
@@ -532,8 +516,7 @@ namespace ArduinoPlugAndPlay
                 info = Extractor.ExtractInfo (portName, serialOutput);
 
                 ReaderWriter.Close ();
-                //}
-            } catch (TimeoutException ex) {
+            } catch (TimeoutException) {
                 Console.WriteLine ("Timed out. Aborting.");
 
                 if (!UnusableDevicePorts.Contains (portName))
