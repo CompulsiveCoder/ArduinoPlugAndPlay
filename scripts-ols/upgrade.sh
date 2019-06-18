@@ -32,8 +32,8 @@ cd $INSTALL_DIR
 
 INSTALLED_VERSION="$(cat version.txt)"
 
-LATEST_BUILD_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/GreenSense/Index/$BRANCH/buildnumber.txt")
-LATEST_VERSION_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/GreenSense/Index/$BRANCH/version.txt")
+LATEST_BUILD_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/buildnumber.txt")
+LATEST_VERSION_NUMBER=$(curl -s -H 'Cache-Control: no-cache' "https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/version.txt")
 
 LATEST_VERSION="$LATEST_VERSION_NUMBER.$LATEST_BUILD_NUMBER"
 
