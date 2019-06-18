@@ -96,6 +96,8 @@ namespace ArduinoPlugAndPlay
 
         public void RunLoop ()
         {
+            var loopStartTime = DateTime.Now;
+
             Console.WriteLine ("----------");
             Console.WriteLine ("Starting Plug and Play loop...");
             Console.WriteLine ("");
@@ -115,7 +117,9 @@ namespace ArduinoPlugAndPlay
                 ProcessNewDevices ();
             }
 
+            var loopDuration = DateTime.Now.Subtract (loopStartTime);
             Console.WriteLine ("");
+            Console.WriteLine ("  Loop duration: " + loopDuration.ToString ());
             Console.WriteLine ("Loop Completed!");
             Console.WriteLine ("----------");
             Console.WriteLine ("");
@@ -124,6 +128,7 @@ namespace ArduinoPlugAndPlay
         public void LoadExistingDeviceList ()
         {
             Console.WriteLine ("Loading existing device list from files...");
+            var startTime = DateTime.Now;
             foreach (var infoFromFile in Data.ReadAllDevicesFromFile()) {
                 var infoFromDevice = ExtractDeviceInfo (infoFromFile.Port);
                 var filesMatchDeviceInfo = infoFromFile.DoesMatch (infoFromDevice);
@@ -137,6 +142,9 @@ namespace ArduinoPlugAndPlay
                 else
                     DevicePorts.Add (infoFromFile.Port);
             }
+            var duration = DateTime.Now.Subtract (startTime);
+            Console.WriteLine ("  Duration: " + duration.ToString ());
+            Console.WriteLine ("Finished loading existing device list from files.");
         }
 
         public void HandlePortDeviceMismatch (string portName)
@@ -457,6 +465,8 @@ namespace ArduinoPlugAndPlay
 
             Console.WriteLine ("  Reading new device info from USB/serial output: " + portName);
 
+            var extractionStartTime = DateTime.Now;
+
             try {
                 ReaderWriter.Open (portName, DefaultBaudRate);
 
@@ -510,6 +520,10 @@ namespace ArduinoPlugAndPlay
                 info = Extractor.ExtractInfo (portName, serialOutput);
 
                 ReaderWriter.Close ();
+
+                var extractionDuration = DateTime.Now.Subtract (extractionStartTime);
+
+                Console.WriteLine ("  Device info extraction duration: " + extractionDuration.ToString ());
             } catch (TimeoutException) {
                 Console.WriteLine ("Timed out. Aborting.");
 

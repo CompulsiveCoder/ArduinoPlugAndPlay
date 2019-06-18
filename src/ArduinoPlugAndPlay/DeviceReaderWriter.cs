@@ -35,7 +35,7 @@ namespace ArduinoPlugAndPlay
         {
             Timeout.Start ();
             while (Client.Port.BytesToRead == 0) {
-                Thread.Sleep (100);
+                Thread.Sleep (10);
                 Timeout.Check (TimeoutReadingLineInSeconds * 1000, "Timed out reading a line from the serial port.");
             }
             return Client.ReadLine ();
