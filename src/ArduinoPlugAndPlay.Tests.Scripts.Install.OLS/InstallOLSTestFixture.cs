@@ -22,7 +22,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 
             var branch = new BranchDetector ().Branch;
 
-            var destination = "installation/ArduinoPlugAndPlay";
+            var destination = Path.GetFullPath ("installation/ArduinoPlugAndPlay");
 
             var smtpServer = "mail.newtestserver.com";
 

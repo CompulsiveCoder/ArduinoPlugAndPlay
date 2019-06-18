@@ -118,7 +118,7 @@ bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
 
 echo ""
 echo "  Starting transform-service-template.sh script..."
-bash transform-service-template.sh "$BRANCH" "$DESTINATION" $SERVICE_TEMPLATE_FILE_NAME $SERVICE_FILE_NAME || exit 1
+bash transform-service-template.sh "$BRANCH" "$DESTINATION" "$SERVICE_TEMPLATE_FILE_NAME" "$SERVICE_FILE_NAME" || exit 1
 
 echo ""
 echo "  Starting install-service.sh script..."
