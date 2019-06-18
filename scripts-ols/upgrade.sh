@@ -81,7 +81,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
 
   echo ""
   echo "  Executing $INSTALL_SCRIPT_FILE_NAME script..."
-  INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/$INSTALL_SCRIPT_FILE_NAME.sh"
+  INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/$INSTALL_SCRIPT_FILE_NAME"
   echo "    URL: $INSTALL_SCRIPT_URL"
   echo "    File name: $INSTALL_SCRIPT_FILE_NAME"
   wget -nv --no-cache -O - $INSTALL_SCRIPT_URL | bash -s "$BRANCH" "$DESTINATION" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
