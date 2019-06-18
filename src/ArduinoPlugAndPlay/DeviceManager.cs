@@ -152,39 +152,33 @@ namespace ArduinoPlugAndPlay
             if (IsVerbose)
                 Console.WriteLine ("Checking for new devices...");
 
-            var devicesAreConnected = AreDevicesConnected ();
+            var list = GetDevicePortList ();
 
-            if (devicesAreConnected) {
-                ProcessConnectedDevices ();
-            } else
-                Console.WriteLine ("No devices found.");
-        }
+            if (list.Length > 0) {
+                Console.WriteLine ("The following devices were detected:");
 
-        public void ProcessConnectedDevices ()
-        {
-            Console.WriteLine ("The following devices were detected:");
+                foreach (var item in list) {
 
-            var list = GetDeviceList ();
+                    var isNewDevice = !DevicePorts.Contains (item.Trim ());
 
-            foreach (var item in list) {
+                    var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
 
-                var isNewDevice = !DevicePorts.Contains (item.Trim ());
+                    var deviceStatus = "";
 
-                var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
+                    if (isNewDevice && isUsableDevice) {
+                        deviceStatus = "new";
+                        NewDevicePorts.Add (item);
+                    } else if (!isUsableDevice) {
+                        deviceStatus = "unusable";
+                    } else {
+                        deviceStatus = "existing";
+                    }
 
-                var deviceStatus = "";
-
-                if (isNewDevice && isUsableDevice) {
-                    deviceStatus = "new";
-                    NewDevicePorts.Add (item);
-                } else if (!isUsableDevice) {
-                    deviceStatus = "unusable";
-                } else {
-                    deviceStatus = "existing";
+                    Console.WriteLine ("  " + item + " (" + deviceStatus + ")");
                 }
 
-                Console.WriteLine ("  " + item + " (" + deviceStatus + ")");
-            }
+            } else
+                Console.WriteLine ("No devices found.");
         }
 
         public void ProcessNewDevices ()
@@ -242,7 +236,7 @@ namespace ArduinoPlugAndPlay
                 if (IsVerbose)
                     Console.WriteLine ("Existing devices (stored in file):");
 
-                var detectedDevices = new List<string> (GetDeviceList ());
+                var detectedDevices = new List<string> (GetDevicePortList ());
 
                 for (int i = 0; i < DevicePorts.Count; i++) {
                     var portName = DevicePorts [i];
@@ -429,7 +423,7 @@ namespace ArduinoPlugAndPlay
             return Platformio.AreDevicesDetected ();
         }
 
-        public string[] GetDeviceList ()
+        public string[] GetDevicePortList ()
         {
             var deviceList = Platformio.GetDeviceList ();
 

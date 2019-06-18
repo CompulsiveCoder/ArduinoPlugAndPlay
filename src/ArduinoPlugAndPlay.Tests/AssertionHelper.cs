@@ -39,7 +39,7 @@ namespace ArduinoPlugAndPlay.Tests
 
         public void AssertDeviceCount (int deviceCount)
         {
-            var deviceList = Manager.GetDeviceList ();
+            var deviceList = Manager.GetDevicePortList ();
 
             Assert.AreEqual (deviceCount, deviceList.Length, "Incorrect number of devices found in list.");
 
