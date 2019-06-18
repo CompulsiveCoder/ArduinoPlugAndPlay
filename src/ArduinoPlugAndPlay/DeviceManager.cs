@@ -166,23 +166,24 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("The following devices were detected:");
 
                 foreach (var item in list) {
+                    if (!String.IsNullOrEmpty (item)) {
+                        var isNewDevice = !DevicePorts.Contains (item.Trim ());
 
-                    var isNewDevice = !DevicePorts.Contains (item.Trim ());
+                        var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
 
-                    var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
+                        var deviceStatus = "";
 
-                    var deviceStatus = "";
+                        if (isNewDevice && isUsableDevice) {
+                            deviceStatus = "new";
+                            NewDevicePorts.Add (item);
+                        } else if (!isUsableDevice) {
+                            deviceStatus = "unusable";
+                        } else {
+                            deviceStatus = "existing";
+                        }
 
-                    if (isNewDevice && isUsableDevice) {
-                        deviceStatus = "new";
-                        NewDevicePorts.Add (item);
-                    } else if (!isUsableDevice) {
-                        deviceStatus = "unusable";
-                    } else {
-                        deviceStatus = "existing";
+                        Console.WriteLine ("  " + item + " (" + deviceStatus + ")");
                     }
-
-                    Console.WriteLine ("  " + item + " (" + deviceStatus + ")");
                 }
 
             } else
@@ -200,7 +201,7 @@ namespace ArduinoPlugAndPlay
                     Console.WriteLine ("Adding new devices:");
 
                     var nextDevicePort = NewDevicePorts [0];
-                    if (nextDevicePort != null)
+                    if (!String.IsNullOrEmpty (nextDevicePort))
                         AddDevice (nextDevicePort);
                 }
             }
@@ -208,6 +209,9 @@ namespace ArduinoPlugAndPlay
 
         public void AddDevice (string devicePort)
         {
+            if (String.IsNullOrEmpty (devicePort))
+                throw new ArgumentException ("A device port must be provided.");
+
             if (IsVerbose)
                 Console.WriteLine ("Adding device: " + devicePort);
 
