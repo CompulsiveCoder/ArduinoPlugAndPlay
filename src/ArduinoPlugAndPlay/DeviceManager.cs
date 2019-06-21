@@ -107,7 +107,9 @@ namespace ArduinoPlugAndPlay
 
             // Check for removed devices
             CheckForRemovedDevices ();
-            ProcessRemovedDevices ();
+            if (BackgroundStarter.QueuedProcesses.Count == 0) {
+                ProcessRemovedDevices ();
+            }
 
             // Check for new devices
             if (BackgroundStarter.QueuedProcesses.Count == 0) {
@@ -269,7 +271,9 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("Removing devices:");
 
                 while (RemovedDevicePorts.Count > 0) {
-                    RemoveDevice (RemovedDevicePorts [0]);
+                    var port = RemovedDevicePorts [0];
+                    if (!String.IsNullOrEmpty (port))
+                        RemoveDevice (port);
                 }
             }
         }
@@ -309,6 +313,9 @@ namespace ArduinoPlugAndPlay
 
         public bool LaunchAddDeviceCommand (DeviceInfo info)
         {
+            if (String.IsNullOrEmpty (info.Port))
+                throw new ArgumentException ("info.Port cannot be empty");
+
             var action = "add";
 
             var cmd = FixCommand (USBDeviceConnectedCommand, action, info);
@@ -320,6 +327,9 @@ namespace ArduinoPlugAndPlay
 
         public bool LaunchRemoveDeviceCommand (DeviceInfo info)
         {
+            if (String.IsNullOrEmpty (info.Port))
+                throw new ArgumentException ("info.Port cannot be empty");
+
             var action = "remove";
 
             var cmd = FixCommand (USBDeviceDisconnectedCommand, action, info);
