@@ -25,7 +25,7 @@ if [ ! -f "$PACKAGE_FILE_EXT" ]; then
   echo ""
   echo "  Downloading package..."
   echo "    $PACKAGE_URL"
-	curl -s -LO -f $PACKAGE_URL -o $PACKAGE_FILE_EXT || echo "Failed to download $PACKAGE_NAME library package."
+	curl -s -LO -H 'Cache-Control: no-cache' -f $PACKAGE_URL -o $PACKAGE_FILE_EXT || exit 1
 
   echo ""
   echo "  Unzipping package..."
