@@ -25,7 +25,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             mockBackgroundProcessStarter.EnableCommandExecution = true;
 
-            deviceManager.DeviceAddedCommand = "bash " + ProjectDirectory + "/count.sh";
+            deviceManager.USBDeviceConnectedCommand = "bash " + ProjectDirectory + "/count.sh";
 
             var deviceInfo = GetExampleDeviceInfo ();
 

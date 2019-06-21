@@ -29,14 +29,14 @@ namespace ArduinoPlugAndPlay.ClientConsole
 
             var deviceManager = new DeviceManager ();
 
-            var isVerboseString = config.GetValue ("IsVerbose");
-            if (!String.IsNullOrEmpty (isVerboseString))
-                Boolean.TryParse (isVerboseString, out IsVerbose);
-            deviceManager.IsVerbose = IsVerbose;
+            deviceManager.IsVerbose = config.GetBoolean ("IsVerbose");
 
             deviceManager.SleepTimeInSeconds = config.GetInt32 ("SleepTime", 1);
-            deviceManager.DeviceAddedCommand = config.GetValue ("DeviceAddedCommand");
-            deviceManager.DeviceRemovedCommand = config.GetValue ("DeviceRemovedCommand");
+            deviceManager.TimeoutReadingDeviceInfoInSeconds = config.GetInt32 ("TimeoutReadingDeviceInfo", 30);
+            deviceManager.CommandTimeoutInSeconds = config.GetInt32 ("CommandTimeout", 120);
+
+            deviceManager.USBDeviceConnectedCommand = config.GetValue ("USBDeviceConnectedCommand");
+            deviceManager.USBDeviceDisconnectedCommand = config.GetValue ("USBDeviceDisconnectedCommand");
 
             deviceManager.SmtpServer = config.GetValue ("SmtpServer");
             deviceManager.EmailAddress = config.GetValue ("EmailAddress");

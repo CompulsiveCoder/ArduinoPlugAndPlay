@@ -17,13 +17,21 @@ namespace ArduinoPlugAndPlay
 
         public virtual void Open (string portName, int baudRate)
         {
+            Console.WriteLine ("Opening serial port: " + portName);
+
             Client = new SerialClient (portName, baudRate);
             Client.Open ();
+
+            Console.WriteLine ("  Serial port is open");
         }
 
         public virtual void Close ()
         {
+            Console.WriteLine ("Closing serial port: " + Client.Port.PortName);
+
             Client.Close ();            
+
+            Console.WriteLine ("  Serial port is closed");
         }
 
         public virtual string Read ()

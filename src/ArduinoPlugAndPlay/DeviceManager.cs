@@ -29,8 +29,8 @@ namespace ArduinoPlugAndPlay
 
         public bool IsActive = true;
 
-        public string DeviceAddedCommand = "echo 'Device added ({FAMILY} {GROUP} {BOARD})'";
-        public string DeviceRemovedCommand = "echo 'Device removed ({FAMILY} {GROUP} {BOARD})'";
+        public string USBDeviceConnectedCommand = "echo 'Device added ({FAMILY} {GROUP} {BOARD})'";
+        public string USBDeviceDisconnectedCommand = "echo 'Device removed ({FAMILY} {GROUP} {BOARD})'";
 
         public string SmtpServer = String.Empty;
         public string EmailAddress = String.Empty;
@@ -45,7 +45,7 @@ namespace ArduinoPlugAndPlay
         public bool IsVerbose = true;
 
         public int CommandTimeoutInSeconds = 5 * 60;
-        public int TimeoutExtractingDetailsInSeconds = 30;
+        public int TimeoutReadingDeviceInfoInSeconds = 30;
 
         public bool UseCommandTimeout = true;
 
@@ -64,9 +64,9 @@ namespace ArduinoPlugAndPlay
 
             Console.WriteLine ("Settings");
             Console.WriteLine ("  Device added command:");
-            Console.WriteLine ("    " + DeviceAddedCommand);
+            Console.WriteLine ("    " + USBDeviceConnectedCommand);
             Console.WriteLine ("  Device removed command:");
-            Console.WriteLine ("    " + DeviceRemovedCommand);
+            Console.WriteLine ("    " + USBDeviceDisconnectedCommand);
             Console.WriteLine ("  Sleep time: " + SleepTimeInSeconds + " seconds between loops");
             Console.WriteLine ("");
 
@@ -313,7 +313,7 @@ namespace ArduinoPlugAndPlay
         {
             var action = "add";
 
-            var cmd = FixCommand (DeviceAddedCommand, action, info);
+            var cmd = FixCommand (USBDeviceConnectedCommand, action, info);
 
             info.AddCommandCompleted = StartBashCommand (action, cmd, info);
 
@@ -324,7 +324,7 @@ namespace ArduinoPlugAndPlay
         {
             var action = "remove";
 
-            var cmd = FixCommand (DeviceRemovedCommand, action, info);
+            var cmd = FixCommand (USBDeviceDisconnectedCommand, action, info);
 
             info.RemoveCommandCompleted = StartBashCommand (action, cmd, info);
 
@@ -512,7 +512,7 @@ namespace ArduinoPlugAndPlay
                     output.Contains (Extractor.ProjectNamePreText) &&
                     output.Contains (Extractor.BoardTypePreText);
 
-                    Timeout.Check (TimeoutExtractingDetailsInSeconds * 1000, "Timed out attempting to read the details from the device.");
+                    Timeout.Check (TimeoutReadingDeviceInfoInSeconds * 1000, "Timed out attempting to read the details from the device.");
 
                     i++;
                 }

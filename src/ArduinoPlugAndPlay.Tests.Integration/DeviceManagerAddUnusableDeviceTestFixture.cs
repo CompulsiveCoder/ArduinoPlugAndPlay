@@ -23,7 +23,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
-            deviceManager.TimeoutExtractingDetailsInSeconds = 3;
+            deviceManager.TimeoutReadingDeviceInfoInSeconds = 3;
 
             // deviceManager.DeviceAddedCommand = "MAX=5; COUNT=0; [ -f \"fcf.txt\" ] && COUNT=\"$(cat fcf.txt)\"; COUNT=$(($COUNT+1)); echo \"$COUNT\" > \"fcf.txt\"; echo \"$COUNT\"; [ \"$COUNT\" -lt \"$MAX\" ] && echo \"Script intentionally failed\" && exit 1";
 

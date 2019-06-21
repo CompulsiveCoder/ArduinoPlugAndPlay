@@ -56,13 +56,13 @@ namespace ArduinoPlugAndPlay.Tests
 
         public void AssertAddDeviceCommandStarted (DeviceInfo info, MockBackgroundProcessStarter starter)
         {
-            var expectedCommand = Manager.InsertValues (Manager.DeviceAddedCommand, info);
+            var expectedCommand = Manager.InsertValues (Manager.USBDeviceConnectedCommand, info);
             AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile (info.Port, info.GroupName));
         }
 
         public void AssertRemoveDeviceCommandStarted (DeviceInfo info, MockBackgroundProcessStarter starter)
         {
-            var expectedCommand = Manager.InsertValues (Manager.DeviceRemovedCommand, info);
+            var expectedCommand = Manager.InsertValues (Manager.USBDeviceDisconnectedCommand, info);
             AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile (info.Port, info.GroupName));
         }
 

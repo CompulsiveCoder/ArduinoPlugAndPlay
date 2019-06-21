@@ -22,7 +22,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var timeoutInSeconds = 3;
 
             //deviceManager.DeviceAddedCommand = "echo hello";
-            deviceManager.DeviceAddedCommand = "bash " + ProjectDirectory + "/count.sh";
+            deviceManager.USBDeviceConnectedCommand = "bash " + ProjectDirectory + "/count.sh";
             deviceManager.CommandTimeoutInSeconds = timeoutInSeconds;
 
             var deviceInfo = GetExampleDeviceInfo ();
@@ -66,7 +66,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var timeoutInSeconds = 3;
 
             //deviceManager.DeviceRemovedCommand = "echo hello";
-            deviceManager.DeviceRemovedCommand = "bash " + ProjectDirectory + "/count.sh";
+            deviceManager.USBDeviceDisconnectedCommand = "bash " + ProjectDirectory + "/count.sh";
             deviceManager.CommandTimeoutInSeconds = timeoutInSeconds;
 
             var deviceInfo = GetExampleDeviceInfo ();

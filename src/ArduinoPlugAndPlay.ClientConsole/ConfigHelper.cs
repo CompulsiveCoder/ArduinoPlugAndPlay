@@ -62,6 +62,14 @@ namespace ArduinoPlugAndPlay.ClientConsole
             return value;
         }
 
+        public bool GetBoolean (string argumentKey)
+        {
+            var stringValue = GetValue (argumentKey);
+            var boolValue = false;
+            if (!String.IsNullOrEmpty (stringValue))
+                Boolean.TryParse (stringValue, out boolValue);
+            return boolValue;
+        }
     }
 }
 
