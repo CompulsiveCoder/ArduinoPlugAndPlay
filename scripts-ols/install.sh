@@ -61,21 +61,21 @@ echo "  Downloading init.sh script..."
 INIT_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/init.sh"
 echo "    URL: $INIT_FILE_URL"
 echo "    File name: init.sh"
-wget -nv --no-cache $INIT_FILE_URL || exit 1
+curl -s -LO -H 'Cache-Control: no-cache' -f $INIT_FILE_URL || exit 1
 
 echo ""
 echo "  Downloading install-service.sh script..."
 INSTALL_SERVICE_FILE="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/install-service.sh"
 echo "    URL: $INSTALL_SERVICE_FILE"
 echo "    File name: install-service.sh"
-wget -nv --no-cache $INSTALL_SERVICE_FILE || exit 1
+curl -s -LO -H 'Cache-Control: no-cache' -f $INSTALL_SERVICE_FILE || exit 1
 
 echo ""
 echo "  Downloading install-package.sh script..."
 INSTALL_PACKAGE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package.sh"
 echo "    URL: $INSTALL_PACKAGE_URL"
 echo "    File name: install-package.sh"
-wget -nv --no-cache $INSTALL_PACKAGE_URL || exit 1
+curl -s -LO -H 'Cache-Control: no-cache' -f $INSTALL_PACKAGE_URL || exit 1
 
 START_SCRIPT_NAME="start-plug-and-play.sh"
 
@@ -88,7 +88,7 @@ echo "  Downloading $START_SCRIPT_NAME script..."
 START_SCRIPT_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/$START_SCRIPT_NAME"
 echo "    URL: $START_SCRIPT_URL"
 echo "    File name: $START_SCRIPT_NAME"
-wget -nv --no-cache $START_SCRIPT_URL || exit 1
+curl -s -LO -H 'Cache-Control: no-cache' -f $START_SCRIPT_URL || exit 1
 
 echo ""
 echo "  Downloading transform-service-template.sh script..."
@@ -102,14 +102,14 @@ echo "  Downloading systemctl.sh script..."
 SYSTEMCTL_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/systemctl.sh"
 echo "    URL: $SYSTEMCTL_URL"
 echo "    File name: systemctl.sh"
-wget -nv --no-cache $SYSTEMCTL_URL || exit 1
+curl -s -LO -H 'Cache-Control: no-cache' -f $SYSTEMCTL_URL || exit 1
 
 echo ""
 echo "  Downloading service template file..."
 SERVICE_TEMPLATE_FILE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/svc/$SERVICE_TEMPLATE_FILE_NAME"
 echo "    URL: $SERVICE_TEMPLATE_FILE_URL"
 echo "    File name: $SERVICE_TEMPLATE_FILE_NAME"
-wget -nv --no-cache $SERVICE_TEMPLATE_FILE_URL -O $SERVICE_TEMPLATE_FILE_NAME || exit 1
+curl -s -L -H 'Cache-Control: no-cache' -f $SERVICE_TEMPLATE_FILE_URL -o $SERVICE_TEMPLATE_FILE_NAME || exit 1
 
 
 echo ""
