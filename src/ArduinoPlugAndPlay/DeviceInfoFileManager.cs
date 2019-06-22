@@ -48,6 +48,7 @@ namespace ArduinoPlugAndPlay
             var deviceFolder = Path.Combine (InfoDirectory, devicePort.Replace ("/dev/", ""));
 
             var info = new DeviceInfo ();
+            info.Port = devicePort;
 
             if (Directory.Exists (deviceFolder)) {
                 //Console.WriteLine ("Device info directory:");
@@ -56,7 +57,6 @@ namespace ArduinoPlugAndPlay
                 info.FamilyName = File.ReadAllText (Path.Combine (deviceFolder, "family.txt"));
                 info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt"));
                 info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
-                info.Port = File.ReadAllText (Path.Combine (deviceFolder, "port.txt"));
                 info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
 
                 if (File.Exists (Path.Combine (deviceFolder, "add-command-completed.txt")))
