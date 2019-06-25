@@ -102,14 +102,14 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("Starting Plug and Play loop...");
             Console.WriteLine ("");
 
-            // Check existing processes
-            CheckRunningProcesses ();
-
             // Check for removed devices
             CheckForRemovedDevices ();
             if (BackgroundStarter.QueuedProcesses.Count == 0) {
                 ProcessRemovedDevices ();
             }
+
+            // Check running processes
+            CheckRunningProcesses ();
 
             // Check for new devices
             if (BackgroundStarter.QueuedProcesses.Count == 0) {
@@ -638,8 +638,8 @@ namespace ArduinoPlugAndPlay
         public void CheckForAbortDueToDisconnect (ProcessWrapper processWrapper)
         {
             var deviceHasBeenDisconnected = !DevicePorts.Contains (processWrapper.Info.Port)
-                                            || RemovedDevicePorts.Contains (processWrapper.Info.Port)
-                                            || !Platformio.PortIsInList (processWrapper.Info.Port);
+                                            || RemovedDevicePorts.Contains (processWrapper.Info.Port);
+            //|| !Platformio.PortIsInList (processWrapper.Info.Port); // TODO: Check if needed. This check is slow and should be redundant
 
             // If the device has been removed kill the process
             if (deviceHasBeenDisconnected && !processWrapper.HasExited) {
@@ -687,8 +687,20 @@ namespace ArduinoPlugAndPlay
                 // Mark the process wrapper as having not started yet so it can restart
                 processWrapper.HasStarted = false;
 
-                // Add to the back of the queue
-                BackgroundStarter.QueuedProcesses.Enqueue (processWrapper);
+                // Run the remove device command before restarting the process
+                if (processWrapper.Action == "add")
+                    LaunchRemoveDeviceCommand (processWrapper.Info);
+
+                // If the process hasn't reached the maximum number of retries
+                if (processWrapper.TryCount < CommandRetryMax) {
+                    // Relaunch the add device command at the back of the queue
+                    BackgroundStarter.QueuedProcesses.Enqueue (processWrapper);
+                } else {
+                    if (processWrapper.Action == "add") {
+                        // Add the port to the unusable ports list
+                        UnusableDevicePorts.Add (processWrapper.Info.Port);
+                    }
+                }
 
                 // Ensure that there's a process running.
                 // This will restart the current one if its still at the front of the queue

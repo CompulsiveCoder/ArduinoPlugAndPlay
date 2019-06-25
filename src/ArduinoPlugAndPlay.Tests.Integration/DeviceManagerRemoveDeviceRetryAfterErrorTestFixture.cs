@@ -46,6 +46,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             for (int i = 1; i <= deviceManager.CommandRetryMax; i++) {
                 deviceManager.RunLoop ();
 
+                Thread.Sleep (1000);
+
                 assertion.AssertDeviceIsNotList (info.Port);
 
                 Assert.AreEqual (1, deviceManager.BackgroundStarter.QueuedProcesses.Count, "Wrong number of processes found.");
