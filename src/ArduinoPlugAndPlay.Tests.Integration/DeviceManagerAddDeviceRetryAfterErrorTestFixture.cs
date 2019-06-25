@@ -72,7 +72,7 @@ rm ""devices/device1.txt""
 
             for (int i = 0; i < deviceManager.CommandRetryMax - 1; i++) {
                 Console.WriteLine ();
-                Console.WriteLine ("--- Start Test Loop #" + i + 1);
+                Console.WriteLine ("--- Start Test Loop #" + (i + 1));
                 Console.WriteLine ();
 
                 Console.WriteLine ("Running a loop to execute the intentionally failing process...");
