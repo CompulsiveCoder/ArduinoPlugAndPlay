@@ -65,8 +65,12 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             // The next loop should detect the failure
             deviceManager.RunLoop ();
 
+            Thread.Sleep (1000);
+
             // The next loop should restart the process
             deviceManager.RunLoop ();
+
+            Thread.Sleep (1000);
 
             Assert.IsTrue (processWrapper.Process.HasExited, "The process hasn't exited.");
 
