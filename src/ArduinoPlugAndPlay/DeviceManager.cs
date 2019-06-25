@@ -107,9 +107,9 @@ namespace ArduinoPlugAndPlay
 
             // Check for removed devices
             CheckForRemovedDevices ();
-            if (BackgroundStarter.QueuedProcesses.Count == 0) {
+//            if (BackgroundStarter.QueuedProcesses.Count == 0) {
                 ProcessRemovedDevices ();
-            }
+//            }
 
             // Check for new devices
             if (BackgroundStarter.QueuedProcesses.Count == 0) {
