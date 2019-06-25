@@ -78,6 +78,10 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   if [ "$ENABLE_AUTO_UPDATE" = "1" ]; then
     INSTALL_SCRIPT_FILE_NAME="install-auto-update.sh"
   fi  
+  
+  echo ""
+  echo "  Stopping the arduino plug and play service..."
+  systemctl stop arduino-plug-and-play.service
 
   echo ""
   echo "  Executing $INSTALL_SCRIPT_FILE_NAME script..."
