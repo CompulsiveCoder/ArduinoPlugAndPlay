@@ -153,6 +153,17 @@ namespace ArduinoPlugAndPlay
         {
             Output += line + Environment.NewLine;
         }
+
+        public bool ProcessExists (string action, string port)
+        {
+            var processes = QueuedProcesses.ToArray ();
+            foreach (var process in processes) {
+                if (process.Action == action && process.Info.Port == port)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }
 

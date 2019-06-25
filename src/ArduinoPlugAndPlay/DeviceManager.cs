@@ -108,7 +108,7 @@ namespace ArduinoPlugAndPlay
             // Check for removed devices
             CheckForRemovedDevices ();
 //            if (BackgroundStarter.QueuedProcesses.Count == 0) {
-                ProcessRemovedDevices ();
+            ProcessRemovedDevices ();
 //            }
 
             // Check for new devices
@@ -217,7 +217,7 @@ namespace ArduinoPlugAndPlay
 
             NewDevicePorts.Remove (devicePort);
 
-            if (!DevicePorts.Contains (devicePort)) {
+            if (!DevicePorts.Contains (devicePort) && !BackgroundStarter.ProcessExists ("add", devicePort)) {
                 // && Platformio.PortIsInList (devicePort)) // TODO: Check if this should be used. It's slow.
                 var info = ExtractDeviceInfo (devicePort);
 
@@ -285,7 +285,7 @@ namespace ArduinoPlugAndPlay
 
         public void RemoveDevice (string devicePort)
         {
-            if (!String.IsNullOrEmpty (devicePort)) {
+            if (!String.IsNullOrEmpty (devicePort) && !BackgroundStarter.ProcessExists ("remove", devicePort)) {
 
                 DevicePorts.Remove (devicePort);
 
