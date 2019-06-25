@@ -149,13 +149,13 @@ rm ""devices/device1.txt""
             deviceManager.RunLoop ();
 
             Console.WriteLine ("Sleeping to let the add process finish...");
-            Thread.Sleep (1000);
+            Thread.Sleep (2000);
 
             Console.WriteLine ("Running a loop so the remove process can be started and the port will be added to the unusable ports list...");
             deviceManager.RunLoop ();
 
             Console.WriteLine ("Sleeping to let the remove process finish...");
-            Thread.Sleep (3000);
+            Thread.Sleep (4000);
 
             Console.WriteLine ("Checking that device1.txt was removed...");
             Console.WriteLine ("  " + device1FilePath);
