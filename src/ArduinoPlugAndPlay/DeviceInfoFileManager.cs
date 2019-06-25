@@ -105,7 +105,8 @@ namespace ArduinoPlugAndPlay
                 //Console.WriteLine ("Deleting device info:");
                 //Console.WriteLine (deviceInfoDir);
 
-                Directory.Delete (deviceInfoDir, true);
+                if (Directory.Exists(deviceInfoDir))
+                  Directory.Delete (deviceInfoDir, true);
             }
         }
 
