@@ -81,7 +81,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   
   echo ""
   echo "  Stopping the arduino plug and play service..."
-  systemctl stop arduino-plug-and-play.service
+  sh systemctl.sh stop arduino-plug-and-play.service
 
   echo ""
   echo "  Executing $INSTALL_SCRIPT_FILE_NAME script..."

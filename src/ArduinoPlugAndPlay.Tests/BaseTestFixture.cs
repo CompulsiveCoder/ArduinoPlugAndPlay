@@ -156,46 +156,18 @@ namespace ArduinoPlugAndPlay.Tests
 
         public DeviceInfo GetExampleDeviceInfo ()
         {
-            return GetExampleDeviceInfo ("/dev/ttyUSB0");
+            return GetExampleDeviceInfo (0);
         }
 
-        public DeviceInfo GetExampleDeviceInfo (int portIndex)
-        {
-            return GetExampleDeviceInfo ("/dev/ttyUSB" + portIndex);
-        }
-
-        public DeviceInfo GetExampleDeviceInfo (string portName)
+        public DeviceInfo GetExampleDeviceInfo (int deviceIndex)
         {
             var info = new DeviceInfo ();
 
-            info.FamilyName = "ExampleFamily";
-            info.GroupName = "ExampleGroup";
-            info.ProjectName = "ProjectName";
+            info.FamilyName = "ExampleFamily" + deviceIndex;
+            info.GroupName = "ExampleGroup" + deviceIndex;
+            info.ProjectName = "ProjectName" + deviceIndex;
             info.BoardType = "uno";
-            info.Port = portName;
-
-            return info;
-        }
-
-        public DeviceInfo GetExampleDeviceInfo2 ()
-        {
-            return GetExampleDeviceInfo2 ("/dev/ttyUSB1");
-        }
-
-        public DeviceInfo GetExampleDeviceInfo2 (int portIndex)
-        {
-            return GetExampleDeviceInfo ("/dev/ttyUSB" + portIndex);
-        }
-
-        public DeviceInfo GetExampleDeviceInfo2 (string portName)
-        {
-            var info = new DeviceInfo ();
-
-            info.FamilyName = "ExampleFamily2";
-            info.GroupName = "ExampleGroup2";
-            info.ProjectName = "ProjectName2";
-            info.BoardType = "nano";
-            info.Port = portName;
+            info.Port = "ttyUSB" + deviceIndex;
 
             return info;
         }

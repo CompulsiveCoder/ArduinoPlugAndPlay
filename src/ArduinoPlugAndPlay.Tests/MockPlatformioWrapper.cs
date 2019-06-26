@@ -18,16 +18,16 @@ namespace ArduinoPlugAndPlay.Tests
         {
             Console.WriteLine ("Virtually (mock) connecting device: " + portName);
 
-            if (!MockDevices.Contains (portName))
-                MockDevices.Add (portName);
+            if (!MockDevices.Contains (portName.Replace ("/dev/", "")))
+                MockDevices.Add (portName.Replace ("/dev/", ""));
         }
 
         public void DisconnectDevice (string portName)
         {
             Console.WriteLine ("Virtually (mock) disconnecting device: " + portName);
 
-            if (MockDevices.Contains (portName))
-                MockDevices.Remove (portName);
+            if (MockDevices.Contains (portName.Replace ("/dev/", "")))
+                MockDevices.Remove (portName.Replace ("/dev/", ""));
         }
 
         public override string[] GetDeviceList ()

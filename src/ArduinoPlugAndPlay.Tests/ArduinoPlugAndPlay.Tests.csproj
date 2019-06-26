@@ -40,12 +40,12 @@
     <Compile Include="AssertionHelper.cs" />
     <Compile Include="BaseTestFixture.cs" />
     <Compile Include="MockDeviceOutputs.cs" />
-    <Compile Include="MockDeviceReaderWriter.cs" />
     <Compile Include="MockPlatformioWrapper.cs" />
     <Compile Include="MockProcessStarter.cs" />
     <Compile Include="TestProcessStarter.cs" />
     <Compile Include="MockBackgroundProcessStarter.cs" />
     <Compile Include="BranchDetector.cs" />
+    <Compile Include="MockSerialDeviceReaderWriter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

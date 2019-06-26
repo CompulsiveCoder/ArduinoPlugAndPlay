@@ -21,7 +21,7 @@ namespace ArduinoPlugAndPlay
 
         public DeviceInfoFileManager Data = new DeviceInfoFileManager ();
 
-        public DeviceReaderWriter ReaderWriter = new DeviceReaderWriter ();
+        public SerialDeviceReaderWriter ReaderWriter = new SerialDeviceReaderWriter ();
 
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
@@ -70,7 +70,7 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("  Sleep time: " + SleepTimeInSeconds + " seconds between loops");
             Console.WriteLine ("");
 
-            LoadExistingDeviceList ();
+            LoadExistingDeviceListFromFiles ();
 
             while (IsActive) {
                 try {
@@ -125,22 +125,33 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("");
         }
 
-        public void LoadExistingDeviceList ()
+        public void LoadExistingDeviceListFromFiles ()
         {
             Console.WriteLine ("Loading existing device list from files...");
             var startTime = DateTime.Now;
             foreach (var infoFromFile in Data.ReadAllDevicesFromFile()) {
-                var infoFromDevice = ExtractDeviceInfo (infoFromFile.Port);
+                var infoFromDevice = ReadDeviceInfo (infoFromFile.Port);
+
+                Console.WriteLine ("  Device info found...");
+                Console.WriteLine ("    Port: " + infoFromFile.Port);
+                Console.WriteLine ("    Family: " + infoFromFile.FamilyName);
+                Console.WriteLine ("    Project: " + infoFromFile.ProjectName);
+                Console.WriteLine ("    Group: " + infoFromFile.GroupName);
+
                 var filesMatchDeviceInfo = infoFromFile.DoesMatch (infoFromDevice);
 
                 var physicalDeviceIsFound = infoFromDevice != null;
 
-                if (!physicalDeviceIsFound)
+                if (!physicalDeviceIsFound) {
+                    Console.WriteLine ("  Registered device is no longer connected to port. Removing: " + infoFromFile.Port);
                     RemoveDevice (infoFromFile.Port);
-                else if (!filesMatchDeviceInfo)
+                } else if (!filesMatchDeviceInfo) {
+                    Console.WriteLine ("  Registered device info doesn't match the info coming from the physical device: " + infoFromFile.Port);
                     HandlePortDeviceMismatch (infoFromFile.Port);
-                else
+                } else {
+                    Console.WriteLine ("  Registered device found is still connected. Adding to device ports list: " + infoFromFile.Port);
                     DevicePorts.Add (infoFromFile.Port);
+                }
             }
             var duration = DateTime.Now.Subtract (startTime);
             Console.WriteLine ("  Duration: " + duration.ToString ());
@@ -219,7 +230,7 @@ namespace ArduinoPlugAndPlay
 
             if (!DevicePorts.Contains (devicePort) && !BackgroundStarter.ProcessExists ("add", devicePort)) {
                 // && Platformio.PortIsInList (devicePort)) // TODO: Check if this should be used. It's slow.
-                var info = ExtractDeviceInfo (devicePort);
+                var info = ReadDeviceInfo (devicePort);
 
                 DevicePorts.Add (devicePort);
 
@@ -471,7 +482,7 @@ namespace ArduinoPlugAndPlay
             return newValue;
         }
 
-        public DeviceInfo ExtractDeviceInfo (string portName)
+        public DeviceInfo ReadDeviceInfo (string portName)
         {
             DeviceInfo info = null;
 
@@ -551,6 +562,7 @@ namespace ArduinoPlugAndPlay
 
                     SendErrorEmail (ex, portName);
                 }
+                throw ex;
             } catch (Exception ex) {
                 if (!UnusableDevicePorts.Contains (portName))
                     UnusableDevicePorts.Add (portName);

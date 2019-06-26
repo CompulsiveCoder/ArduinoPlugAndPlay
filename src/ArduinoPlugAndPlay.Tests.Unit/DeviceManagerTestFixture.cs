@@ -13,7 +13,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
-            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             // Set up the device manager with the mock dependencies
@@ -25,10 +25,13 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var assertion = new AssertionHelper (deviceManager);
 
             // Set the mock output from the device
-            mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (info));
+            mockReaderWriter.SetMockOutput (info.Port, MockOutputs.GetDeviceSerialOutput (info));
 
             // Connect the virtual (mock) USB device
             mockPlatformio.ConnectDevice (info.Port);
+
+            // Open the virtual (mock) USB device connection
+            mockReaderWriter.Open (info.Port);
 
             // Add the device
             deviceManager.AddDevice (info.Port);
@@ -47,7 +50,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
         {
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
-            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             // Set up the device manager with the mock dependencies
@@ -61,7 +64,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var info = GetExampleDeviceInfo ();
 
             // Set the mock output from the device
-            mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (info));
+            mockReaderWriter.SetMockOutput (info.Port, MockOutputs.GetDeviceSerialOutput (info));
 
             // Connect the virtual (mock) device
             mockPlatformio.ConnectDevice (info.Port);

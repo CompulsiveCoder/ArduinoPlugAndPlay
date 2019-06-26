@@ -15,7 +15,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
-            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             mockBackgroundProcessStarter.EnableCommandExecution = true;

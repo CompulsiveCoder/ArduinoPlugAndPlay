@@ -8,12 +8,12 @@ namespace ArduinoPlugAndPlay.Tests.Integration
     public class DeviceManagerLoadExistingDevicesIntegrationTestFixture : BaseTestFixture
     {
         [Test]
-        public void Test_LoadExistingDevices_PortDeviceMistmatch ()
+        public void Test_LoadExistingDevices_LoadsExistingDevicesWithoutRecreatingThem ()
         {
             var deviceManager = new DeviceManager ();
 
             var mockPlatformio = new MockPlatformioWrapper ();
-            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             deviceManager.Platformio = mockPlatformio;
@@ -26,9 +26,63 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             //deviceManager.DeviceAddedCommand = "bash " + ProjectDirectory + "/count.sh";
 
+            Console.WriteLine ("Creating example device info files...");
+            var deviceInfo = GetExampleDeviceInfo (0);
+            CreateExampleDeviceInfoFiles (deviceInfo);
+
+            Console.WriteLine ("Creating example device 2 info files...");
+            var deviceInfo2 = GetExampleDeviceInfo (1);
+            CreateExampleDeviceInfoFiles (deviceInfo2);
+
+            Console.WriteLine ("Setting example device 1 as mock serial device output...");
+            mockReaderWriter.SetMockOutput (deviceInfo.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo));
+
+            Console.WriteLine ("Virtually connecting device 1...");
+            mockPlatformio.ConnectDevice (deviceInfo.Port);
+
+            Console.WriteLine ("Setting example device 2 as mock serial device output...");
+            mockReaderWriter.SetMockOutput (deviceInfo2.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo2));
+
+            Console.WriteLine ("Virtually connecting device 2...");
+            mockPlatformio.ConnectDevice (deviceInfo2.Port);
+
+            Console.WriteLine ("Loading existing device info from file...");
+            deviceManager.LoadExistingDeviceListFromFiles ();
+
+            Console.WriteLine ("Checking that devices were loaded...");
+            Assert.AreEqual (2, deviceManager.DevicePorts.Count, "Incorrect number of devices loaded");
+
+            Console.WriteLine ("Running loop to see if commands are launched...");
+            deviceManager.RunLoop ();
+
+            Assert.AreEqual (0, deviceManager.BackgroundStarter.QueuedProcesses.Count, "Processes started when they shouldn't have.");
+
+
+            // Assert that the expected command was started
+            //assertion.AssertRemoveDeviceCommandStarted (deviceInfo, mockBackgroundProcessStarter);
+
+        }
+
+        [Test]
+        public void Test_LoadExistingDevices_PortDeviceMistmatch ()
+        {
+            var deviceManager = new DeviceManager ();
+
+            var mockPlatformio = new MockPlatformioWrapper ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
+            var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+
+            deviceManager.Platformio = mockPlatformio;
+            deviceManager.ReaderWriter = mockReaderWriter;
+            deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+
+            var assertion = new AssertionHelper (deviceManager);
+
+            mockBackgroundProcessStarter.EnableCommandExecution = true;
+
             // Create two different example devices
-            var deviceInfo = GetExampleDeviceInfo ();
-            var deviceInfo2 = GetExampleDeviceInfo2 ();
+            var deviceInfo = GetExampleDeviceInfo (0);
+            var deviceInfo2 = GetExampleDeviceInfo (1);
 
             // Set the ports to be the same
             deviceInfo.Port = deviceInfo2.Port = "ttyUSB0";
@@ -37,48 +91,16 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             CreateExampleDeviceInfoFiles (deviceInfo);
 
             // Set the mock output to device 2
-            mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (deviceInfo2));
+            mockReaderWriter.SetMockOutput (deviceInfo2.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo2));
 
             // Connect the virtual (mock) USB device
             mockPlatformio.ConnectDevice (deviceInfo.Port);
 
             // Run a loop to set off a long running command
-            deviceManager.LoadExistingDeviceList ();
-
+            deviceManager.LoadExistingDeviceListFromFiles ();
 
             // Assert that the expected command was started
             assertion.AssertRemoveDeviceCommandStarted (deviceInfo, mockBackgroundProcessStarter);
-
-            // Disconnect the device before the command is completed
-            /*mockPlatformio.DisconnectDevice (deviceInfo.Port);
-
-            // Run another loop to see how it handles it
-            deviceManager.RunLoop ();
-
-            var logDir = Path.GetFullPath ("logs");
-            Console.WriteLine (logDir);
-
-            var logFilePath = "";
-            foreach (var file in Directory.GetFiles(logDir, "*.txt"))
-                logFilePath = file;
-
-            Assert.IsNotNullOrEmpty (logFilePath, "Couldn't find log file.");
-
-            var output = File.ReadAllText (logFilePath);
-
-            Console.WriteLine ("Log file...");
-            Console.WriteLine (output);
-            Console.WriteLine ("");
-
-            var reachableNumber = 1;
-
-            Assert.IsTrue (output.Contains (reachableNumber.ToString ()), "Script didn't output anything.");
-
-            var unreachableNumber = 5;
-
-            Assert.IsFalse (output.Contains (unreachableNumber.ToString ()), "Script continued too far.");
-
-            Assert.AreEqual (2, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");*/
         }
 
     }

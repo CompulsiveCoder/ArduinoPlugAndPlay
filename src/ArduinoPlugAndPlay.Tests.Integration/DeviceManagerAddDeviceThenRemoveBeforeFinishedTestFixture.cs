@@ -14,7 +14,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var deviceManager = new DeviceManager ();
 
             var mockPlatformio = new MockPlatformioWrapper ();
-            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             deviceManager.Platformio = mockPlatformio;
@@ -30,7 +30,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var deviceInfo = GetExampleDeviceInfo ();
 
             // Set the mock output from the device
-            mockReaderWriter.SetMockOutput (MockOutputs.GetDeviceSerialOutput (deviceInfo));
+            mockReaderWriter.SetMockOutput (deviceInfo.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo));
 
             // Connect the virtual (mock) USB device
             mockPlatformio.ConnectDevice (deviceInfo.Port);

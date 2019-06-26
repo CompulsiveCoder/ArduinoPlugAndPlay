@@ -4,15 +4,20 @@ using System.Threading;
 
 namespace ArduinoPlugAndPlay
 {
-    public class DeviceReaderWriter
+    public class SerialDeviceReaderWriter
     {
         public SerialClient Client;
 
         public int TimeoutReadingLineInSeconds = 15;
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
-        public DeviceReaderWriter ()
+        public SerialDeviceReaderWriter ()
         {
+        }
+
+        public virtual void Open (string portName)
+        {
+            Open (portName, 9600);
         }
 
         public virtual void Open (string portName, int baudRate)

@@ -41,7 +41,6 @@
     <Compile Include="DeviceInfoExtractor.cs" />
     <Compile Include="DeviceInfoFileManager.cs" />
     <Compile Include="DeviceManager.cs" />
-    <Compile Include="DeviceReaderWriter.cs" />
     <Compile Include="PlatformioParser.cs" />
     <Compile Include="PlatformioWrapper.cs" />
     <Compile Include="TimeoutHelper.cs" />
@@ -49,6 +48,7 @@
     <Compile Include="ProcessStarter.cs" />
     <Compile Include="ProcessWrapper.cs" />
     <Compile Include="TimeoutExeption.cs" />
+    <Compile Include="SerialDeviceReaderWriter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

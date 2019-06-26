@@ -13,7 +13,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
         {
             // Set up the mock objects
             var mockPlatformio = new MockPlatformioWrapper ();
-            var mockReaderWriter = new MockDeviceReaderWriter ();
+            var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
 
             mockBackgroundProcessStarter.EnableCommandExecution = true;
@@ -32,10 +32,11 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             for (int i = 1; i < 100; i++) {
                 mockOutput += "\n" + i;
             }
-            mockReaderWriter.SetMockOutput (mockOutput);
-            mockReaderWriter.EnableVirtualDelay = true; // This delay prevents the test log from getting bloated
 
             var port = "ttyUSB0";
+
+            mockReaderWriter.SetMockOutput (port, mockOutput);
+            mockReaderWriter.EnableVirtualDelay = true; // This delay prevents the test log from getting bloated
 
             // Connect the virtual (mock) USB device
             mockPlatformio.ConnectDevice (port);
