@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                shHide( 'git remote set-url origin https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git' )
+                shHide( 'git clone --recursive -b $BRANCH_NAME https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git .' )
                 sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
                 sh "git fetch --no-tags"
                 sh 'git checkout $BRANCH_NAME'
