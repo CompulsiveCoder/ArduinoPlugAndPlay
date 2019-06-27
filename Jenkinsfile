@@ -4,6 +4,11 @@ pipeline {
         disableConcurrentBuilds();
     }
     stages {
+        stage('CleanWSStart') {
+            steps {
+                deleteDir()
+            }
+        }
         stage('Checkout') {
             steps {
                 shHide( 'git remote set-url origin https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git' )
@@ -86,9 +91,9 @@ pipeline {
                 sh 'sh push-version.sh'
             }
         } 
-        stage('CleanWS') {
+        stage('CleanWSEnd') {
             steps {
-                cleanWs()
+                deleteDir()
             }
         }
     }
@@ -102,6 +107,7 @@ pipeline {
             )
         }
         failure() {
+          deleteDir()
           emailext (
               subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
               body: """<p>FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
