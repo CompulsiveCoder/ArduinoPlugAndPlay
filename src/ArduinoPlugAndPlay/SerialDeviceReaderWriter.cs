@@ -24,7 +24,13 @@ namespace ArduinoPlugAndPlay
         {
             Console.WriteLine ("Opening serial port: " + portName);
 
-            Client = new SerialClient (portName, baudRate);
+            var fullPortName = portName;
+            if (!portName.Contains ("/dev/"))
+                fullPortName = "/dev/" + portName;
+
+            Console.WriteLine ("  Full port name: " + fullPortName);
+
+            Client = new SerialClient (fullPortName, baudRate);
             Client.Open ();
 
             Console.WriteLine ("  Serial port is open");

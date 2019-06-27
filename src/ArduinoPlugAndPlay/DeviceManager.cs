@@ -130,7 +130,7 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("Loading existing device list from files...");
             var startTime = DateTime.Now;
             foreach (var infoFromFile in Data.ReadAllDevicesFromFile()) {
-                var infoFromDevice = ReadDeviceInfo (infoFromFile.Port);
+                var infoFromDevice = ReadSerialDeviceInfo (infoFromFile.Port);
 
                 Console.WriteLine ("  Device info found...");
                 Console.WriteLine ("    Port: " + infoFromFile.Port);
@@ -230,7 +230,7 @@ namespace ArduinoPlugAndPlay
 
             if (!DevicePorts.Contains (devicePort) && !BackgroundStarter.ProcessExists ("add", devicePort)) {
                 // && Platformio.PortIsInList (devicePort)) // TODO: Check if this should be used. It's slow.
-                var info = ReadDeviceInfo (devicePort);
+                var info = ReadSerialDeviceInfo (devicePort);
 
                 DevicePorts.Add (devicePort);
 
@@ -482,7 +482,7 @@ namespace ArduinoPlugAndPlay
             return newValue;
         }
 
-        public DeviceInfo ReadDeviceInfo (string portName)
+        public DeviceInfo ReadSerialDeviceInfo (string portName)
         {
             DeviceInfo info = null;
 
