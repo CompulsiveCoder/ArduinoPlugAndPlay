@@ -50,6 +50,12 @@ pipeline {
                 sh '#sh test-all.sh'
             }
         }
+        stage('Tag and Push') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh tag-and-push.sh'
+            }
+        }
         stage('Create Release Zip') {
             when { expression { !shouldSkipBuild() } }
             steps {
