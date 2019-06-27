@@ -43,6 +43,18 @@ pipeline {
                 sh 'sh test-all.sh'
             }
         }
+        stage('CreateReleaseZip') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh create-release-zip.sh'
+            }
+        }
+        stage('PublishGitHubRelease') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh publish-github-release.sh'
+            }
+        }
         stage('Clean') {
             when { expression { !shouldSkipBuild() } }
             steps {
