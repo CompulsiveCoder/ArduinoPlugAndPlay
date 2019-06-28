@@ -20,6 +20,7 @@ mkdir -p $TMP_RELEASE_FOLDER
 
 cp $BIN_RELEASE_FOLDER/ArduinoPlugAndPlay.dll $TMP_RELEASE_FOLDER/
 cp $BIN_RELEASE_FOLDER/ArduinoPlugAndPlay.dll.mdb $TMP_RELEASE_FOLDER/
+cp $BIN_RELEASE_FOLDER/ArduinoPlugAndPlay.exe.config $TMP_RELEASE_FOLDER/
 cp $BIN_RELEASE_FOLDER/ArduinoPlugAndPlay.exe $TMP_RELEASE_FOLDER/
 cp $BIN_RELEASE_FOLDER/ArduinoPlugAndPlay.exe.mdb $TMP_RELEASE_FOLDER/
 cp $BIN_RELEASE_FOLDER/ArduinoPlugAndPlay.exe.config $TMP_RELEASE_FOLDER/
