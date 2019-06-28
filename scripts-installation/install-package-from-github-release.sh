@@ -53,26 +53,26 @@ fi
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
 
   # Check if the project exists within the workspace
-	[[ $(echo $PWD) =~ "workspace" ]] && IS_IN_INDEX=1 || IS_IN_INDEX=0
+	#[[ $(echo $PWD) =~ "workspace" ]] && IS_IN_INDEX=1 || IS_IN_INDEX=0
 	
-	if [ $IS_IN_INDEX ]; then
+	#if [ $IS_IN_INDEX ]; then
 	  # Get the path to the workspace lib directory
-	  WORKSPACE_LIB_DIR=$(readlink -f "../../../lib")
+	#  WORKSPACE_LIB_DIR=$(readlink -f "../../../lib")
 	  
 	  #echo "  Workspace lib directory:"
 	  #echo "    $WORKSPACE_LIB_DIR"
 	  
 	  # Check if the package exists in the Workspace inject lib directory
-    if [ -d "$WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION" ]; then
-      echo "  From workspace lib directory"
+  #  if [ -d "$WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION" ]; then
+  #    echo "  From workspace lib directory"
       # Copy the package from the workspace lib directory
-      cp -r $WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION $PACKAGE_FOLDER || exit 1
-      cp -r $WORKSPACE_LIB_DIR/$PACKAGE_FILE_EXT $PACKAGE_FILE_EXT || exit 1
-    fi
-  fi
+  #    cp -r $WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION $PACKAGE_FOLDER || exit 1
+  #    cp -r $WORKSPACE_LIB_DIR/$PACKAGE_FILE_EXT $PACKAGE_FILE_EXT || exit 1
+  #  fi
+  #fi
   
   # If the package still isn't found
-  if [ ! -d "$PACKAGE_NAME" ]; then
+  #if [ ! -d "$PACKAGE_NAME" ]; then
     echo "  From the web (GitHub release)"
     
     # Download the package from the web    
@@ -81,15 +81,15 @@ if [ ! -f "$PACKAGE_FILE_EXT" ]; then
     # Unzip the package
 	  unzip -qq -o "$PACKAGE_FILE_EXT" -d "$PACKAGE_FOLDER/" || exit 1
 	  
-	  if [ $IS_IN_INDEX ]; then
+	#  if [ $IS_IN_INDEX ]; then
       # Make the workspace lib directory if necessary
-	    mkdir -p $WORKSPACE_LIB_DIR
+	#    mkdir -p $WORKSPACE_LIB_DIR
 	    
 	    # Copy the package into the workspace lib directory
-	    cp -r "$PACKAGE_NAME" $WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION/ || exit 1
-	    cp -r "$PACKAGE_FILE_EXT" $WORKSPACE_LIB_DIR/$PACKAGE_FILE_EXT || exit 1
-	  fi
-  fi
+	#    cp -r "$PACKAGE_NAME" $WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION/ || exit 1
+	#    cp -r "$PACKAGE_FILE_EXT" $WORKSPACE_LIB_DIR/$PACKAGE_FILE_EXT || exit 1
+	#  fi
+  #fi
 	
 else
 	echo "  Already exists. Skipping download."
