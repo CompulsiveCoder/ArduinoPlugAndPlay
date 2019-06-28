@@ -57,7 +57,7 @@ if [ ! -f "$PACKAGE_FILE_EXT" ]; then
 	
 	if [ $IS_IN_WORKSPACE ]; then
 	  # Get the path to the workspace lib directory
-	  WORKSPACE_LIB_DIR=$(readlink -f "../../../lib")
+	  WORKSPACE_LIB_DIR=$(readlink -f "../lib")
 	  
 	  #echo "  Workspace lib directory:"
 	  #echo "    $WORKSPACE_LIB_DIR"
