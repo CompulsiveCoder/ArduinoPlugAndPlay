@@ -75,12 +75,6 @@ pipeline {
                 sh 'sh publish-github-release.sh'
             }
         }
-        stage('Push Updated Version in Script') {
-            when { expression { !shouldSkipBuild() } }
-            steps {
-                sh 'sh push-updated-version-in-script.sh'
-            }
-        }
         stage('Clean') {
             when { expression { !shouldSkipBuild() } }
             steps {
@@ -109,6 +103,7 @@ pipeline {
         stage('Push Version') {
             when { expression { !shouldSkipBuild() } }
             steps {
+                sh 'sh push-updated-version-in-script.sh'
                 sh 'sh push-version.sh'
             }
         } 
