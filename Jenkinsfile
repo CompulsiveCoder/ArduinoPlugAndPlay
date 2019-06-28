@@ -94,16 +94,11 @@ pipeline {
                 sh 'sh graduate.sh'
             }
         }
-        stage('Increment Version') {
-            when { expression { !shouldSkipBuild() } }
-            steps {
-                sh 'sh increment-version.sh'
-            }
-        } 
-        stage('Push Version') {
+        stage('Increment/Push Version') {
             when { expression { !shouldSkipBuild() } }
             steps {
                 sh 'sh push-updated-version-in-script.sh'
+                sh 'sh increment-version.sh'
                 sh 'sh push-version.sh'
             }
         } 
