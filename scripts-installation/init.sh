@@ -34,7 +34,7 @@ echo "      $PWD/$CONFIG_FILE_SAVED"
 
 echo ""
 echo "  Installing the ArduinoPlugAndPlay library..."
-sh install-package-from-github-release.sh CompulsiveCoder ArduinoPlugAndPlay 1.0.0.234 || exit 1
+sh install-package-from-github-release.sh CompulsiveCoder ArduinoPlugAndPlay 1.0.0.235 || exit 1
 
 # If the config file is found in the downloaded package
 if [ -f $CONFIG_FILE ]; then
