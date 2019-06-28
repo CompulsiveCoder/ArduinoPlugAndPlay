@@ -1,4 +1,4 @@
-echo "Publishing GitHub RELEASE_URL..."
+echo "Publishing GitHub release..."
 
 . ./project.settings
 
@@ -22,7 +22,7 @@ fi
 
 REPOSITORY="$GITHUB_OWNER/$GITHUB_PROJECT"
 TAG="v$VERSION$POSTFIX"
-RELEASE_NAME="ArduinoPlugAndPlay.$VERSION$POSTFIX"
+RELEASE_NAME="$GITHUB_PROJECT.$VERSION$POSTFIX"
 RELEASE_DESCRIPTION="Release $VERSION$POSTFIX"
 
 PRERELEASE="true"
