@@ -39,6 +39,12 @@ pipeline {
                 sh 'sh inject-version.sh'
             }
         }
+        stage('Update Version in Script') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh update-version-in-script.sh'
+            }
+        }
         stage('Build') {
             when { expression { !shouldSkipBuild() } }
             steps {
@@ -67,6 +73,12 @@ pipeline {
             when { expression { !shouldSkipBuild() } }
             steps {
                 sh 'sh publish-github-release.sh'
+            }
+        }
+        stage('Push Updated Version in Script') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh push-updated-version-in-script.sh'
             }
         }
         stage('Clean') {

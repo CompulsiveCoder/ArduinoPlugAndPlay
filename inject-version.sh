@@ -25,12 +25,5 @@ sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Scr
 sed -i -e "s/1\.0\.0\.[.0-9]*/$FULL_VERSION/g" "src/ArduinoPlugAndPlay.Tests.Scripts.Install.OLS/Properties/AssemblyInfo.cs" || exit 1
 
 echo ""
-echo "  Init script:"
-INIT_SCRIPT="scripts-installation/init.sh"
-echo "    $INIT_SCRIPT"
-
-sed -i "s/ArduinoPlugAndPlay .* |/ArduinoPlugAndPlay $FULL_VERSION |/" $INIT_SCRIPT || exit 1
-
-echo ""
 
 echo "Finished injecting version"
