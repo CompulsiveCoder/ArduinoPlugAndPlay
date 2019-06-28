@@ -1,9 +1,14 @@
 #!/bin/bash
 
-PACKAGE_OWNER=$1
-PACKAGE_NAME=$2
-PACKAGE_VERSION=$3
-INCLUDE_VERSION_IN_FOLDER=$4
+BRANCH=$1
+PACKAGE_OWNER=$2
+PACKAGE_NAME=$3
+PACKAGE_VERSION=$4
+
+if [ ! "$BRANCH" ]; then
+	echo "Please provide a branch as an argument."
+	exit 1
+fi
 
 if [ ! "$PACKAGE_OWNER" ]; then
 	echo "Please provide a package owner as an argument."
@@ -51,6 +56,8 @@ fi
 
 # If the package isn't found
 if [ ! -f "$PACKAGE_FILE_EXT" ]; then
+
+#TODO: Fix or remove
 
   # Check if the project exists within the workspace
 	#[[ $(echo $PWD) =~ "workspace" ]] && IS_IN_INDEX=1 || IS_IN_INDEX=0
