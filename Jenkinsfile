@@ -18,6 +18,7 @@ pipeline {
                 sh 'git pull origin $BRANCH_NAME'
                 sh 'git config --global user.email "compulsivecoder@gmail.com"'
                 sh 'git config --global user.name "CompulsiveCoderCI"'
+                sh 'sh view-version.sh'
             }
         }
         stage('Prepare') {
@@ -133,7 +134,6 @@ def shHide(cmd) {
 }
 
 
- 
  
  
  

@@ -6,10 +6,12 @@ if [ "$BRANCH" = "dev" ]
 then
   echo "Forcing remote test"
 
-  echo " " >> .travis.yml
+  sh clean.sh || exit 1
+
+  echo " " >> Jenkinsfile
   
   git pull origin dev && \
-  git commit .travis.yml -m "Forcing retest" && \
+  git commit Jenkinsfile -m "Forcing retest" && \
   git push origin dev && \
   
   echo "Repository has been updated. Test should now start on test server."
