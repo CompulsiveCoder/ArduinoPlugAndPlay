@@ -91,12 +91,14 @@ pipeline {
         stage('Graduate') {
             when { expression { !shouldSkipBuild() } }
             steps {
+                sh 'git checkout scripts-installation/init.sh'
                 sh 'sh graduate.sh'
             }
         }
         stage('Increment/Push Version') {
             when { expression { !shouldSkipBuild() } }
             steps {
+                sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
                 sh 'sh increment-version.sh'
                 sh 'sh push-version.sh'
