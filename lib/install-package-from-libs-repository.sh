@@ -43,7 +43,7 @@ if [ ! -f "$PACKAGE_FILE_EXT" ]; then
 	  
 	  # Check if the package exists in the workspace inject lib directory
     if [ -d "$WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION" ]; then
-      echo "  From Workspace lib directory"
+      echo "  From workspace lib directory"
       # Copy the package from the Workspace lib directory
       cp -r $WORKSPACE_LIB_DIR/$PACKAGE_FOLDER_WITH_VERSION $PACKAGE_FOLDER || exit 1
       cp -r $WORKSPACE_LIB_DIR/$PACKAGE_FILE_EXT $PACKAGE_FILE_EXT || exit 1

@@ -71,8 +71,8 @@ echo "    File name: install-service.sh"
 curl -s -LO -H 'Cache-Control: no-cache' -f $INSTALL_SERVICE_FILE || exit 1
 
 echo ""
-echo "  Downloading install-package.sh script..."
-INSTALL_PACKAGE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package.sh"
+echo "  Downloading install-package-from-github-release.sh script..."
+INSTALL_PACKAGE_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-installation/install-package-from-github-release.sh"
 echo "    URL: $INSTALL_PACKAGE_URL"
 echo "    File name: install-package.sh"
 curl -s -LO -H 'Cache-Control: no-cache' -f $INSTALL_PACKAGE_URL || exit 1
