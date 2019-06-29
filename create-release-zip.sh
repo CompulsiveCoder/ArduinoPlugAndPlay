@@ -10,8 +10,8 @@ BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
 VERSION_POSTFIX=""
 
-if [ "$BRANCH" = "dev" ]; then
-  VERSION_POSTFIX="-dev"
+if [ "$BRANCH" != "lts" ]; then
+  VERSION_POSTFIX="-$BRANCH"
 fi
 
 VERSION="$(cat version.txt).$(cat buildnumber.txt)"
