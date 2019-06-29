@@ -53,7 +53,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   echo ""
   echo "  Removing old libraries..."
   rm ArduinoPlugAndPlay -R && \
-  rm ArduinoPlugAndPlay*.nupkg || exit 1
+  rm ArduinoPlugAndPlay*.zip || exit 1
 
   INSTALL_SCRIPT_FILE_NAME="install.sh"
   
