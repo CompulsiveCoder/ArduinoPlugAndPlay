@@ -64,6 +64,19 @@ else
   sh $SYSTEMCTL_SCRIPT start $SERVICE_FILE || exit 1
   
   sh $SYSTEMCTL_SCRIPT restart $SERVICE_FILE # TODO: Remove if not needed
+
+  echo ""
+  echo "Viewing service status..."
+  SERVICE_STATUS=$(sh $SYSTEMCTL_SCRIPT status $SERVICE_FILE) || exit 1
+
+  echo "${SERVICE_STATUS}"
+
+  echo ""
+  echo "  Checking service is loaded and active..."
+  [[ ! $(echo $SERVICE_STATUS) =~ "Loaded: loaded" ]] && echo "The service isn't loaded" && exit 1
+  [[ ! $(echo $SERVICE_STATUS) =~ "Active: active" ]] && echo "The service isn't active" && exit 1
+  [[ $(echo $SERVICE_STATUS) =~ "not found" ]] && echo "The service wasn't found" && exit 1
+
 fi
 
 echo "Finished installing service"
