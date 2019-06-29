@@ -78,10 +78,6 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   if [ "$ENABLE_AUTO_UPDATE" = "1" ]; then
     INSTALL_SCRIPT_FILE_NAME="install-auto-update.sh"
   fi  
-  
-  echo ""
-  echo "  Stopping the arduino plug and play service..."
-  sh systemctl.sh stop arduino-plug-and-play.service
 
   echo ""
   echo "  Executing $INSTALL_SCRIPT_FILE_NAME script..."
@@ -89,6 +85,8 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   echo "    URL: $INSTALL_SCRIPT_URL"
   echo "    File name: $INSTALL_SCRIPT_FILE_NAME"
   curl -s -LO -H 'Cache-Control: no-cache' -f $INSTALL_SCRIPT_URL | bash -s "$BRANCH" "$DESTINATION" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
+  
+  # The arduino-plug-and-play.service doesn't need to be restarted here. It should be started by the install script.
 else
   echo "  Up to date. Skipping upgrade."
 fi

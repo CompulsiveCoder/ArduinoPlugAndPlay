@@ -54,7 +54,7 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 
             var expectedServiceFile = Path.Combine (Path.Combine (TemporaryDirectory, installDir), "mock/services/arduino-plug-and-play.service");
 
-            Assert.IsFalse (File.Exists (expectedServiceFile), "Plug and play service still exists when it should have been removed.");
+            Assert.IsTrue (File.Exists (expectedServiceFile), "Plug and play service file doesn't exist: " + expectedServiceFile);
 
             Console.WriteLine ("");
             Console.WriteLine ("Checking config file was installed...");

@@ -51,6 +51,8 @@ if [ ! $ADMIN_EMAIL ]; then
   ADMIN_EMAIL="$(cat $DESTINATION/admin-email.txt)"
 fi
 
+IS_MOCK_SYSTEMCTL="$(cat $DESTINATION/is-mock-systemctl.txt)"
+
 echo "  SMTP server: $SMTP_SERVER"
 echo "  Admin email: $ADMIN_EMAIL"
 
@@ -75,6 +77,14 @@ fi
 echo ""
 echo "  Downloading and running uninstall script..."
 wget -q --no-cache -O - https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/uninstall.sh | bash -s -- $BRANCH $INSTALL_DIR || exit 1
+
+# Recreate the is-mock-systemctl.txt if running in a test environment
+if [ "$IS_MOCK_SYSTEMCTL" = "1" ]; then
+  echo "  Is mock systemctl: true"
+  echo "  Recreating is-mock-systemctl.txt file..."
+  mkdir -p $DESTINATION
+  echo $IS_MOCK_SYSTEMCTL > $DESTINATION/is-mock-systemctl.txt
+fi
 
 echo ""
 echo "  Downloading and running install script..."
