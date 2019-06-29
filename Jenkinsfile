@@ -75,6 +75,12 @@ pipeline {
                 sh 'sh publish-github-release.sh'
             }
         }
+        stage('Test OLS') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh test-category.sh OLS'
+            }
+        }
         stage('Clean') {
             when { expression { !shouldSkipBuild() } }
             steps {
