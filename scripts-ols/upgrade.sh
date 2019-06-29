@@ -1,4 +1,4 @@
-echo "Upgrading plug and play..."
+echo "Upgrading Arduino Plug and Play..."
 
 BRANCH=$1
 DESTINATION=$2
@@ -88,7 +88,7 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
   INSTALL_SCRIPT_URL="https://raw.githubusercontent.com/CompulsiveCoder/ArduinoPlugAndPlay/$BRANCH/scripts-ols/$INSTALL_SCRIPT_FILE_NAME"
   echo "    URL: $INSTALL_SCRIPT_URL"
   echo "    File name: $INSTALL_SCRIPT_FILE_NAME"
-  wget -nv --no-cache -O - $INSTALL_SCRIPT_URL | bash -s "$BRANCH" "$DESTINATION" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
+  curl -s -LO -H 'Cache-Control: no-cache' -f $INSTALL_SCRIPT_URL | bash -s "$BRANCH" "$DESTINATION" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
 else
   echo "  Up to date. Skipping upgrade."
 fi
