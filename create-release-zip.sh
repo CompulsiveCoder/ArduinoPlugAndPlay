@@ -35,9 +35,9 @@ cp $BIN_RELEASE_FOLDER/nunit.framework.dll $TMP_RELEASE_FOLDER/
 
 mkdir -p $RELEASES_FOLDER
 
-cd .tmp/
+cd .tmp/ArduinoPlugAndPlay
 
-zip -r $DIR/releases/ArduinoPlugAndPlay.$VERSION$VERSION_POSTFIX.zip ArduinoPlugAndPlay
+zip -r $DIR/releases/ArduinoPlugAndPlay.$VERSION$VERSION_POSTFIX.zip *
 
 cd $DIR
 
