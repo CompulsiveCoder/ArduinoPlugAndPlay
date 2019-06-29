@@ -75,12 +75,6 @@ pipeline {
                 sh 'sh publish-github-release.sh'
             }
         }
-        stage('Test OLS') {
-            when { expression { !shouldSkipBuild() } }
-            steps {
-                sh 'sh test-category.sh OLS'
-            }
-        }
         stage('Clean') {
             when { expression { !shouldSkipBuild() } }
             steps {
@@ -106,6 +100,7 @@ pipeline {
             steps {
                 sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
+                sh 'sh test-category.sh OLS'
                 sh 'sh increment-version.sh'
                 sh 'sh push-version.sh'
             }
