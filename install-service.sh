@@ -36,7 +36,7 @@ echo "    $SERVICES_DIR/$SERVICE_FILE"
 
 if [ $IS_MOCK_SYSTEMCTL = 1 ]; then
   echo ""
-  echo "  Is mock systemctl. Installing to mock directory."
+  echo "  Is mock systemctl. Installing to mock services directory..."
   cp $SERVICE_FILE_PATH $SERVICES_DIR/$SERVICE_FILE
 else
   if [ -f $SERVICES_DIR/$SERVICE_FILE ]; then 
@@ -52,6 +52,7 @@ else
   echo ""
   echo "  Setting permissions on service file..." 
   $SUDO chmod 644 $SERVICES_DIR/$SERVICE_FILE || exit 1
+  
   #sh $SYSTEMCTL_SCRIPT daemon-reload && \ # TODO: Remove if not needed
   
   echo ""
@@ -61,7 +62,8 @@ else
   echo ""
   echo "  Starting service..." 
   sh $SYSTEMCTL_SCRIPT start $SERVICE_FILE || exit 1
-  #sh $SYSTEMCTL_SCRIPT restart $SERVICE_FILE # TODO: Remove if not needed
+  
+  sh $SYSTEMCTL_SCRIPT restart $SERVICE_FILE # TODO: Remove if not needed
 fi
 
 echo "Finished installing service"
