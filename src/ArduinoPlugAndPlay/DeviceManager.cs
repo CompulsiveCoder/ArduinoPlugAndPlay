@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Collections.Generic;
 using duinocom;
@@ -556,6 +556,10 @@ namespace ArduinoPlugAndPlay
                 if (ex.Message.Contains ("Input/output error")
                     || ex.Message.Contains ("No such file or directory")) {
                     Console.WriteLine ("Device was likely disconnected. Aborting install.");
+                } else if (ex.Message.Contains("Inappropriate ioctl for device")){
+                    Console.WriteLine("Error: Inappropriate ioctl for device");
+                    Console.WriteLine("Device is unusable.");
+                    UnusableDevicePorts.Add(portName);
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
                     Console.WriteLine (ex.ToString ());
