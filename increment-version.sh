@@ -16,5 +16,5 @@ if [ "$BRANCH" = "dev" ]; then
 
   echo $CURRENT_BUILD > buildnumber.txt
 else
-  echo "Not in dev branch. Skipping."
+  echo "Skipping increment version. Version is only incremented in 'dev' branch not '$BRANCH' branch"
 fi
