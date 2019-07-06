@@ -406,14 +406,16 @@ namespace ArduinoPlugAndPlay
         public string ReadAllLogFiles ()
         {
             var builder = new StringBuilder ();
-            foreach (var file in Directory.GetFiles(Path.GetFullPath("logs"))) {
-                var content = File.ReadAllText (file);
-                builder.AppendLine (Path.GetFileName (file));
-                builder.AppendLine ("");
-                builder.AppendLine (content);
-                builder.AppendLine ("");
-                builder.AppendLine ("");
-            }
+            if (Directory.Exists(Path.GetFullPath("logs"))){
+	            foreach (var file in Directory.GetFiles(Path.GetFullPath("logs"))) {
+	                var content = File.ReadAllText (file);
+	                builder.AppendLine (Path.GetFileName (file));
+	                builder.AppendLine ("");
+	                builder.AppendLine (content);
+	                builder.AppendLine ("");
+	                builder.AppendLine ("");
+	            }
+	        }
             return builder.ToString ();
         }
 
@@ -567,7 +569,6 @@ namespace ArduinoPlugAndPlay
                     SendErrorEmail (ex, portName);
                 }
                 throw ex;
-            } catch (Exception ex) {
                 if (!UnusableDevicePorts.Contains (portName))
                     UnusableDevicePorts.Add (portName);
 
