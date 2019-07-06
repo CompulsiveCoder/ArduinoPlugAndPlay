@@ -138,19 +138,3 @@ def shHide(cmd) {
     sh('#!/bin/sh -e\n' + cmd)
 }
 
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
