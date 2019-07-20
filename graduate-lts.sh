@@ -40,6 +40,10 @@ echo "Pushing the updated lts branch to origin..."
 git push origin lts || exit 1
 
 echo ""
+echo "Forcing remote test..."
+sh force-remote-test.sh || exit 1
+
+echo ""
 echo "Checking out the $BRANCH branch again..."
 git checkout $BRANCH || exit 1
 
