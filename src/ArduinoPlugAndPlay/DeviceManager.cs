@@ -51,6 +51,8 @@ namespace ArduinoPlugAndPlay
 
         public int CommandRetryMax = 5;
 
+        public string HostName = "";
+
         public DeviceManager ()
         {
             Starter.WriteOutputToConsole = true;
@@ -62,12 +64,15 @@ namespace ArduinoPlugAndPlay
             Console.WriteLine ("Running Arduino Plug and Play");
             Console.WriteLine ("");
 
+            HostName = GetHostName ();
+
             Console.WriteLine ("Settings");
             Console.WriteLine ("  Device added command:");
             Console.WriteLine ("    " + USBDeviceConnectedCommand);
             Console.WriteLine ("  Device removed command:");
             Console.WriteLine ("    " + USBDeviceDisconnectedCommand);
             Console.WriteLine ("  Sleep time: " + SleepTimeInSeconds + " seconds between loops");
+            Console.WriteLine ("  Host name: " + HostName);
             Console.WriteLine ("");
 
             LoadExistingDeviceListFromFiles ();
@@ -499,8 +504,6 @@ namespace ArduinoPlugAndPlay
 
                 var allDetailsHaveBeenDetected = false;
 
-                var deviceHasBeenDisconnected = false;
-
                 // Read the first line from the device before sending a command.
                 // This seems to allow commands to function properly
                 ReaderWriter.ReadLine ();
@@ -556,6 +559,7 @@ namespace ArduinoPlugAndPlay
                     UnusableDevicePorts.Add (portName);
             } catch (IOException ex) {
                 var reportError = false;
+                var deviceIsUnusable = false;
 
                 if (ex.Message.Contains ("Input/output error")
                     || ex.Message.Contains ("No such file or directory")) {
@@ -563,13 +567,16 @@ namespace ArduinoPlugAndPlay
                 } else if (ex.Message.Contains ("Inappropriate ioctl for device")) {
                     Console.WriteLine ("Error: Inappropriate ioctl for device");
                     Console.WriteLine ("Device is unusable.");
+                    deviceIsUnusable = true;
                 } else {
-                    Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
+                    Console.WriteLine ("An error occurred. Aborting install.");
                     reportError = true;
                 }
 
-                if (!UnusableDevicePorts.Contains (portName))
-                    UnusableDevicePorts.Add (portName);
+                if (deviceIsUnusable) {
+                    if (!UnusableDevicePorts.Contains (portName))
+                        UnusableDevicePorts.Add (portName);
+                }
 
                 if (reportError) {
                     Console.WriteLine ("An error occurred.");
@@ -750,8 +757,7 @@ namespace ArduinoPlugAndPlay
 
         public void SendErrorEmail (Exception error, string portName)
         {
-            
-            var message = "The following error was thrown ArduinoPlugAndPlay utility...\n\nPort: " + portName + "\n\n" + error.ToString ();
+            var message = "The following error was thrown by ArduinoPlugAndPlay utility on " + HostName + "...\n\nPort: " + portName + "\n\n" + error.ToString ();
 
             var logFile = GetLogFile (portName);
 
@@ -775,7 +781,7 @@ namespace ArduinoPlugAndPlay
 
             if (areDetailsProvided) {
                 try {
-                    var subject = "Error: ArduinoPlugAndPlay";
+                    var subject = "Error: ArduinoPlugAndPlay on " + HostName;
                     var body = message;
 
                     var mail = new MailMessage (EmailAddress, EmailAddress, subject, body);
@@ -798,6 +804,22 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("SMTP server and email address not provided. Skipping error report email.");
                 Console.WriteLine ("");
             }
+        }
+
+        public static string GetHostName ()
+        {
+            var starter = new ProcessStarter ();
+
+            starter.WriteOutputToConsole = false;
+
+            starter.Start ("hostname");
+
+            var selfHostName = "";
+            if (!starter.IsError) {
+                selfHostName = starter.Output.Trim ();
+            }
+
+            return selfHostName;
         }
     }
 }
