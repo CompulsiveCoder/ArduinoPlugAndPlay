@@ -13,7 +13,7 @@ matrix:
       before_script:
         - git checkout $TRAVIS_BRANCH
         - sh prepare.sh
-        - sh init-tests.sh
+        - sh init.sh
       script:
         - sh increment-version.sh
         - sh inject-version.sh
