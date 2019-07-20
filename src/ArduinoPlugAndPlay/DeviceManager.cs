@@ -561,7 +561,6 @@ namespace ArduinoPlugAndPlay
                 } else if (ex.Message.Contains ("Inappropriate ioctl for device")) {
                     Console.WriteLine ("Error: Inappropriate ioctl for device");
                     Console.WriteLine ("Device is unusable.");
-                    UnusableDevicePorts.Add (portName);
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
                 }
