@@ -406,16 +406,16 @@ namespace ArduinoPlugAndPlay
         public string ReadAllLogFiles ()
         {
             var builder = new StringBuilder ();
-            if (Directory.Exists(Path.GetFullPath("logs"))){
-	            foreach (var file in Directory.GetFiles(Path.GetFullPath("logs"))) {
-	                var content = File.ReadAllText (file);
-	                builder.AppendLine (Path.GetFileName (file));
-	                builder.AppendLine ("");
-	                builder.AppendLine (content);
-	                builder.AppendLine ("");
-	                builder.AppendLine ("");
-	            }
-	        }
+            if (Directory.Exists (Path.GetFullPath ("logs"))) {
+                foreach (var file in Directory.GetFiles(Path.GetFullPath("logs"))) {
+                    var content = File.ReadAllText (file);
+                    builder.AppendLine (Path.GetFileName (file));
+                    builder.AppendLine ("");
+                    builder.AppendLine (content);
+                    builder.AppendLine ("");
+                    builder.AppendLine ("");
+                }
+            }
             return builder.ToString ();
         }
 
@@ -558,17 +558,14 @@ namespace ArduinoPlugAndPlay
                 if (ex.Message.Contains ("Input/output error")
                     || ex.Message.Contains ("No such file or directory")) {
                     Console.WriteLine ("Device was likely disconnected. Aborting install.");
-                } else if (ex.Message.Contains("Inappropriate ioctl for device")){
-                    Console.WriteLine("Error: Inappropriate ioctl for device");
-                    Console.WriteLine("Device is unusable.");
-                    UnusableDevicePorts.Add(portName);
+                } else if (ex.Message.Contains ("Inappropriate ioctl for device")) {
+                    Console.WriteLine ("Error: Inappropriate ioctl for device");
+                    Console.WriteLine ("Device is unusable.");
+                    UnusableDevicePorts.Add (portName);
                 } else {
                     Console.WriteLine ("An error occurred. The device may have been disconnected. Aborting install.");
-                    Console.WriteLine (ex.ToString ());
-
-                    SendErrorEmail (ex, portName);
                 }
-                throw ex;
+
                 if (!UnusableDevicePorts.Contains (portName))
                     UnusableDevicePorts.Add (portName);
 
