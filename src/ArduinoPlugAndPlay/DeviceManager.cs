@@ -655,7 +655,7 @@ namespace ArduinoPlugAndPlay
             //|| !Platformio.PortIsInList (processWrapper.Info.Port); // TODO: Check if needed. This check is slow and should be redundant
 
             // If the device has been removed kill the process
-            if (deviceHasBeenDisconnected && !processWrapper.HasExited) {
+            if (deviceHasBeenDisconnected && processWrapper.Action == "add" && !processWrapper.HasExited) {
                 AbortDueToDisconnect (processWrapper);
             }
         }
