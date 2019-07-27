@@ -48,13 +48,13 @@ pipeline {
         stage('Build') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh build-all.sh'
+                sh '#sh build-all.sh'
             }
         }
         stage('Test') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh test-all.sh'
+                sh '#sh test-all.sh'
             }
         }
         stage('Tag and Push') {
@@ -100,7 +100,7 @@ pipeline {
             steps {
                 sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
-                sh 'sh test-category.sh OLS'
+                sh '#sh test-category.sh OLS'
                 sh 'sh increment-version.sh'
                 sh 'sh push-version.sh'
             }

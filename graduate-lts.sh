@@ -15,9 +15,9 @@ echo ""
 echo "Fetching from origin..."
 git fetch origin || exit 1
 
-echo ""
-echo "Pulling the master branch from origin (to update it locally)..."
-git pull origin master || exit 1
+#echo ""
+#echo "Pulling the master branch from origin (to update it locally)..."
+#git pull origin master || exit 1
 
 echo ""
 echo "Merging the lts branch into the master branch..."
@@ -27,8 +27,8 @@ echo ""
 echo "Checking out the lts branch..."
 git checkout lts || exit 1
 
-echo ""
-echo "Pulling the lts branch from origin (to update it locally)..."
+#echo ""
+#echo "Pulling the lts branch from origin (to update it locally)..."
 #git pull origin lts || exit 1
 
 echo ""
@@ -46,6 +46,10 @@ sh force-remote-test.sh || exit 1
 echo ""
 echo "Checking out the $BRANCH branch again..."
 git checkout $BRANCH || exit 1
+
+echo ""
+echo "Merging lts into $BRANCH"
+git merge lts
 
 echo ""
 echo "The 'master' branch has been graduated to the 'lts' branch"
