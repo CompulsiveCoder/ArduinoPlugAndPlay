@@ -17,5 +17,5 @@ matrix:
       script:
         - sh increment-version.sh
         - sh inject-version.sh
-        - sh build-tests.sh
+        - sh build.sh
 
