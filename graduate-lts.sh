@@ -48,4 +48,8 @@ echo "Checking out the $BRANCH branch again..."
 git checkout $BRANCH || exit 1
 
 echo ""
+echo "Merging lts into $BRANCH"
+git merge lts
+
+echo ""
 echo "The 'master' branch has been graduated to the 'lts' branch"
