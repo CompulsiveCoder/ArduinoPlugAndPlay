@@ -29,7 +29,7 @@ git checkout lts || exit 1
 
 echo ""
 echo "Pulling the lts branch from origin (to update it locally)..."
-git pull origin lts || exit 1
+#git pull origin lts || exit 1
 
 echo ""
 echo "Merging the master branch into the lts branch..."
