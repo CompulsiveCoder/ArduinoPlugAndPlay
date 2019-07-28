@@ -15,9 +15,9 @@ echo ""
 echo "Fetching from origin..."
 git fetch origin || exit 1
 
-#echo ""
-#echo "Pulling the master branch from origin (to update it locally)..."
-#git pull origin master || exit 1
+echo ""
+echo "Pulling the master branch from origin (to update it locally)..."
+git pull origin master || exit 1
 
 echo ""
 echo "Merging the lts branch into the master branch..."

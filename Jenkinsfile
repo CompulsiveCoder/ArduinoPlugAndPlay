@@ -48,13 +48,13 @@ pipeline {
         stage('Build') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh build-all.sh'
+                sh 'sh build-all.sh'
             }
         }
         stage('Test') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh test-all.sh'
+                sh 'sh test-all.sh'
             }
         }
         stage('Tag and Push') {
@@ -138,7 +138,4 @@ def shHide(cmd) {
     sh('#!/bin/sh -e\n' + cmd)
 }
 
- 
- 
- 
  
