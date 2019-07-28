@@ -33,7 +33,7 @@ git checkout lts || exit 1
 
 echo ""
 echo "Merging the master branch into the lts branch..."
-git merge master || exit 1
+git merge -X theirs master || exit 1
 
 echo ""
 echo "Pushing the updated lts branch to origin..."
