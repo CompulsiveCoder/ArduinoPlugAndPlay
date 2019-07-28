@@ -9,7 +9,7 @@ if [ "$BRANCH" = "dev" ];  then
   git fetch origin && \
 
   # Merge the master branch into the dev branch
-  git merge origin/master && \
+  git merge -X ours origin/master && \
 
   # Checkout the master branch
   git checkout master && \
