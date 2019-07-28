@@ -33,6 +33,12 @@ pipeline {
                 sh 'sh init.sh'
             }
         }
+        stage('Increment Version') {
+            when { expression { !shouldSkipBuild() } }
+            steps {
+                sh 'sh increment-version.sh'
+            }
+        }
         stage('Inject Version') {
             when { expression { !shouldSkipBuild() } }
             steps {
@@ -95,13 +101,12 @@ pipeline {
                 sh 'sh graduate.sh'
             }
         }
-        stage('Increment/Push Version') {
+        stage('Push Version') {
             when { expression { !shouldSkipBuild() } }
             steps {
                 sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
                 sh '#sh test-category.sh OLS'
-                sh 'sh increment-version.sh'
                 sh 'sh push-version.sh'
             }
         } 
