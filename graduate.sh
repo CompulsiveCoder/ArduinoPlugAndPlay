@@ -6,22 +6,22 @@ if [ "$BRANCH" = "dev" ];  then
   echo "Graduating dev branch to master branch"
 
   # Fetch other branches
-  git fetch origin --quiet && \
+  git fetch origin && \
 
-  # Pull the master branch into the dev branch
-  git pull origin master --quiet && \
+  # Merge the master branch into the dev branch
+  git merge master && \
 
   # Checkout the master branch
   git checkout master && \
 
   # Ensure it's up to date
-  git pull origin master --quiet && \
+  #git pull origin master --quiet && \
 
   # Merge the dev branch
-  git merge -q dev && \
+  git merge -X theirs dev && \
 
   # Push the updates
-  git push origin master --quiet && \
+  git push origin master && \
 
   # Go back to the dev branch
   git checkout dev && \
