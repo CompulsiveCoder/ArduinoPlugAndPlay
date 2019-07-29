@@ -26,6 +26,9 @@ if [ "$BRANCH" = "dev" ];  then
   echo "  Merging dev branch into master branch..."
   git merge -X theirs dev || exit 1
 
+  echo "  Incrementing version number (again)..."
+  bash increment-version.sh
+
   echo "  Pushing updates to master branch..."
   git push origin master || exit 1
 
