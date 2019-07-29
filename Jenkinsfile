@@ -98,12 +98,14 @@ pipeline {
             when { expression { !shouldSkipBuild() } }
             steps {
                 sh 'git checkout scripts-installation/init.sh'
+                sh 'git checkout buildnumber.txt'
                 sh 'sh graduate.sh'
             }
         }
         stage('Push Version') {
             when { expression { !shouldSkipBuild() } }
             steps {
+                sh 'sh increment-version.sh'
                 sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
                 sh '#sh test-category.sh OLS'
