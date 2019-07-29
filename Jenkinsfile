@@ -48,13 +48,13 @@ pipeline {
         stage('Update Version in Script') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh update-version-in-script.sh'
+                sh 'sh update-version-in-script.sh'
             }
         }
         stage('Build') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh build-all.sh'
+                sh 'sh build-all.sh'
             }
         }
         stage('Test') {
@@ -72,13 +72,13 @@ pipeline {
         stage('Create Release Zip') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh create-release-zip.sh'
+                sh 'sh create-release-zip.sh'
             }
         }
         stage('Publish GitHub Release') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh publish-github-release.sh'
+                sh 'sh publish-github-release.sh'
             }
         }
         stage('Clean') {
@@ -144,6 +144,7 @@ Boolean shouldSkipBuild() {
 def shHide(cmd) {
     sh('#!/bin/sh -e\n' + cmd)
 }
+ 
  
  
  
