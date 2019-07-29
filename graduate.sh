@@ -11,14 +11,14 @@ if [ "$BRANCH" = "dev" ];  then
   echo "  Merging master branch into dev branch..."
   git merge -X ours origin/master || exit 1
 
-  echo "  Stashing updated build number..."
-  git stash || exit 1
+  echo "  Backing up new build number file..."
+  mv buildnumber.txt buildnumber.txt.bak || exit 1
   
   echo "  Checking out master branch..."
   git checkout master || exit 1
 
-  #echo "  Restoring updated build number..."
-  #git checkout stash -- || exit 1
+  echo "  Restoring updated build number..."
+  mv buildnumber.txt.bak buildnumber.txt -f || exit 1
 
   # Ensure it's up to date
   #git pull origin master --quiet && \
