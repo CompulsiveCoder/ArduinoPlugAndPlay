@@ -17,7 +17,7 @@ if [ "$BRANCH" = "dev" ];  then
 #  git stash || exit 1
   
   echo "  Checking out master branch..."
-  git checkout origin/master || exit 1
+  git checkout master || exit 1
 
   # Ensure it's up to date
   #git pull origin master --quiet && \
