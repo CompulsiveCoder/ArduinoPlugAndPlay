@@ -44,7 +44,9 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
 
   echo ""
   echo "  Stopping plug and play service..."
-  sh systemctl.sh stop arduino-plug-and-play.service || exit 1
+  if [ -f "systemctl.sh" ]; then
+    sh systemctl.sh stop arduino-plug-and-play.service || exit 1
+  fi
 
   echo ""
   echo "  Removing old scripts..."
@@ -52,8 +54,8 @@ if [ "$LATEST_VERSION" != "" ] & [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; 
 
   echo ""
   echo "  Removing old libraries..."
-  rm ArduinoPlugAndPlay -R && \
-  rm ArduinoPlugAndPlay*.zip || exit 1
+  rm ArduinoPlugAndPlay -R
+  rm ArduinoPlugAndPlay*.zip
 
   INSTALL_SCRIPT_FILE_NAME="install.sh"
   
