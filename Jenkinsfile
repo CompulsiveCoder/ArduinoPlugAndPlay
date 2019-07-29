@@ -11,11 +11,11 @@ pipeline {
         }
         stage('Checkout') {
             steps {
-                shHide( 'git clone --recursive -b $BRANCH_NAME https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git .' )
-                sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
-                sh "git fetch --no-tags"
+                shHide( 'git clone -b $BRANCH_NAME https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git .' )
+                sh "#git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
+                sh "#git fetch --no-tags"
                 sh 'git checkout $BRANCH_NAME'
-                sh 'git pull origin $BRANCH_NAME'
+                sh '#git pull origin $BRANCH_NAME'
                 sh 'git config --global user.email "compulsivecoder@gmail.com"'
                 sh 'git config --global user.name "CompulsiveCoderCI"'
                 sh 'sh view-version.sh'
