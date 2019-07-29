@@ -2,7 +2,7 @@
 
 BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
-if [ "$BRANCH" != "dev" ];  then
+if [ "$BRANCH" != "lts" ];  then
   git pull origin $BRANCH --quiet && \
   git commit buildnumber.txt -m "Updated version [ci skip]" && \
   git push origin $BRANCH --quiet
