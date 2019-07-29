@@ -17,10 +17,12 @@ if [ "$BRANCH" = "dev" ];  then
 #  git stash || exit 1
   
   echo "  Checking out master branch..."
-  git checkout master || exit 1
+  git checkout origin/master || exit 1
 
   # Ensure it's up to date
   #git pull origin master --quiet && \
+  
+  git checkout buildnumber.txt
 
   echo "  Merging dev branch into master branch..."
   git merge -X theirs dev || exit 1
