@@ -9,16 +9,16 @@ if [ "$BRANCH" = "dev" ];  then
   git fetch origin || exit 1
 
   echo "  Merging master branch into dev branch..."
-  git pull origin master || exit 1
+  git merge -X ours origin/master || exit 1
 
-  echo "  Stashing updated build number..."
-  git stash save || exit 1
+  #echo "  Stashing updated build number..."
+  #git stash save || exit 1
   
   echo "  Checking out master branch..."
   git checkout master || exit 1
 
-  echo "  Restoring updated build number..."
-  git checkout stash -- || exit 1
+  #echo "  Restoring updated build number..."
+  #git checkout stash -- || exit 1
 
   # Ensure it's up to date
   #git pull origin master --quiet && \
