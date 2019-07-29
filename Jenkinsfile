@@ -54,7 +54,7 @@ pipeline {
         stage('Build') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh build-all.sh'
+                sh '#sh build-all.sh'
             }
         }
         stage('Test') {

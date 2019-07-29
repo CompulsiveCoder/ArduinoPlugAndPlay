@@ -11,8 +11,8 @@ if [ "$BRANCH" = "dev" ];  then
   echo "  Merging master branch into dev branch..."
   git merge -X ours origin/master || exit 1
 
-  #echo "  Stashing updated build number..."
-  #git stash save || exit 1
+  echo "  Stashing updated build number..."
+  git stash save || exit 1
   
   echo "  Checking out master branch..."
   git checkout master || exit 1
