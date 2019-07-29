@@ -12,10 +12,6 @@ pipeline {
         stage('Checkout') {
             steps {
                 shHide( 'git clone -b $BRANCH_NAME https://${GHTOKEN}@github.com/CompulsiveCoder/ArduinoPlugAndPlay.git .' )
-                sh "#git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
-                sh "#git fetch --no-tags"
-                sh '#git checkout $BRANCH_NAME'
-                sh '#git pull origin $BRANCH_NAME'
                 sh 'git config --global user.email "compulsivecoder@gmail.com"'
                 sh 'git config --global user.name "CompulsiveCoderCI"'
                 sh 'sh view-version.sh'
@@ -60,7 +56,7 @@ pipeline {
         stage('Test') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh '#sh test-all.sh'
+                sh 'sh test-all.sh'
             }
         }
         stage('Tag and Push') {
@@ -108,7 +104,7 @@ pipeline {
                 sh 'sh increment-version.sh'
                 sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
-                sh '#sh test-category.sh OLS'
+                sh 'sh test-category.sh OLS'
                 sh 'sh push-version.sh'
             }
         } 

@@ -8,29 +8,14 @@ if [ "$BRANCH" = "dev" ];  then
   echo "  Fetching from origin..."
   git fetch origin || exit 1
 
-  #echo "  Merging master branch into dev branch..."
-  #git merge -X ours origin/master || exit 1
-
-  #echo "  Backing up new build number file..."
-  #cp buildnumber.txt buildnumber.txt.bak || exit 1
-  #git checkout buildnumber.txt
-#  git stash || exit 1
-  
   echo "  Checking out master branch..."
   git checkout master || exit 1
 
   # Ensure it's up to date
-  #git pull origin master --quiet && \
+  #git pull origin master || exit 1
   
-  #echo "  Restoring updated build number..."
-  #cp buildnumber.txt.bak buildnumber.txt -f || exit 1
-
   echo "  Merging dev branch into master branch..."
   git merge -X ours origin/dev || exit 1
-
-
-#  echo "  Incrementing version number (again)..."
-#  bash increment-version.sh
 
   echo "  Pushing updates to master branch..."
   git push origin master || exit 1
