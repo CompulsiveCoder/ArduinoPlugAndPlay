@@ -2,7 +2,7 @@
 
 BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
 
-#if [ "$BRANCH" = "dev" ]; then
+if [ "$BRANCH" != "lts" ]; then
   echo "Incrementing version"
 
   CURRENT_VERSION=$(cat version.txt)
@@ -15,6 +15,6 @@ BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
   echo "New version: $CURRENT_VERSION.$CURRENT_BUILD"
 
   echo $CURRENT_BUILD > buildnumber.txt
-#else
-#  echo "Skipping increment version. Version is only incremented in 'dev' branch not '$BRANCH' branch"
-#fi
+else
+  echo "Skipping increment version. Version is not incremented in the lts branch"
+fi
