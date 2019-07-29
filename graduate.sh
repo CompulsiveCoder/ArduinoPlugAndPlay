@@ -26,7 +26,7 @@ if [ "$BRANCH" = "dev" ];  then
   cp buildnumber.txt.bak buildnumber.txt -f || exit 1
 
   echo "  Merging dev branch into master branch..."
-  git merge -X theirs origin/dev || exit 1
+  git merge -X ours origin/dev || exit 1
 
 
 #  echo "  Incrementing version number (again)..."
