@@ -8,8 +8,8 @@ if [ "$BRANCH" = "dev" ];  then
   echo "  Fetching from origin..."
   git fetch origin || exit 1
 
-  echo "  Merging master branch into dev branch..."
-  git merge -X ours origin/master || exit 1
+  #echo "  Merging master branch into dev branch..."
+  #git merge -X ours origin/master || exit 1
 
   #echo "  Backing up new build number file..."
   #cp buildnumber.txt buildnumber.txt.bak || exit 1
