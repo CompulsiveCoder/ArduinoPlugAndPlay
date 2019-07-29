@@ -17,8 +17,8 @@ if [ "$BRANCH" = "dev" ];  then
   echo "  Checking out master branch..."
   git checkout master || exit 1
 
-  echo "  Restoring updated build number..."
-  git checkout stash -- || exit 1
+  #echo "  Restoring updated build number..."
+  #git checkout stash -- || exit 1
 
   # Ensure it's up to date
   #git pull origin master --quiet && \
