@@ -12,7 +12,8 @@ if [ "$BRANCH" = "dev" ];  then
   git merge -X ours origin/master || exit 1
 
   echo "  Backing up new build number file..."
-  mv buildnumber.txt buildnumber.txt.bak || exit 1
+  cp buildnumber.txt buildnumber.txt.bak || exit 1
+  git stash || exit 1
   
   echo "  Checking out master branch..."
   git checkout master || exit 1
