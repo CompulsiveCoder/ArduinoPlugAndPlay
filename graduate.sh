@@ -22,13 +22,12 @@ if [ "$BRANCH" = "dev" ];  then
   # Ensure it's up to date
   #git pull origin master --quiet && \
   
-  git checkout buildnumber.txt
-
-  echo "  Merging dev branch into master branch..."
-  git merge -X theirs dev || exit 1
-
   echo "  Restoring updated build number..."
   cp buildnumber.txt.bak buildnumber.txt -f || exit 1
+
+  echo "  Merging dev branch into master branch..."
+  git merge -X theirs origin/dev || exit 1
+
 
 #  echo "  Incrementing version number (again)..."
 #  bash increment-version.sh
