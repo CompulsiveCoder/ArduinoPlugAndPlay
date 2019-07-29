@@ -13,19 +13,20 @@ if [ "$BRANCH" = "dev" ];  then
 
   echo "  Backing up new build number file..."
   cp buildnumber.txt buildnumber.txt.bak || exit 1
-  git stash || exit 1
+  git checkout buildnumber.txt
+#  git stash || exit 1
   
   echo "  Checking out master branch..."
   git checkout master || exit 1
-
-  echo "  Restoring updated build number..."
-  mv buildnumber.txt.bak buildnumber.txt -f || exit 1
 
   # Ensure it's up to date
   #git pull origin master --quiet && \
 
   echo "  Merging dev branch into master branch..."
   git merge -X theirs dev || exit 1
+
+  echo "  Restoring updated build number..."
+  cp buildnumber.txt.bak buildnumber.txt -f || exit 1
 
 #  echo "  Incrementing version number (again)..."
 #  bash increment-version.sh
