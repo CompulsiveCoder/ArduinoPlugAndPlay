@@ -21,6 +21,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             Assert.AreEqual (exampleInfo.GroupName, info.GroupName, "Group names don't match");
             Assert.AreEqual (exampleInfo.ProjectName, info.ProjectName, "Project names don't match");
             Assert.AreEqual (exampleInfo.BoardType, info.BoardType, "Board types don't match");
+            Assert.AreEqual (exampleInfo.ScriptCode, info.ScriptCode, "Script codes don't match");
             Assert.AreEqual (exampleInfo.Port, info.Port, "Ports don't match");
         }
     }

@@ -480,6 +480,7 @@ namespace ArduinoPlugAndPlay
             newValue = newValue.Replace ("{GROUP}", info.GroupName);
             newValue = newValue.Replace ("{PROJECT}", info.ProjectName);
             newValue = newValue.Replace ("{BOARD}", info.BoardType);
+            newValue = newValue.Replace ("{SCRIPTCODE}", info.ScriptCode);
             newValue = newValue.Replace ("{PORT}", info.Port.Replace ("/dev/", ""));
 
             if (IsVerbose) {
@@ -534,7 +535,8 @@ namespace ArduinoPlugAndPlay
                     allDetailsHaveBeenDetected = output.Contains (Extractor.FamilyNamePreText) &&
                     output.Contains (Extractor.GroupNamePreText) &&
                     output.Contains (Extractor.ProjectNamePreText) &&
-                    output.Contains (Extractor.BoardTypePreText);
+                    output.Contains (Extractor.BoardTypePreText) &&
+                    output.Contains (Extractor.ScriptCodePreText);
 
                     Timeout.Check (TimeoutReadingDeviceInfoInSeconds * 1000, "Timed out attempting to read the details from the device.");
 

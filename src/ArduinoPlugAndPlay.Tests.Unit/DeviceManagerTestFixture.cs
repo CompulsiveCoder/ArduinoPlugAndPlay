@@ -96,11 +96,11 @@ namespace ArduinoPlugAndPlay.Tests.Unit
         {
             var deviceManager = new DeviceManager ();
 
-            var startPattern = "{FAMILY}/{GROUP}/{PROJECT}/{BOARD}/{PORT}";
+            var startPattern = "{FAMILY}/{GROUP}/{PROJECT}/{BOARD}/{SCRIPTCODE}/{PORT}";
 
             var info = GetExampleDeviceInfo ();
 
-            var expectedResult = info.FamilyName + "/" + info.GroupName + "/" + info.ProjectName + "/" + info.BoardType + "/" + info.Port.Replace ("/dev/", "");
+            var expectedResult = info.FamilyName + "/" + info.GroupName + "/" + info.ProjectName + "/" + info.BoardType + "/" + info.ScriptCode + "/" + info.Port.Replace ("/dev/", "");
 
             var actualResult = deviceManager.InsertValues (startPattern, info);
 
