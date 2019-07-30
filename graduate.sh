@@ -15,7 +15,7 @@ if [ "$BRANCH" = "dev" ];  then
   #git pull origin master || exit 1
   
   echo "  Merging dev branch into master branch..."
-  git merge -X ours origin/dev || exit 1
+  git merge -X theirs origin/dev || exit 1
 
   echo "  Pushing updates to master branch..."
   git push origin master || exit 1
