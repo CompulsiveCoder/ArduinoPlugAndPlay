@@ -519,7 +519,7 @@ namespace ArduinoPlugAndPlay
 
                 while (!allDetailsHaveBeenDetected) {
                     // Resend the # command after every 10 lines if the data hasn't been received
-                    var modValue = i % 10;
+                    var modValue = i % 15;
                     if (i == 0 || modValue == 0) {
                         ReaderWriter.WriteLine ("#");
                     }
