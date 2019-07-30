@@ -167,6 +167,7 @@ namespace ArduinoPlugAndPlay.Tests
             info.GroupName = "ExampleGroup" + deviceIndex;
             info.ProjectName = "ProjectName" + deviceIndex;
             info.BoardType = "uno";
+            info.ScriptCode = "example-script";
             info.Port = "ttyUSB" + deviceIndex;
 
             return info;

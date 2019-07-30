@@ -35,6 +35,7 @@ namespace ArduinoPlugAndPlay
             File.WriteAllText (Path.Combine (deviceInfoDir, "group.txt"), info.GroupName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "project.txt"), info.ProjectName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "board.txt"), info.BoardType);
+            File.WriteAllText (Path.Combine (deviceInfoDir, "script-code.txt"), info.ScriptCode);
             File.WriteAllText (Path.Combine (deviceInfoDir, "port.txt"), info.Port);
             File.WriteAllText (Path.Combine (deviceInfoDir, "add-command-completed.txt"), info.AddCommandCompleted.ToString ());
             File.WriteAllText (Path.Combine (deviceInfoDir, "remove-command-completed.txt"), info.RemoveCommandCompleted.ToString ());
@@ -58,6 +59,7 @@ namespace ArduinoPlugAndPlay
                 info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt"));
                 info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
                 info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
+                info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt"));
 
                 if (File.Exists (Path.Combine (deviceFolder, "add-command-completed.txt")))
                     info.AddCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")));
@@ -105,8 +107,8 @@ namespace ArduinoPlugAndPlay
                 //Console.WriteLine ("Deleting device info:");
                 //Console.WriteLine (deviceInfoDir);
 
-                if (Directory.Exists(deviceInfoDir))
-                  Directory.Delete (deviceInfoDir, true);
+                if (Directory.Exists (deviceInfoDir))
+                    Directory.Delete (deviceInfoDir, true);
             }
         }
 

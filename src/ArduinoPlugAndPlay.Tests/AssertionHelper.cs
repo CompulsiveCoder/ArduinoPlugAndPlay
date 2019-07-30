@@ -93,18 +93,21 @@ namespace ArduinoPlugAndPlay.Tests
             var groupFilePath = Path.Combine (deviceDir, "group.txt");
             var projectFilePath = Path.Combine (deviceDir, "project.txt");
             var boardFilePath = Path.Combine (deviceDir, "board.txt");
+            var scriptCodeFilePath = Path.Combine (deviceDir, "script-code.txt");
             var portFilePath = Path.Combine (deviceDir, "port.txt");
 
             Assert.IsTrue (File.Exists (familyFilePath), "family.txt file not found");
             Assert.IsTrue (File.Exists (groupFilePath), "project.txt file not found");
             Assert.IsTrue (File.Exists (projectFilePath), "group.txt file not found");
             Assert.IsTrue (File.Exists (boardFilePath), "board.txt file not found");
+            Assert.IsTrue (File.Exists (scriptCodeFilePath), "script-code.txt file not found");
             Assert.IsTrue (File.Exists (portFilePath), "port.txt file not found");
 
             Assert.AreEqual (info.FamilyName, File.ReadAllText (familyFilePath).Trim (), "Family file content is incorrect.");
             Assert.AreEqual (info.GroupName, File.ReadAllText (groupFilePath).Trim (), "Group file content is incorrect.");
             Assert.AreEqual (info.ProjectName, File.ReadAllText (projectFilePath).Trim (), "Project file content is incorrect.");
             Assert.AreEqual (info.BoardType, File.ReadAllText (boardFilePath).Trim (), "Board file content is incorrect.");
+            Assert.AreEqual (info.ScriptCode, File.ReadAllText (scriptCodeFilePath).Trim (), "Script code file content is incorrect.");
             Assert.AreEqual (info.Port, File.ReadAllText (portFilePath).Trim (), "Port file content is incorrect.");
 
             Console.WriteLine ("Device info files exist and are accurate.");

@@ -11,12 +11,13 @@ namespace ArduinoPlugAndPlay.Tests
         public string GetDeviceSerialOutput (DeviceInfo deviceInfo)
         {
             var output = @"Starting device...
-
+-- Start Device Info
 Family: " + deviceInfo.FamilyName + @"
 Group: " + deviceInfo.GroupName + @"
 Project: " + deviceInfo.ProjectName + @"
 Board: " + deviceInfo.BoardType + @"
-
+ScriptCode: " + deviceInfo.ScriptCode + @"
+-- End Device Info
 ";
 
             return output;
