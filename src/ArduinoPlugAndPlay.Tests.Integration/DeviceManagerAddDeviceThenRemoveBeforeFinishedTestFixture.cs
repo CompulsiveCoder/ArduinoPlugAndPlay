@@ -70,7 +70,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             Assert.IsFalse (output.Contains (unreachableNumber.ToString ()), "Script continued too far.");
 
-            Assert.AreEqual (2, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");
+            Assert.AreEqual (1, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");
         }
 
     }
