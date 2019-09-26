@@ -46,6 +46,7 @@
     <Compile Include="MockBackgroundProcessStarter.cs" />
     <Compile Include="BranchDetector.cs" />
     <Compile Include="MockSerialDeviceReaderWriter.cs" />
+    <Compile Include="MockSerialPortWrapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

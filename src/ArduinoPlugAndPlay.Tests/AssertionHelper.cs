@@ -76,7 +76,7 @@ namespace ArduinoPlugAndPlay.Tests
             foreach (var cmd in starter.CommandsRun) {
                 Console.WriteLine ("  " + cmd);
             }
-            Assert.IsTrue (starter.CommandsRun.Contains (fullExpectedCommand), "The expected command wasn't run.");
+			Assert.IsTrue (starter.CommandsRun.Contains (fullExpectedCommand), "The expected command wasn't run: " + fullExpectedCommand);
 
             Console.WriteLine ("The expected bash command was started.");
         }

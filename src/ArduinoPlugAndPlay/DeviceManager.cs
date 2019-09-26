@@ -6,6 +6,8 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 using System.Net.Mail;
+using System.IO.Ports;
+using System.Linq;
 
 namespace ArduinoPlugAndPlay
 {
@@ -22,6 +24,8 @@ namespace ArduinoPlugAndPlay
         public DeviceInfoFileManager Data = new DeviceInfoFileManager ();
 
         public SerialDeviceReaderWriter ReaderWriter = new SerialDeviceReaderWriter ();
+
+        public SerialPortWrapper SerialPort = new SerialPortWrapper ();
 
         public TimeoutHelper Timeout = new TimeoutHelper ();
 
@@ -112,8 +116,8 @@ namespace ArduinoPlugAndPlay
 
             // Check for removed devices
             //if (BackgroundStarter.QueuedProcesses.Count == 0) {
-                CheckForRemovedDevices ();
-                ProcessRemovedDevices ();
+            CheckForRemovedDevices ();
+            ProcessRemovedDevices ();
             //}
 
             // Check for new devices
@@ -264,11 +268,13 @@ namespace ArduinoPlugAndPlay
                 if (IsVerbose)
                     Console.WriteLine ("Existing devices (stored in file):");
 
-                var detectedDevices = new List<string> (GetDevicePortList ());
+                //var detectedDevices = new List<string> (GetDevicePortList ());
 
                 for (int i = 0; i < DevicePorts.Count; i++) {
                     var portName = DevicePorts [i];
-                    var deviceHasBeenRemoved = !detectedDevices.Contains (portName);
+
+                    var deviceHasBeenRemoved = !SerialPort.GetPortNames ().Any (x => x == portName);
+                    //var deviceHasBeenRemoved = !detectedDevices.Contains (portName);
 
                     if (IsVerbose)
                         Console.WriteLine ("Has been removed: " + deviceHasBeenRemoved);
@@ -301,25 +307,40 @@ namespace ArduinoPlugAndPlay
 
         public void RemoveDevice (string devicePort)
         {
-            if (!String.IsNullOrEmpty (devicePort) && !BackgroundStarter.ProcessExists ("remove", devicePort)) {
+            var devicePortIsEmpty = String.IsNullOrEmpty (devicePort);
+            var removeProcessExists = BackgroundStarter.ProcessExists ("remove", devicePort);
 
-                DevicePorts.Remove (devicePort);
-
+            if (IsVerbose) {
+                Console.WriteLine ("Removing device: " + devicePort);
+                Console.WriteLine ("Device port name is empty: " + devicePortIsEmpty);
+                Console.WriteLine ("Remove process exists: " + removeProcessExists);
+            }
+            if (!devicePortIsEmpty) {
                 RemovedDevicePorts.Remove (devicePort);
+
+                if (!removeProcessExists) {
+
+                    DevicePorts.Remove (devicePort);
                 
-                Console.WriteLine ("  " + devicePort);
+                    Console.WriteLine ("  " + devicePort);
 
-                if (UnusableDevicePorts.Contains (devicePort)) {
-                    UnusableDevicePorts.Remove (devicePort);
+                    if (UnusableDevicePorts.Contains (devicePort)) {
+                        UnusableDevicePorts.Remove (devicePort);
+                    } else {
+
+                        var info = Data.ReadInfoFromFile (devicePort);
+
+                        Data.DeleteInfoFromFile (info.Port);
+
+                        LaunchRemoveDeviceCommand (info);
+                    }
                 } else {
-
-                    var info = Data.ReadInfoFromFile (devicePort);
-
-                    Data.DeleteInfoFromFile (info.Port);
-
-                    LaunchRemoveDeviceCommand (info);
+                    if (IsVerbose)
+                        Console.WriteLine ("Remove process already exists. Skipping remove.");
                 }
-
+            } else {
+                if (IsVerbose)
+                    Console.WriteLine ("Device port is empty. Skipping remove.");
             }
         }
 

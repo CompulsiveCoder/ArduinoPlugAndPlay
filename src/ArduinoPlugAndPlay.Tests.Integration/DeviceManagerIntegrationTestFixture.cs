@@ -7,7 +7,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
     public class DeviceManagerIntegrationTestFixture : BaseTestFixture
     {
         [Test]
-        public void Test_ConnectDevice ()
+        public void Test_Connect3DevicesThenRemove1 ()
         {
             Console.WriteLine ("Testing connecting an arduino device...");
 
@@ -15,12 +15,14 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+            deviceManager.SerialPort = mockSerialPortWrapper;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -32,25 +34,27 @@ namespace ArduinoPlugAndPlay.Tests.Integration
                 Console.WriteLine ("Connecting device #" + i + "...");
                 Console.WriteLine ("");
 
-                var info = GetExampleDeviceInfo (i);
+                var deviceInfo = GetExampleDeviceInfo (i);
+
+                mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
 
                 // Virtually connect a device
-                mockPlatformio.ConnectDevice (info.Port);
+                mockPlatformio.ConnectDevice (deviceInfo.Port);
 
                 // Set the mock output from the device
-                mockReaderWriter.SetMockOutput (info.Port, MockOutputs.GetDeviceSerialOutput (info));
+                mockReaderWriter.SetMockOutput (deviceInfo.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo));
 
                 // Run a device manager loop
                 deviceManager.RunLoop ();
 
                 // Assert that the expected command was started
-                assertion.AssertAddDeviceCommandStarted (info, mockBackgroundProcessStarter);
+                assertion.AssertAddDeviceCommandStarted (deviceInfo, mockBackgroundProcessStarter);
 
                 // Assert there is 1 device
                 assertion.AssertDeviceCount (i + 1);
 
                 // Assert that the device related data/info was created
-                assertion.AssertDeviceExists (info);
+                assertion.AssertDeviceExists (deviceInfo);
             }
 
 
@@ -58,24 +62,25 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             Console.WriteLine ("Disconnecting device #1...");
             Console.WriteLine ("");
 
-            var info1 = GetExampleDeviceInfo (1);
+            var deviceInfo1 = GetExampleDeviceInfo (1);
 
             // Virtually connect a device
-            mockPlatformio.DisconnectDevice (info1.Port);
+            mockSerialPortWrapper.DisconnectDevice (deviceInfo1.Port);
+
+            mockPlatformio.DisconnectDevice (deviceInfo1.Port);
 
             // Run a device manager loop
             deviceManager.RunLoop ();
 
             // Assert that the expected command was started
-            assertion.AssertRemoveDeviceCommandStarted (info1, mockBackgroundProcessStarter);
+            assertion.AssertRemoveDeviceCommandStarted (deviceInfo1, mockBackgroundProcessStarter);
 
             // Assert there are 2 devices left
             assertion.AssertDeviceCount (2);
 
             // Assert that the device related data/info was removed
-            assertion.AssertDeviceDoesntExist (info1);
+            assertion.AssertDeviceDoesntExist (deviceInfo1);
         }
 
     }
 }
-

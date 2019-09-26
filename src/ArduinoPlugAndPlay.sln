@@ -56,4 +56,12 @@ Global
 		{E26A5693-20E2-426E-9B1E-B07AF554AD0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E26A5693-20E2-426E-9B1E-B07AF554AD0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/plain
+	EndGlobalSection
 EndGlobal

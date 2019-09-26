@@ -15,10 +15,12 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+            deviceManager.SerialPort = mockSerialPortWrapper;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -39,12 +41,14 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             Console.WriteLine ("Virtually connecting device 1...");
             mockPlatformio.ConnectDevice (deviceInfo.Port);
+            mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
 
             Console.WriteLine ("Setting example device 2 as mock serial device output...");
             mockReaderWriter.SetMockOutput (deviceInfo2.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo2));
 
             Console.WriteLine ("Virtually connecting device 2...");
             mockPlatformio.ConnectDevice (deviceInfo2.Port);
+            mockSerialPortWrapper.ConnectDevice (deviceInfo2.Port);
 
             Console.WriteLine ("Loading existing device info from file...");
             deviceManager.LoadExistingDeviceListFromFiles ();
@@ -102,7 +106,5 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             // Assert that the expected command was started
             assertion.AssertRemoveDeviceCommandStarted (deviceInfo, mockBackgroundProcessStarter);
         }
-
     }
 }
-
