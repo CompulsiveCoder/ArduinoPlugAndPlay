@@ -70,6 +70,13 @@ namespace ArduinoPlugAndPlay.ClientConsole
                 Boolean.TryParse (stringValue, out boolValue);
             return boolValue;
         }
+
+        public string[] GetArray (string argumentKey)
+        {
+            var stringValue = GetValue (argumentKey);
+
+            return stringValue.Split (',');
+        }
     }
 }
 

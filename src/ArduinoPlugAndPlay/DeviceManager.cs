@@ -44,6 +44,8 @@ namespace ArduinoPlugAndPlay
         public List<string> RemovedDevicePorts = new List<string> ();
         public List<string> UnusableDevicePorts = new List<string> ();
 
+        public string[] IgnoredSerialPorts = new string[]{ };
+
         public int DefaultBaudRate = 9600;
 
         public bool IsVerbose = true;
@@ -186,7 +188,9 @@ namespace ArduinoPlugAndPlay
                 Console.WriteLine ("The following devices were detected:");
 
                 foreach (var item in list) {
-                    if (!String.IsNullOrEmpty (item)) {
+                    var isBlank = String.IsNullOrEmpty (item);
+                    var isIgnored = IsPortIgnored (item.Trim ());
+                    if (!isBlank && !isIgnored) {
                         var isNewDevice = !DevicePorts.Contains (item.Trim ());
 
                         var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
@@ -843,6 +847,11 @@ namespace ArduinoPlugAndPlay
             }
 
             return selfHostName;
+        }
+
+        public bool IsPortIgnored (string portName)
+        {
+            return Array.IndexOf (IgnoredSerialPorts, portName) > 0;
         }
     }
 }
