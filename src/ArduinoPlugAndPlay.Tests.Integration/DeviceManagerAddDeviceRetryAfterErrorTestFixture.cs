@@ -165,7 +165,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.RunLoop ();
 
             Console.WriteLine ("Sleeping to let the add process finish...");
-            Thread.Sleep (1000);
+            Thread.Sleep (2000);
         }
 
         public void RunLoopToRemoveDeviceAndAddToUnusable (DeviceManager deviceManager, DeviceInfo deviceInfo)
