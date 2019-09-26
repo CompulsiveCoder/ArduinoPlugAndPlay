@@ -184,13 +184,18 @@ namespace ArduinoPlugAndPlay
 
             var list = GetDevicePortList ();
 
+            var devicesHaveBeenDetected = false;
             if (list.Length > 0) {
-                Console.WriteLine ("The following devices were detected:");
-
+                var titleHasBeenShown = false;
                 foreach (var item in list) {
                     var isBlank = String.IsNullOrEmpty (item);
                     var isIgnored = IsPortIgnored (item.Trim ());
                     if (!isBlank && !isIgnored) {
+                        devicesHaveBeenDetected = true;
+                        if (!titleHasBeenShown) {
+                            Console.WriteLine ("The following devices were detected:");
+                            titleHasBeenShown = true;
+                        }
                         var isNewDevice = !DevicePorts.Contains (item.Trim ());
 
                         var isUsableDevice = !UnusableDevicePorts.Contains (item.Trim ());
@@ -210,8 +215,10 @@ namespace ArduinoPlugAndPlay
                     }
                 }
 
-            } else
-                Console.WriteLine ("No devices found.");
+            }
+
+            if (!devicesHaveBeenDetected)
+                Console.WriteLine ("  No devices detected.");
         }
 
         public void ProcessNewDevices ()
