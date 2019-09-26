@@ -17,6 +17,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             mockBackgroundProcessStarter.EnableCommandExecution = true;
 
@@ -25,6 +26,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+            deviceManager.SerialPort = mockSerialPortWrapper;
 
             deviceManager.USBDeviceDisconnectedCommand = "MAX=5; COUNT=0; [ -f \"fcf.txt\" ] && COUNT=\"$(cat fcf.txt)\"; COUNT=$(($COUNT+1)); echo \"$COUNT\" > \"fcf.txt\"; echo \"$COUNT\"; [ \"$COUNT\" -lt \"$MAX\" ] && echo \"Script intentionally failed\" && exit 1 || exit 0";
 
@@ -38,6 +40,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Disconnect the virtual (mock) device so it appears to have been removed
             mockPlatformio.DisconnectDevice (info.Port);
+            mockSerialPortWrapper.DisconnectDevice (info.Port);
 
             var countInFile = 0;
 

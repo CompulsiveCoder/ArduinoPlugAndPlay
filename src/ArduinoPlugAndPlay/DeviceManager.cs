@@ -490,12 +490,16 @@ namespace ArduinoPlugAndPlay
 
         public bool AreDevicesConnected ()
         {
-            return Platformio.AreDevicesDetected ();
+            return GetDevicePortList ().Length > 0;
+            // TODO: Remove if not needed
+            //return Platformio.AreDevicesDetected ();
         }
 
         public string[] GetDevicePortList ()
         {
-            var deviceList = Platformio.GetDeviceList ();
+            var deviceList = SerialPort.GetPortNames ();
+            // TODO: Remove if not needed
+            //var deviceList = Platformio.GetDeviceList ();
 
             return deviceList;
         }

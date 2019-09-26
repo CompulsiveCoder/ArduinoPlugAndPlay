@@ -15,6 +15,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             mockBackgroundProcessStarter.EnableCommandExecution = true;
 
@@ -23,6 +24,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+            deviceManager.SerialPort = mockSerialPortWrapper;
             deviceManager.TimeoutReadingDeviceInfoInSeconds = 3;
 
             // deviceManager.DeviceAddedCommand = "MAX=5; COUNT=0; [ -f \"fcf.txt\" ] && COUNT=\"$(cat fcf.txt)\"; COUNT=$(($COUNT+1)); echo \"$COUNT\" > \"fcf.txt\"; echo \"$COUNT\"; [ \"$COUNT\" -lt \"$MAX\" ] && echo \"Script intentionally failed\" && exit 1";
@@ -40,6 +42,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Connect the virtual (mock) USB device
             mockPlatformio.ConnectDevice (port);
+            mockSerialPortWrapper.ConnectDevice (port);
 
             // Run a loop which should detect the unusable device, and register it as unusable
             deviceManager.RunLoop ();
@@ -50,6 +53,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Disconnect the unusable device
             mockPlatformio.DisconnectDevice (port);
+            mockSerialPortWrapper.DisconnectDevice (port);
 
             // Run a loop which should remove the unusable device completely
             deviceManager.RunLoop ();

@@ -16,10 +16,12 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+            deviceManager.SerialPort = mockSerialPortWrapper;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -34,6 +36,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Connect the virtual (mock) USB device
             mockPlatformio.ConnectDevice (deviceInfo.Port);
+            mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
 
             // Run a loop to set off a long running command
             deviceManager.RunLoop ();
@@ -43,6 +46,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Disconnect the device before the command is completed
             mockPlatformio.DisconnectDevice (deviceInfo.Port);
+            mockSerialPortWrapper.DisconnectDevice (deviceInfo.Port);
 
             // Run another loop to see how it handles it
             deviceManager.RunLoop ();
