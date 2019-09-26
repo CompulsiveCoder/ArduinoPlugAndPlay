@@ -858,7 +858,7 @@ namespace ArduinoPlugAndPlay
 
         public bool IsPortIgnored (string portName)
         {
-            return Array.IndexOf (IgnoredSerialPorts, portName) > 0;
+            return Array.IndexOf (IgnoredSerialPorts, portName) > -1;
         }
     }
 }
