@@ -52,12 +52,14 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
             deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
+            deviceManager.SerialPort = mockSerialPortWrapper;
 
             var assertion = new AssertionHelper (deviceManager);
 
@@ -68,6 +70,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             // Connect the virtual (mock) device
             mockPlatformio.ConnectDevice (info.Port);
+            mockSerialPortWrapper.ConnectDevice (info.Port);
 
             // Add the device to the ports list so it appears the device exists
             deviceManager.DevicePorts.Add (info.Port);
@@ -77,6 +80,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             // Disconnect the virtual (mock) device so it appears to have been removed
             mockPlatformio.DisconnectDevice (info.Port);
+            mockSerialPortWrapper.DisconnectDevice (info.Port);
 
             // Remove the device
             deviceManager.RemoveDevice (info.Port);
