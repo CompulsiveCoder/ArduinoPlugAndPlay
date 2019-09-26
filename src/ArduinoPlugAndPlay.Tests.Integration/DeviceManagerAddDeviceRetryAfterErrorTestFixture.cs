@@ -94,7 +94,7 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.RunLoop ();
 
             Console.WriteLine ("Sleeping to let the add device process finish...");
-            Thread.Sleep (1000);
+            Thread.Sleep (2000);
 
             Console.WriteLine ("Checking that device1.txt was created...");
             Console.WriteLine ("  " + device1FilePath);
