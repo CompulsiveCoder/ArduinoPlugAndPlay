@@ -37,7 +37,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var parser = new PlatformioParser (starter);
 
             starter.ClearOutput ();
-            starter.AppendOutput (MockOutputs.GetDeviceListOutput (2));
+            // TODO: Remove if not needed. Should be obsolete.
+            //starter.AppendOutput (MockOutputs.GetDeviceListOutput (2));
 
             var expectedResult = true;
 
@@ -45,7 +46,6 @@ namespace ArduinoPlugAndPlay.Tests.Unit
 
             Assert.AreEqual (expectedResult, actualResult, "Result doesn't match the expected result.");
         }
-
 
         [Test]
         public void Test_GetDeviceList_0Devices ()
@@ -57,7 +57,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             starter.ClearOutput ();
             starter.AppendOutput (MockOutputs.DeviceListZeroDevicesOutput);
 
-            var expectedResult = new string[]{ };
+            var expectedResult = new string[] { };
 
             var actualResult = parser.ParseDeviceList ();
 

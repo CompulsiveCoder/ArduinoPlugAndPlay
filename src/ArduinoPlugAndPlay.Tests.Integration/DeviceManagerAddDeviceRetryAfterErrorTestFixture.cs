@@ -16,7 +16,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var deviceInfo = GetExampleDeviceInfo ();
 
             // Set up the mock objects
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
             var mockSerialPortWrapper = new MockSerialPortWrapper ();
@@ -27,7 +28,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var deviceManager = new DeviceManager ();
             deviceManager.IsVerbose = true;
             deviceManager.SleepTimeInSeconds = 1;
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
             deviceManager.SerialPort = mockSerialPortWrapper;
@@ -49,7 +51,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             mockReaderWriter.SetMockOutput (deviceInfo.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo));
 
             // Connect the virtual (mock) USB device
-            mockPlatformio.ConnectDevice (deviceInfo.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.ConnectDevice (deviceInfo.Port);
             mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
 
             // Open connection to the virtual (mock) USB device
@@ -245,6 +248,5 @@ rm ""devices/device1.txt""
         {
             return Path.GetFullPath ("devices/device" + deviceNumber + ".txt");
         }
-
     }
 }

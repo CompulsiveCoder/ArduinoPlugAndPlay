@@ -11,6 +11,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.snk</AssemblyOriginatorKeyFile>
     <UseMSBuildEngine>False</UseMSBuildEngine>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,8 +44,6 @@
     <Compile Include="DeviceInfoExtractor.cs" />
     <Compile Include="DeviceInfoFileManager.cs" />
     <Compile Include="DeviceManager.cs" />
-    <Compile Include="PlatformioParser.cs" />
-    <Compile Include="PlatformioWrapper.cs" />
     <Compile Include="TimeoutHelper.cs" />
     <Compile Include="BackgroundProcessStarter.cs" />
     <Compile Include="ProcessStarter.cs" />

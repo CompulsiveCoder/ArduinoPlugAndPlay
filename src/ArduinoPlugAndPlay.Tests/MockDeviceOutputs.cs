@@ -15,6 +15,7 @@ namespace ArduinoPlugAndPlay.Tests
 Family: " + deviceInfo.FamilyName + @"
 Group: " + deviceInfo.GroupName + @"
 Project: " + deviceInfo.ProjectName + @"
+Device name: " + deviceInfo.DeviceName + @"
 Board: " + deviceInfo.BoardType + @"
 ScriptCode: " + deviceInfo.ScriptCode + @"
 -- End Device Info
@@ -22,8 +23,8 @@ ScriptCode: " + deviceInfo.ScriptCode + @"
 
             return output;
         }
-
-        public string GetDeviceListOutput (int numberOfDevices)
+        // TODO: Remove if not needed. Should be obsolete.
+        /*public string GetDeviceListOutput (int numberOfDevices)
         {
             var template = @"/dev/ttyUSB{0}
 ------------
@@ -39,8 +40,7 @@ Description: USB2.0-Serial
             }
 
             return output;
-        }
-
+        }*/
         public string DeviceListZeroDevicesOutput {
             get {
                 return " \n ";

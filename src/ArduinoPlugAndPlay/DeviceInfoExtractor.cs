@@ -8,7 +8,9 @@ namespace ArduinoPlugAndPlay
         public string GroupNamePreText = "Group:";
         public string ProjectNamePreText = "Project:";
         public string BoardTypePreText = "Board:";
+        public string DeviceNamePreText = "Device name:";
         public string ScriptCodePreText = "ScriptCode:";
+        public string EndDeviceInfoText = "-- End Device Info";
 
         public DeviceInfoExtractor ()
         {
@@ -29,6 +31,8 @@ namespace ArduinoPlugAndPlay
                     info.GroupName = ExtractGroupName (line);
                 else if (line.StartsWith (ProjectNamePreText))
                     info.ProjectName = ExtractProjectName (line);
+                else if (line.StartsWith (DeviceNamePreText))
+                    info.DeviceName = ExtractDeviceName (line);
                 else if (line.StartsWith (BoardTypePreText))
                     info.BoardType = ExtractBoardType (line);
                 else if (line.StartsWith (ScriptCodePreText))
@@ -59,6 +63,11 @@ namespace ArduinoPlugAndPlay
         public string ExtractProjectName (string line)
         {
             return ExtractValueFromLine (line, ProjectNamePreText);
+        }
+
+        public string ExtractDeviceName (string line)
+        {
+            return ExtractValueFromLine (line, DeviceNamePreText);
         }
 
         public string ExtractBoardType (string line)

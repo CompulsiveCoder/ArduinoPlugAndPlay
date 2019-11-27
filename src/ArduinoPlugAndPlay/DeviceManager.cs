@@ -14,37 +14,25 @@ namespace ArduinoPlugAndPlay
     public class DeviceManager
     {
         public ProcessStarter Starter = new ProcessStarter ();
-
         public BackgroundProcessStarter BackgroundStarter = new BackgroundProcessStarter ();
-
         public DeviceInfoExtractor Extractor = new DeviceInfoExtractor ();
-
-        public PlatformioWrapper Platformio = new PlatformioWrapper ();
-
+        // TODO: Remove if not needed. Should be obsolete.
+        //public PlatformioWrapper Platformio = new PlatformioWrapper ();
         public DeviceInfoFileManager Data = new DeviceInfoFileManager ();
-
         public SerialDeviceReaderWriter ReaderWriter = new SerialDeviceReaderWriter ();
-
         public SerialPortWrapper SerialPort = new SerialPortWrapper ();
-
         public TimeoutHelper Timeout = new TimeoutHelper ();
-
         public int SleepTimeInSeconds = 1;
-
         public bool IsActive = true;
-
         public string USBDeviceConnectedCommand = "echo 'Device added ({FAMILY} {GROUP} {BOARD})'";
         public string USBDeviceDisconnectedCommand = "echo 'Device removed ({FAMILY} {GROUP} {BOARD})'";
-
         public string SmtpServer = String.Empty;
         public string EmailAddress = String.Empty;
-
         public List<string> DevicePorts = new List<string> ();
         public List<string> NewDevicePorts = new List<string> ();
         public List<string> RemovedDevicePorts = new List<string> ();
         public List<string> UnusableDevicePorts = new List<string> ();
-
-        public string[] IgnoredSerialPorts = new string[]{ };
+        public string[] IgnoredSerialPorts = new string[] { };
 
         public int DefaultBaudRate = 9600;
 
@@ -568,11 +556,13 @@ namespace ArduinoPlugAndPlay
 
                     var output = builder.ToString ();
 
-                    allDetailsHaveBeenDetected = output.Contains (Extractor.FamilyNamePreText) &&
+                    allDetailsHaveBeenDetected = output.Contains(Extractor.EndDeviceInfoText);
+                    // TODO: Remove if not needed. Should be obsolete.
+                    /*output.Contains (Extractor.FamilyNamePreText) &&
                     output.Contains (Extractor.GroupNamePreText) &&
                     output.Contains (Extractor.ProjectNamePreText) &&
                     output.Contains (Extractor.BoardTypePreText) &&
-                    output.Contains (Extractor.ScriptCodePreText);
+                    output.Contains (Extractor.ScriptCodePreText);*/
 
                     Timeout.Check (TimeoutReadingDeviceInfoInSeconds * 1000, "Timed out attempting to read the details from the device.");
 

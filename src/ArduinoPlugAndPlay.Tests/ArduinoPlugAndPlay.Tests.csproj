@@ -11,6 +11,8 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.Tests.snk</AssemblyOriginatorKeyFile>
     <UseMSBuildEngine>False</UseMSBuildEngine>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +43,6 @@
     <Compile Include="AssertionHelper.cs" />
     <Compile Include="BaseTestFixture.cs" />
     <Compile Include="MockDeviceOutputs.cs" />
-    <Compile Include="MockPlatformioWrapper.cs" />
     <Compile Include="MockProcessStarter.cs" />
     <Compile Include="TestProcessStarter.cs" />
     <Compile Include="MockBackgroundProcessStarter.cs" />

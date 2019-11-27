@@ -12,13 +12,16 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var info = GetExampleDeviceInfo ();
 
             // Set up the mock objects
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
+            var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
 
@@ -28,7 +31,9 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             mockReaderWriter.SetMockOutput (info.Port, MockOutputs.GetDeviceSerialOutput (info));
 
             // Connect the virtual (mock) USB device
-            mockPlatformio.ConnectDevice (info.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.ConnectDevice (info.Port);
+            mockSerialPortWrapper.ConnectDevice (info.Port);
 
             // Open the virtual (mock) USB device connection
             mockReaderWriter.Open (info.Port);
@@ -44,19 +49,20 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             assertion.AssertDeviceInfoFilesExist (deviceManager.Data.InfoDirectory, info);
         }
 
-
         [Test]
         public void Test_RemoveDevice ()
         {
             // Set up the mock objects
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
             var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
             deviceManager.SerialPort = mockSerialPortWrapper;
@@ -69,7 +75,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             mockReaderWriter.SetMockOutput (info.Port, MockOutputs.GetDeviceSerialOutput (info));
 
             // Connect the virtual (mock) device
-            mockPlatformio.ConnectDevice (info.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.ConnectDevice (info.Port);
             mockSerialPortWrapper.ConnectDevice (info.Port);
 
             // Add the device to the ports list so it appears the device exists
@@ -79,7 +86,8 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             CreateExampleDeviceInfoFiles ();
 
             // Disconnect the virtual (mock) device so it appears to have been removed
-            mockPlatformio.DisconnectDevice (info.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.DisconnectDevice (info.Port);
             mockSerialPortWrapper.DisconnectDevice (info.Port);
 
             // Remove the device
@@ -100,18 +108,17 @@ namespace ArduinoPlugAndPlay.Tests.Unit
         {
             var deviceManager = new DeviceManager ();
 
-            var startPattern = "{FAMILY}/{GROUP}/{PROJECT}/{BOARD}/{SCRIPTCODE}/{PORT}";
+            var startPattern = "{FAMILY}/{GROUP}/{PROJECT}/{BOARD}/{SCRIPTCODE}/{PORT}/{DEVICENAME}";
 
             var info = GetExampleDeviceInfo ();
 
-            var expectedResult = info.FamilyName + "/" + info.GroupName + "/" + info.ProjectName + "/" + info.BoardType + "/" + info.ScriptCode + "/" + info.Port.Replace ("/dev/", "");
+            var expectedResult = info.FamilyName + "/" + info.GroupName + "/" + info.ProjectName + "/" + info.BoardType + "/" + info.ScriptCode + "/" + info.Port.Replace ("/dev/", "") + "/" + info.DeviceName;
 
             var actualResult = deviceManager.InsertValues (startPattern, info);
 
             Assert.AreEqual (expectedResult, actualResult, "Value insertion failed.");
                     
         }
-
         // TODO: Remove if not needed. Should be obsolete
         /*[Test]
         public void Test_CheckForChangedPorts ()

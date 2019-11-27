@@ -13,12 +13,14 @@ namespace ArduinoPlugAndPlay.Tests.Integration
         {
             var deviceManager = new DeviceManager ();
 
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
             var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
             deviceManager.SerialPort = mockSerialPortWrapper;
@@ -35,7 +37,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             mockReaderWriter.SetMockOutput (deviceInfo.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo));
 
             // Connect the virtual (mock) USB device
-            mockPlatformio.ConnectDevice (deviceInfo.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.ConnectDevice (deviceInfo.Port);
             mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
 
             // Run a loop to set off a long running command
@@ -45,7 +48,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             Thread.Sleep (2000);
 
             // Disconnect the device before the command is completed
-            mockPlatformio.DisconnectDevice (deviceInfo.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.DisconnectDevice (deviceInfo.Port);
             mockSerialPortWrapper.DisconnectDevice (deviceInfo.Port);
 
             // Run another loop to see how it handles it
@@ -76,7 +80,6 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             Assert.AreEqual (2, mockBackgroundProcessStarter.CommandsRun.Count, "Invalid number of commands run.");
         }
-
     }
 }
 

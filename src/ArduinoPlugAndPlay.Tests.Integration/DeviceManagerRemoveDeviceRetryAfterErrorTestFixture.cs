@@ -14,7 +14,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             var info = GetExampleDeviceInfo ();
 
             // Set up the mock objects
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
             var mockSerialPortWrapper = new MockSerialPortWrapper ();
@@ -23,7 +24,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
             deviceManager.SerialPort = mockSerialPortWrapper;
@@ -39,7 +41,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             deviceManager.DevicePorts.Add (info.Port);
 
             // Disconnect the virtual (mock) device so it appears to have been removed
-            mockPlatformio.DisconnectDevice (info.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.DisconnectDevice (info.Port);
             mockSerialPortWrapper.DisconnectDevice (info.Port);
 
             var countInFile = 0;
@@ -81,7 +84,6 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             Assert.IsTrue (processWrapper.HasStarted, "The process hasn't started.");
         }
-
     }
 }
 

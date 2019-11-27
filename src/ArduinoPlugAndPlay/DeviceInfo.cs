@@ -10,6 +10,7 @@ namespace ArduinoPlugAndPlay
         public string BoardType = "";
         public string ScriptCode = "";
         public string Port = "";
+        public string DeviceName = "";
         public bool AddCommandCompleted = false;
         public bool RemoveCommandCompleted = false;
 
@@ -23,10 +24,11 @@ namespace ArduinoPlugAndPlay
                 return false;
 
             return FamilyName == info.FamilyName &&
-            GroupName == info.GroupName &&
-            ProjectName == info.ProjectName &&
-            BoardType == info.BoardType &&
-            ScriptCode == info.ScriptCode;
+                GroupName == info.GroupName &&
+                ProjectName == info.ProjectName &&
+                BoardType == info.BoardType &&
+                DeviceName == info.DeviceName &&
+                ScriptCode == info.ScriptCode;
         }
     }
 }

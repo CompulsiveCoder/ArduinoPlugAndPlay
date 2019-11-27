@@ -12,7 +12,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
         public void Test_AddUnusableDevice ()
         {
             // Set up the mock objects
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
             var mockSerialPortWrapper = new MockSerialPortWrapper ();
@@ -21,7 +22,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
             deviceManager.SerialPort = mockSerialPortWrapper;
@@ -41,7 +43,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             mockReaderWriter.EnableVirtualDelay = true; // This delay prevents the test log from getting bloated
 
             // Connect the virtual (mock) USB device
-            mockPlatformio.ConnectDevice (port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.ConnectDevice (port);
             mockSerialPortWrapper.ConnectDevice (port);
 
             // Run a loop which should detect the unusable device, and register it as unusable
@@ -52,7 +55,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             Assert.AreEqual (1, deviceManager.UnusableDevicePorts.Count, "No ports added to the unusable list");
 
             // Disconnect the unusable device
-            mockPlatformio.DisconnectDevice (port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.DisconnectDevice (port);
             mockSerialPortWrapper.DisconnectDevice (port);
 
             // Run a loop which should remove the unusable device completely

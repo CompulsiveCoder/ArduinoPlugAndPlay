@@ -12,14 +12,16 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             Console.WriteLine ("Testing connecting an arduino device...");
 
             // Set up the mock objects
-            var mockPlatformio = new MockPlatformioWrapper ();
+            // TODO: Remove if not needed. Should be obsolete.
+            //var mockPlatformio = new MockPlatformioWrapper ();
             var mockReaderWriter = new MockSerialDeviceReaderWriter ();
             var mockBackgroundProcessStarter = new MockBackgroundProcessStarter ();
             var mockSerialPortWrapper = new MockSerialPortWrapper ();
 
             // Set up the device manager with the mock dependencies
             var deviceManager = new DeviceManager ();
-            deviceManager.Platformio = mockPlatformio;
+            // TODO: Remove if not needed. Should be obsolete.
+            //deviceManager.Platformio = mockPlatformio;
             deviceManager.ReaderWriter = mockReaderWriter;
             deviceManager.BackgroundStarter = mockBackgroundProcessStarter;
             deviceManager.SerialPort = mockSerialPortWrapper;
@@ -36,10 +38,9 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
                 var deviceInfo = GetExampleDeviceInfo (i);
 
-                mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
-
                 // Virtually connect a device
-                mockPlatformio.ConnectDevice (deviceInfo.Port);
+                //mockPlatformio.ConnectDevice (deviceInfo.Port);
+                mockSerialPortWrapper.ConnectDevice (deviceInfo.Port);
 
                 // Set the mock output from the device
                 mockReaderWriter.SetMockOutput (deviceInfo.Port, MockOutputs.GetDeviceSerialOutput (deviceInfo));
@@ -66,8 +67,8 @@ namespace ArduinoPlugAndPlay.Tests.Integration
 
             // Virtually connect a device
             mockSerialPortWrapper.DisconnectDevice (deviceInfo1.Port);
-
-            mockPlatformio.DisconnectDevice (deviceInfo1.Port);
+            // TODO: Remove if not needed. Should be obsolete.
+            //mockPlatformio.DisconnectDevice (deviceInfo1.Port);
 
             // Run a device manager loop
             deviceManager.RunLoop ();
@@ -81,6 +82,5 @@ namespace ArduinoPlugAndPlay.Tests.Integration
             // Assert that the device related data/info was removed
             assertion.AssertDeviceDoesntExist (deviceInfo1);
         }
-
     }
 }

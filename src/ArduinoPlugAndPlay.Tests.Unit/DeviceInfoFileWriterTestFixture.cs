@@ -29,6 +29,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var familyNameFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "family.txt"));
             var groupNameFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "group.txt"));
             var projectNameFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "project.txt"));
+            var deviceNameFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "device-name.txt"));
             var boardTypeFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "board.txt"));
             var scriptCodeFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "script-code.txt"));
             var portFromFile = File.ReadAllText (Path.Combine (deviceInfoDir, "port.txt"));
@@ -38,6 +39,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             Assert.AreEqual (info.FamilyName, familyNameFromFile, "Incorrect family name.");
             Assert.AreEqual (info.GroupName, groupNameFromFile, "Incorrect group name.");
             Assert.AreEqual (info.ProjectName, projectNameFromFile, "Incorrect project name.");
+            Assert.AreEqual (info.DeviceName, deviceNameFromFile, "Incorrect device name.");
             Assert.AreEqual (info.BoardType, boardTypeFromFile, "Incorrect board type.");
             Assert.AreEqual (info.ScriptCode, scriptCodeFromFile, "Incorrect script code.");
             Assert.AreEqual (info.Port, portFromFile, "Incorrect port.");
@@ -69,6 +71,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var familyName = "ExampleFamily";
             var groupName = "ExampleGroup";
             var projectName = "ExampleProject";
+            var deviceName = "ExampleDevice";
             var boardType = "uno";
             var scriptCode = "example-script";
             var addCommandCompleted = false;
@@ -77,6 +80,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             File.WriteAllText (Path.Combine (deviceInfoDir, "family.txt"), familyName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "group.txt"), groupName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "project.txt"), projectName);
+            File.WriteAllText (Path.Combine (deviceInfoDir, "device-name.txt"), deviceName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "board.txt"), boardType);
             File.WriteAllText (Path.Combine (deviceInfoDir, "script-code.txt"), scriptCode);
             File.WriteAllText (Path.Combine (deviceInfoDir, "port.txt"), port);
@@ -90,6 +94,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             Assert.AreEqual (familyName, info.FamilyName, "Incorrect family name.");
             Assert.AreEqual (groupName, info.GroupName, "Incorrect group name.");
             Assert.AreEqual (projectName, info.ProjectName, "Incorrect project name.");
+            Assert.AreEqual (deviceName, info.DeviceName, "Incorrect device name.");
             Assert.AreEqual (boardType, info.BoardType, "Incorrect board type.");
             Assert.AreEqual (scriptCode, info.ScriptCode, "Incorrect script code.");
             Assert.AreEqual (port, info.Port, "Incorrect port.");
