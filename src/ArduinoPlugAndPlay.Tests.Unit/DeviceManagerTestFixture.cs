@@ -117,7 +117,7 @@ namespace ArduinoPlugAndPlay.Tests.Unit
             var actualResult = deviceManager.InsertValues (startPattern, info);
 
             Assert.AreEqual (expectedResult, actualResult, "Value insertion failed.");
-                    
+                   
         }
         // TODO: Remove if not needed. Should be obsolete
         /*[Test]

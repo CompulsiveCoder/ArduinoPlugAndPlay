@@ -34,13 +34,13 @@ namespace ArduinoPlugAndPlay
             File.WriteAllText (Path.Combine (deviceInfoDir, "family.txt"), info.FamilyName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "group.txt"), info.GroupName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "project.txt"), info.ProjectName);
+            File.WriteAllText (Path.Combine (deviceInfoDir, "device-name.txt"), info.DeviceName);
             File.WriteAllText (Path.Combine (deviceInfoDir, "board.txt"), info.BoardType);
             File.WriteAllText (Path.Combine (deviceInfoDir, "script-code.txt"), info.ScriptCode);
             File.WriteAllText (Path.Combine (deviceInfoDir, "port.txt"), info.Port);
             File.WriteAllText (Path.Combine (deviceInfoDir, "add-command-completed.txt"), info.AddCommandCompleted.ToString ());
             File.WriteAllText (Path.Combine (deviceInfoDir, "remove-command-completed.txt"), info.RemoveCommandCompleted.ToString ());
         }
-
 
         public DeviceInfo ReadInfoFromFile (string devicePort)
         {
@@ -58,6 +58,7 @@ namespace ArduinoPlugAndPlay
                 info.FamilyName = File.ReadAllText (Path.Combine (deviceFolder, "family.txt"));
                 info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt"));
                 info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
+                info.DeviceName = File.ReadAllText (Path.Combine (deviceFolder, "device-name.txt"));
                 info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
                 info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt"));
 
@@ -111,7 +112,6 @@ namespace ArduinoPlugAndPlay
                     Directory.Delete (deviceInfoDir, true);
             }
         }
-
     }
 }
 
