@@ -10,7 +10,7 @@ namespace ArduinoPlugAndPlay
 
         public DeviceInfoFileManager ()
         {            
-            InfoDirectory = Path.Combine (Environment.CurrentDirectory, "pnp");
+            InfoDirectory = Path.Combine (Environment.CurrentDirectory, "devices");
         }
 
         public DeviceInfoFileManager (string workingDirectory)
