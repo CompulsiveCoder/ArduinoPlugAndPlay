@@ -57,13 +57,13 @@ namespace ArduinoPlugAndPlay.Tests
         public void AssertAddDeviceCommandStarted (DeviceInfo info, MockBackgroundProcessStarter starter)
         {
             var expectedCommand = Manager.InsertValues (Manager.USBDeviceConnectedCommand, info);
-            AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile (info.Port, info.GroupName));
+            AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile (info));
         }
 
         public void AssertRemoveDeviceCommandStarted (DeviceInfo info, MockBackgroundProcessStarter starter)
         {
             var expectedCommand = Manager.InsertValues (Manager.USBDeviceDisconnectedCommand, info);
-            AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile (info.Port, info.GroupName));
+            AssertCommandStarted (starter, expectedCommand, Manager.GetLogFile (info));
         }
 
         public void AssertCommandStarted (MockBackgroundProcessStarter starter, string expectedCommand, string logFile)
@@ -76,7 +76,7 @@ namespace ArduinoPlugAndPlay.Tests
             foreach (var cmd in starter.CommandsRun) {
                 Console.WriteLine ("  " + cmd);
             }
-			Assert.IsTrue (starter.CommandsRun.Contains (fullExpectedCommand), "The expected command wasn't run: " + fullExpectedCommand);
+            Assert.IsTrue (starter.CommandsRun.Contains (fullExpectedCommand), "The expected command wasn't run: " + fullExpectedCommand);
 
             Console.WriteLine ("The expected bash command was started.");
         }

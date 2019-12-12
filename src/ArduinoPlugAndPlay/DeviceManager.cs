@@ -380,7 +380,7 @@ namespace ArduinoPlugAndPlay
             var fixedCommand = initialCommand;
 
             fixedCommand = InsertValues (fixedCommand, info);
-            fixedCommand = fixedCommand + " >> " + GetLogFile (info.Port, info.GroupName) + "";
+            fixedCommand = fixedCommand + " >> " + GetLogFile (info) + "";
 
             return fixedCommand;
 
@@ -388,7 +388,7 @@ namespace ArduinoPlugAndPlay
 
         #endregion
 
-        public string GetLogFile (string portName, string groupName)
+        public string GetLogFile (DeviceInfo deviceInfo)
         {
             var logsDir = Path.GetFullPath ("logs");
             if (!Directory.Exists (logsDir))
@@ -396,9 +396,9 @@ namespace ArduinoPlugAndPlay
 
             var date = DateTime.Now;
 
-            var dateString = date.Year + "-" + date.Month + "-" + date.Day;
+            var dateString = date.Year + "-" + date.Month + "-" + date.Day + "-" + date.Hour + "-" + date.Minute;
 
-            var logFileName = dateString + "-" + portName.Replace ("/dev/", "") + "-" + groupName + ".txt";
+            var logFileName = dateString + "-" + deviceInfo.Port.Replace ("/dev/", "") + "-" + deviceInfo.GroupName + "-" + deviceInfo.ProjectName + "-" + deviceInfo.BoardType + ".txt";
 
             var filePath = Path.Combine (logsDir, logFileName);
 
@@ -767,7 +767,7 @@ namespace ArduinoPlugAndPlay
 
         public void WriteToLog (ProcessWrapper processWrapper, string text)
         {
-            var logFile = GetLogFile (processWrapper.Info.Port, processWrapper.Info.GroupName);
+            var logFile = GetLogFile (processWrapper.Info);
             File.AppendAllText (logFile, text + Environment.NewLine);
         }
 
