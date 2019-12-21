@@ -593,6 +593,10 @@ namespace ArduinoPlugAndPlay
                 if (ex.Message.Contains ("Input/output error")
                     || ex.Message.Contains ("No such file or directory")) {
                     Console.WriteLine ("Device was likely disconnected. Aborting install.");
+                } else if (ex.Message.Contains ("Invalid argument")) {
+                    Console.WriteLine ("Error: Invalid argument");
+                    Console.WriteLine ("Device is unusable.");
+                    deviceIsUnusable = true;
                 } else if (ex.Message.Contains ("Inappropriate ioctl for device")) {
                     Console.WriteLine ("Error: Inappropriate ioctl for device");
                     Console.WriteLine ("Device is unusable.");
@@ -600,6 +604,7 @@ namespace ArduinoPlugAndPlay
                 } else {
                     Console.WriteLine ("An error occurred. Aborting install.");
                     reportError = true;
+                    deviceIsUnusable = true;
                 }
 
                 if (deviceIsUnusable) {
