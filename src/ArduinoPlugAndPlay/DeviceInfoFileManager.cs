@@ -55,12 +55,18 @@ namespace ArduinoPlugAndPlay
                 //Console.WriteLine ("Device info directory:");
                 //Console.WriteLine (deviceFolder);
 
-                info.FamilyName = File.ReadAllText (Path.Combine (deviceFolder, "family.txt"));
-                info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt"));
-                info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
-                info.DeviceName = File.ReadAllText (Path.Combine (deviceFolder, "device-name.txt"));
-                info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
-                info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt"));
+                if (File.Exists (Path.Combine (deviceFolder, "family.txt")))
+                    info.FamilyName = File.ReadAllText (Path.Combine (deviceFolder, "family.txt"));
+                if (File.Exists (Path.Combine (deviceFolder, "group.txt")))
+                    info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt"));
+                if (File.Exists (Path.Combine (deviceFolder, "project.txt")))
+                    info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
+                if (File.Exists (Path.Combine (deviceFolder, "device-name.txt")))
+                    info.DeviceName = File.ReadAllText (Path.Combine (deviceFolder, "device-name.txt"));
+                if (File.Exists (Path.Combine (deviceFolder, "board.txt")))
+                    info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
+                if (File.Exists (Path.Combine (deviceFolder, "script-code.txt")))
+                    info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt"));
 
                 if (File.Exists (Path.Combine (deviceFolder, "add-command-completed.txt")))
                     info.AddCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")));
