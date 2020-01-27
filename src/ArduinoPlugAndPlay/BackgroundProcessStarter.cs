@@ -91,7 +91,7 @@ namespace ArduinoPlugAndPlay
                 // If the latest process isn't started then start it
                 if (processWrapper != null && !processWrapper.HasStarted) {
                     try {
-                        Console.WriteLine ("  Starting the next process in the queue: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+                        Console.WriteLine ("  Starting the next process in the queue: " + processWrapper.Action + " " + processWrapper.Info.ProjectName + " " + processWrapper.Info.DeviceName);
                         processWrapper.Start ();
                     } catch (Exception ex) {
                         IsError = true;
