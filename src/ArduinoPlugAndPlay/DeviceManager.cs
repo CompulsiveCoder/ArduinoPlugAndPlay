@@ -558,12 +558,6 @@ namespace ArduinoPlugAndPlay
                     var output = builder.ToString ();
 
                     allDetailsHaveBeenDetected = output.Contains (Extractor.EndDeviceInfoText);
-                    // TODO: Remove if not needed. Should be obsolete.
-                    /*output.Contains (Extractor.FamilyNamePreText) &&
-                    output.Contains (Extractor.GroupNamePreText) &&
-                    output.Contains (Extractor.ProjectNamePreText) &&
-                    output.Contains (Extractor.BoardTypePreText) &&
-                    output.Contains (Extractor.ScriptCodePreText);*/
 
                     Timeout.Check (TimeoutReadingDeviceInfoInSeconds * 1000, "Timed out attempting to read the details from the device.");
 
@@ -698,7 +692,6 @@ namespace ArduinoPlugAndPlay
         {
             var deviceHasBeenDisconnected = !DevicePorts.Contains (processWrapper.Info.Port)
                                             || RemovedDevicePorts.Contains (processWrapper.Info.Port);
-            //|| !Platformio.PortIsInList (processWrapper.Info.Port); // TODO: Check if needed. This check is slow and should be redundant
 
             // If the device has been removed kill the process
             if (deviceHasBeenDisconnected && processWrapper.Action == "add" && !processWrapper.HasExited) {
@@ -708,7 +701,7 @@ namespace ArduinoPlugAndPlay
 
         public void AbortDueToDisconnect (ProcessWrapper processWrapper)
         {
-            Console.WriteLine ("Aborting connect command due to device being disconnected while it's still running: " + processWrapper.Action + " " + processWrapper.Info.GroupName);
+            Console.WriteLine ("Aborting connect command due to device being disconnected while it's still running: " + processWrapper.Action + " " + processWrapper.Info.ProjectName + " " + processWrapper.Info.DeviceName);
             processWrapper.Process.Kill ();
             BackgroundStarter.QueuedProcesses.Dequeue ();
 
