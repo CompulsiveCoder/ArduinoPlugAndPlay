@@ -69,9 +69,9 @@ namespace ArduinoPlugAndPlay
                     info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt"));
 
                 if (File.Exists (Path.Combine (deviceFolder, "add-command-completed.txt")))
-                    info.AddCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")));
+                    bool.TryParse (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")), out info.AddCommandCompleted);
                 if (File.Exists (Path.Combine (deviceFolder, "remove-command-completed.txt")))
-                    info.RemoveCommandCompleted = Convert.ToBoolean (File.ReadAllText (Path.Combine (deviceFolder, "remove-command-completed.txt")));
+                    bool.TryParse (File.ReadAllText (Path.Combine (deviceFolder, "remove-command-completed.txt")), out info.RemoveCommandCompleted);
             }
 
             return info;
