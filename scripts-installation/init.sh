@@ -36,9 +36,9 @@ echo ""
 echo "  Installing the ArduinoPlugAndPlay library..."
 
 <<<<<<< HEAD
-bash install-package-from-github-release.sh $BRANCH CompulsiveCoder ArduinoPlugAndPlay 1.0.2.37 || exit 1
+bash install-package-from-github-release.sh $BRANCH CompulsiveCoder ArduinoPlugAndPlay 1.0.2.38 || exit 1
 =======
-bash install-package-from-github-release.sh $BRANCH CompulsiveCoder ArduinoPlugAndPlay 1.0.2.33 || exit 1
+bash install-package-from-github-release.sh $BRANCH CompulsiveCoder ArduinoPlugAndPlay 1.0.2.38 || exit 1
 >>>>>>> 42b7abf710ef4ff6499fce23882f67fcac3bbf1f
 
 # If the config file is found in the downloaded package
