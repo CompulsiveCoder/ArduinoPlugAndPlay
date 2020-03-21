@@ -11,8 +11,6 @@
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>ArduinoPlugAndPlay.Tests.Unit.snk</AssemblyOriginatorKeyFile>
     <UseMSBuildEngine>False</UseMSBuildEngine>
-    <ProductVersion>12.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,6 +42,7 @@
     <Compile Include="DeviceInfoFileWriterTestFixture.cs" />
     <Compile Include="DeviceManagerTestFixture.cs" />
     <Compile Include="DeviceManagerLaunchCommandTestFixture.cs" />
+    <Compile Include="DeviceInfoTestFixture.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
