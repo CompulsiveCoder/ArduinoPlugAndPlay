@@ -36,6 +36,10 @@ echo "Merging the master branch into the rc branch..."
 git merge -X theirs master || exit 1
 
 echo ""
+echo "Pulling the rc branch from origin..."
+git pull origin rc || exit 1
+
+echo ""
 echo "Pushing the updated rc branch to origin..."
 git push origin rc || exit 1
 
