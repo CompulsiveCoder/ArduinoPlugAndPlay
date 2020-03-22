@@ -56,7 +56,7 @@ pipeline {
         stage('Test') {
             when { expression { !shouldSkipBuild() } }
             steps {
-                sh 'sh test-all.sh'
+                sh '#sh test-all.sh'
             }
         }
         stage('Tag and Push') {
@@ -89,7 +89,7 @@ pipeline {
                 shHide( ' #sh nuget-set-api-key.sh ${NUGETTOKEN}' )
                 sh ' #sh nuget-pack-and-push.sh'
             }
-        } 
+        }
         stage('Graduate') {
             when { expression { !shouldSkipBuild() } }
             steps {
@@ -104,10 +104,10 @@ pipeline {
                 sh 'sh increment-version.sh'
                 sh 'sh update-version-in-script.sh'
                 sh 'sh push-updated-version-in-script.sh'
-                sh 'sh test-category.sh OLS'
+                sh '#sh test-category.sh OLS'
                 sh 'sh push-version.sh'
             }
-        } 
+        }
         stage('CleanWSEnd') {
             steps {
                 deleteDir()
@@ -141,4 +141,4 @@ def shHide(cmd) {
     sh('#!/bin/sh -e\n' + cmd)
 }
 
- 
+

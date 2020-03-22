@@ -21,7 +21,7 @@ git pull origin master || exit 1
 
 echo ""
 echo "Merging the rc branch into the master branch..."
-git merge -X ours origin/rc || exit 1
+git merge rc || exit 1
 
 echo ""
 echo "Checking out the rc branch..."
@@ -40,7 +40,7 @@ echo "Pushing the updated rc branch to origin..."
 git push origin rc || exit 1
 
 echo ""
-echo "Fomastering remote test..."
+echo "Forcing remote test..."
 sh force-remote-test.sh || exit 1
 
 echo ""
