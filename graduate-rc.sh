@@ -21,7 +21,7 @@ git pull origin master || exit 1
 
 echo ""
 echo "Merging the rc branch into the master branch..."
-git merge rc || exit 1
+git merge -X ours origin/rc || exit 1
 
 echo ""
 echo "Checking out the rc branch..."

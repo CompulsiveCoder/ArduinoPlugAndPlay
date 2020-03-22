@@ -21,7 +21,7 @@ git pull origin rc || exit 1
 
 echo ""
 echo "Merging the lts branch into the rc branch..."
-git merge lts || exit 1
+git merge origin/lts || exit 1
 
 echo ""
 echo "Checking out the lts branch..."
@@ -33,7 +33,7 @@ git checkout lts || exit 1
 
 echo ""
 echo "Merging the rc branch into the lts branch..."
-git merge -X theirs rc || exit 1
+git merge -X theirs origin/rc || exit 1
 
 echo ""
 echo "Pushing the updated lts branch to origin..."
