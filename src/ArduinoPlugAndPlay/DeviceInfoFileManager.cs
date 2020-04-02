@@ -56,22 +56,22 @@ namespace ArduinoPlugAndPlay
                 //Console.WriteLine (deviceFolder);
 
                 if (File.Exists (Path.Combine (deviceFolder, "family.txt")))
-                    info.FamilyName = File.ReadAllText (Path.Combine (deviceFolder, "family.txt"));
+                    info.FamilyName = File.ReadAllText (Path.Combine (deviceFolder, "family.txt")).Trim ();
                 if (File.Exists (Path.Combine (deviceFolder, "group.txt")))
-                    info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt"));
+                    info.GroupName = File.ReadAllText (Path.Combine (deviceFolder, "group.txt")).Trim ();
                 if (File.Exists (Path.Combine (deviceFolder, "project.txt")))
-                    info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt"));
+                    info.ProjectName = File.ReadAllText (Path.Combine (deviceFolder, "project.txt")).Trim ();
                 if (File.Exists (Path.Combine (deviceFolder, "device-name.txt")))
-                    info.DeviceName = File.ReadAllText (Path.Combine (deviceFolder, "device-name.txt"));
+                    info.DeviceName = File.ReadAllText (Path.Combine (deviceFolder, "device-name.txt")).Trim ();
                 if (File.Exists (Path.Combine (deviceFolder, "board.txt")))
-                    info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt"));
+                    info.BoardType = File.ReadAllText (Path.Combine (deviceFolder, "board.txt")).Trim ();
                 if (File.Exists (Path.Combine (deviceFolder, "script-code.txt")))
-                    info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt"));
+                    info.ScriptCode = File.ReadAllText (Path.Combine (deviceFolder, "script-code.txt")).Trim ();
 
                 if (File.Exists (Path.Combine (deviceFolder, "add-command-completed.txt")))
-                    bool.TryParse (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")), out info.AddCommandCompleted);
+                    bool.TryParse (File.ReadAllText (Path.Combine (deviceFolder, "add-command-completed.txt")).Trim (), out info.AddCommandCompleted);
                 if (File.Exists (Path.Combine (deviceFolder, "remove-command-completed.txt")))
-                    bool.TryParse (File.ReadAllText (Path.Combine (deviceFolder, "remove-command-completed.txt")), out info.RemoveCommandCompleted);
+                    bool.TryParse (File.ReadAllText (Path.Combine (deviceFolder, "remove-command-completed.txt")).Trim (), out info.RemoveCommandCompleted);
             }
 
             return info;
