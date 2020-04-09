@@ -40,6 +40,9 @@ namespace ArduinoPlugAndPlay.ClientConsole
 
             deviceManager.SmtpServer = config.GetValue ("SmtpServer");
             deviceManager.EmailAddress = config.GetValue ("EmailAddress");
+            deviceManager.SmtpUsername = config.GetValue ("SmtpUsername");
+            deviceManager.SmtpPassword = config.GetValue ("SmtpPassword");
+            deviceManager.SmtpPort = config.GetInt32 ("SmtpPort", 25);
 
             deviceManager.IgnoredSerialPorts = config.GetArray ("IgnoredSerialPorts");
 

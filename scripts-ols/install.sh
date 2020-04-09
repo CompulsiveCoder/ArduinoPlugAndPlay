@@ -5,10 +5,13 @@ DESTINATION=$2
 
 SMTP_SERVER=$3
 ADMIN_EMAIL=$4
+SMTP_USERNAME=$5
+SMTP_PASSWORD=$6
+SMTP_PORT=$7
 
-SERVICE_TEMPLATE_FILE_NAME=$5
+SERVICE_TEMPLATE_FILE_NAME=$8
 
-EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail] [ServiceTemplateName]"
+EXAMPLE_COMMAND="Example:\n..sh [Branch] [Install_Dir] [SmtpServer] [AdminEmail] [SmtpUsername] [SmtpPassword] [SmtpPort] [ServiceTemplateName]"
 
 if [ ! $BRANCH ]; then
   BRANCH=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
@@ -30,6 +33,18 @@ if [ ! $ADMIN_EMAIL ]; then
   ADMIN_EMAIL="na"
 fi
 
+if [ ! $SMTP_USERNAME ]; then
+  SMTP_USERNAME="na"
+fi
+
+if [ ! $SMTP_PASSWORD ]; then
+  SMTP_PASSWORD="na"
+fi
+
+if [ ! $SMTP_PORT ]; then
+  SMTP_PORT="25"
+fi
+
 SERVICE_FILE_NAME="arduino-plug-and-play.service"
 
 if [ ! $SERVICE_TEMPLATE_FILE_NAME ]; then
@@ -41,6 +56,9 @@ echo "  Destination: $DESTINATION"
 
 echo "  SMTP server: $SMTP_SERVER"
 echo "  Admin email: $ADMIN_EMAIL"
+echo "  SMTP username: $SMTP_USERNAME"
+echo "  SMTP password: [hidden]"
+echo "  SMTP port: $SMTP_PORT"
 
 echo "  Service template file: $SERVICE_TEMPLATE_FILE_NAME"
 
@@ -114,7 +132,7 @@ curl -s -L -H 'Cache-Control: no-cache' -f $SERVICE_TEMPLATE_FILE_URL -o $SERVIC
 
 echo ""
 echo "  Starting init.sh script..."
-bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL" || exit 1
+bash init.sh "$BRANCH" "$SMTP_SERVER" "$ADMIN_EMAIL" "$SMTP_USERNAME" "$SMTP_PASSWORD" "$SMTP_PORT" || exit 1
 
 echo ""
 echo "  Starting transform-service-template.sh script..."

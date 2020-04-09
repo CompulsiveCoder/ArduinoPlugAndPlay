@@ -25,15 +25,17 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
             var destination = Path.GetFullPath ("installation/ArduinoPlugAndPlay");
 
             var smtpServer = "mail.newtestserver.com";
-
             var emailAddress = "user@newtestserver.com";
+            var smtpUsername = "myUsername";
+            var smtpPassword = "myPassword";
+            var smtpPort = "26";
 
             // Configure systemctl mocking
             var isMockSystemCtlFile = Path.Combine (TemporaryDirectory, destination + "/is-mock-systemctl.txt");
             Directory.CreateDirectory (Path.GetDirectoryName (isMockSystemCtlFile));
             File.WriteAllText (isMockSystemCtlFile, 1.ToString ());
 
-            var cmd = "bash " + scriptPath + " " + branch + " " + destination + " " + smtpServer + " " + emailAddress;
+            var cmd = "bash " + scriptPath + " " + branch + " " + destination + " " + smtpServer + " " + emailAddress + " " + smtpUsername + " " + smtpPassword + " " + smtpPort;
 
             Console.WriteLine ("Command:");
             Console.WriteLine ("  " + cmd);
@@ -73,6 +75,9 @@ namespace ArduinoPlugAndPlay.Tests.Scripts.OLS
 
             Assert.IsTrue (configFileContent.Contains (smtpServer), "SMTP server wasn't injected into the config file.");
             Assert.IsTrue (configFileContent.Contains (emailAddress), "Email address wasn't injected into the config file.");
+            Assert.IsTrue (configFileContent.Contains (smtpUsername), "SMTP username wasn't injected into the config file.");
+            Assert.IsTrue (configFileContent.Contains (smtpPassword), "SMTP password wasn't injected into the config file.");
+            Assert.IsTrue (configFileContent.Contains (smtpPort), "SMTP port wasn't injected into the config file.");
         }
     }
 }
