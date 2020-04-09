@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Net.Mail;
 using System.IO.Ports;
 using System.Linq;
+using System.Net;
 
 namespace ArduinoPlugAndPlay
 {
@@ -28,6 +29,9 @@ namespace ArduinoPlugAndPlay
         public string USBDeviceDisconnectedCommand = "echo 'Device removed ({FAMILY} {GROUP} {BOARD})'";
         public string SmtpServer = String.Empty;
         public string EmailAddress = String.Empty;
+        public string SmtpUsername = String.Empty;
+        public string SmtpPassword = String.Empty;
+        public int SmtpPort = 25;
         public List<string> DevicePorts = new List<string> ();
         public List<string> NewDevicePorts = new List<string> ();
         public List<string> RemovedDevicePorts = new List<string> ();
@@ -809,11 +813,21 @@ namespace ArduinoPlugAndPlay
             if (areDetailsProvided) {
                 try {
                     var subject = "Error: ArduinoPlugAndPlay on " + HostName;
-                    var body = message;
+                    var body = message + "\n\n\n\n--------------------\n\nEmail sent by Arduino Plug And Play.";
 
                     var mail = new MailMessage (EmailAddress, EmailAddress, subject, body);
 
-                    var smtpClient = new SmtpClient (SmtpServer);
+                    var smtpClient = new SmtpClient (SmtpServer, SmtpPort);
+
+                    var credentialsAreProvided = (SmtpUsername != "user" &&
+                                                 SmtpPassword != "pass" &&
+                                                 SmtpUsername != "na" &&
+                                                 SmtpPassword != "na" &&
+                                                 !String.IsNullOrWhiteSpace (SmtpUsername) &&
+                                                 !String.IsNullOrWhiteSpace (SmtpPassword));
+
+                    if (credentialsAreProvided)
+                        smtpClient.Credentials = new NetworkCredential (SmtpUsername, SmtpPassword);
 
                     smtpClient.Send (mail);
 
@@ -822,6 +836,9 @@ namespace ArduinoPlugAndPlay
                     Console.WriteLine ("An error occurred while sending error report...");
                     Console.WriteLine ("SMTP Server: " + SmtpServer);
                     Console.WriteLine ("Email Address: " + EmailAddress);
+                    Console.WriteLine ("SMTP Username: " + SmtpUsername);
+                    Console.WriteLine ("SMTP Password: [hidden]");
+                    Console.WriteLine ("SMTP Port: " + SmtpPort);
                     Console.WriteLine ("");
                     Console.WriteLine (ex.ToString ());
                     Console.WriteLine ("");
