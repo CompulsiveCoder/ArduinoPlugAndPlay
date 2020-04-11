@@ -826,8 +826,10 @@ namespace ArduinoPlugAndPlay
                                                  !String.IsNullOrWhiteSpace (SmtpUsername) &&
                                                  !String.IsNullOrWhiteSpace (SmtpPassword));
 
-                    if (credentialsAreProvided)
+                    if (credentialsAreProvided) {
                         smtpClient.Credentials = new NetworkCredential (SmtpUsername, SmtpPassword);
+                        smtpClient.EnableSsl = true;
+                    }
 
                     smtpClient.Send (mail);
 
