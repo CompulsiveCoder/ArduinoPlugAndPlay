@@ -22,10 +22,12 @@ if [ $IS_MOCK_SYSTEMCTL = 1 ]; then
   SERVICES_DIR="mock/services"
 fi
 
+#SUDO=""
+#if [ ! "$(id -u)" -eq 0 ]; then
+#    SUDO='sudo'
+#fi
+# TODO: Clean up. Sudo is not used. If sudo is required the script can be called with sudo.
 SUDO=""
-if [ ! "$(id -u)" -eq 0 ]; then
-    SUDO='sudo'
-fi
 
 mkdir -p $SERVICES_DIR
 
